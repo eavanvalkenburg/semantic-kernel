@@ -1,11 +1,11 @@
 ---
 # These are optional elements. Feel free to remove any of them.
-status: { proposed }
-contact: { eavanvalkenburg }
-date: { 2024-05-14 }
-deciders: { matthewbolanos }
-consulted: { moonbox3, alliscode }
-informed: { dmytrostruk, markwallace }
+status: proposed
+contact: eavanvalkenburg
+date: 2024-05-14
+deciders: matthewbolanos
+consulted: moonbox3, alliscode
+informed: dmytrostruk, markwallace
 ---
 
 # Pythonic Hooks
