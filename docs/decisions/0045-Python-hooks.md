@@ -26,6 +26,8 @@ We need to decide on the best way to implement hooks in Python. Hooks are a way 
 - Event Handlers (current implementation)
 - Filters
 - Callbacks
+- Context Managers
+- Other
 
 ## Decision Outcome
 
@@ -75,6 +77,7 @@ async def function_filter(
 
 - Good, because context defined in the filter is fully documented.
 - Good, because wrapping the call to the next (and the inner most to the function) allows for pre- and post- event handling.
+- Good, is similar to how FastAPI handles middleware, so developers might be familiar with the concept.
 - Bad, because dotnet specific concept, might not be familiar to python developers.
 - Bad, developers will have to always do a extra action in their filter, namely call next
 
@@ -104,8 +107,18 @@ class ChatCallback(BaseCallback):
 - Good, easy to add another callback, just add to the base callback and users can immediately use it
 - Bad, because different from dotnet filters
 
+### Context Managers
+
+Context managers are a common approach in python, they allow for a block of code to be run with a specific context, this is not the same as the context in filters, but it is a way to run code in a specific context, this could be used to run code in a specific context, but it is not the same as a filter or a callback.
+
+- Good, because context managers are a common approach in python
+- Bad, limited flexibility because they only have a single yield option, so they might not work for streaming use cases.
+
+### Other
+
+Other examples are [Django Middleware](https://docs.djangoproject.com/en/5.0/topics/http/middleware/) this works by creating a callable class which get's executed and also has to call a specified function.
 
 ## More Information
 - [LangChain Base Callback](https://github.com/langchain-ai/langchain/blob/714cba96a8f41bae4ece6caa8d4d2f5f409dd25e/libs/core/langchain_core/callbacks/base.py#L263)
 - [Home Assistant Event Bus](https://github.com/home-assistant/core/blob/55bf0b66474d8c3786173f399aaaec1967d4c189/homeassistant/core.py#L1437)
-
+- [FastAPI Middleware](https://fastapi.tiangolo.com/tutorial/middleware/)
