@@ -41,6 +41,8 @@
         "kernelfunction",
         "skprompt",
         "templating",
-        "vectordb"
+        "vectordb",
+        "serde",
+        "datamodel"
     ]
 }
