@@ -22,21 +22,46 @@ from semantic_kernel.utils.experimental_decorator import experimental_class
 @experimental_class
 class OpenAITextEmbeddingBase(OpenAIHandler, EmbeddingGeneratorBase):
     @override
-    async def generate_embeddings(self, texts: list[str], batch_size: int | None = None, **kwargs: Any) -> ndarray:
-        settings = OpenAIEmbeddingPromptExecutionSettings(
-            ai_model_id=self.ai_model_id,
-            **kwargs,
-        )
+    async def generate_embeddings(
+        self,
+        texts: list[str],
+        settings: OpenAIEmbeddingPromptExecutionSettings | None = None,
+        batch_size: int | None = None,
+        **kwargs: Any,
+    ) -> ndarray:
+        """Returns embeddings for the given texts as ndarray."""
+        raw_embeddings = await self.generate_raw_embeddings(texts, settings, batch_size, **kwargs)
+        return array([array(emb) for emb in raw_embeddings])
+
+    async def generate_raw_embeddings(
+        self,
+        texts: list[str],
+        settings: OpenAIEmbeddingPromptExecutionSettings | None = None,
+        batch_size: int | None = None,
+        **kwargs: Any,
+    ) -> Any:
+        """Returns embeddings for the given texts in the unedited format.
+
+        Args:
+            texts (List[str]): The texts to generate embeddings for.
+            settings (PromptExecutionSettings): The settings to use for the request.
+            batch_size (int): The batch size to use for the request.
+            kwargs (Dict[str, Any]): Additional arguments to pass to the request.
+        """
+        if not settings:
+            settings = OpenAIEmbeddingPromptExecutionSettings(ai_model_id=self.ai_model_id)
+        if settings.ai_model_id is None:
+            settings.ai_model_id = self.ai_model_id
+        for key, value in kwargs.items():
+            setattr(settings, key, value)
         raw_embeddings = []
         batch_size = batch_size or len(texts)
         for i in range(0, len(texts), batch_size):
             batch = texts[i : i + batch_size]
             settings.input = batch
-            raw_embedding = await self._send_embedding_request(
-                settings=settings,
-            )
+            raw_embedding = await self._send_embedding_request(settings=settings)
             raw_embeddings.extend(raw_embedding)
-        return array(raw_embeddings)
+        return raw_embeddings
 
     @override
     def get_prompt_execution_settings_class(self) -> PromptExecutionSettings:
