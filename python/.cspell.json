@@ -43,6 +43,7 @@
         "templating",
         "vectordb",
         "serde",
-        "datamodel"
+        "datamodel",
+        "vectorstoremodel"
     ]
 }
