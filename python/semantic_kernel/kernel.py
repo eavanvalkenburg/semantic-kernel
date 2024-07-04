@@ -316,7 +316,7 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
     async def invoke_function_call(
         self,
         function_call: FunctionCallContent,
-        chat_history: ChatHistory,
+        chat_history: ChatHistory | None = None,
         arguments: "KernelArguments | None" = None,
         function_call_count: int | None = None,
         request_index: int | None = None,
@@ -334,7 +334,8 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
                 function_call_content=function_call,
                 result="The tool call arguments are malformed. Arguments must be in JSON format. Please try again.",
             )
-            chat_history.add_message(message=frc.to_chat_message_content())
+            if chat_history:
+                chat_history.add_message(message=frc.to_chat_message_content())
             return None
 
         try:
@@ -358,7 +359,8 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
                     "please try again with a supplied tool call name and make sure to validate the name."
                 ),
             )
-            chat_history.add_message(message=frc.to_chat_message_content())
+            if chat_history:
+                chat_history.add_message(message=frc.to_chat_message_content())
             return None
 
         num_required_func_params = len([param for param in function_to_call.parameters if param.is_required])
@@ -374,7 +376,8 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
                 function_call_content=function_call,
                 result=msg,
             )
-            chat_history.add_message(message=frc.to_chat_message_content())
+            if chat_history:
+                chat_history.add_message(message=frc.to_chat_message_content())
             return None
 
         logger.info(f"Calling {function_call.name} function with args: {function_call.arguments}")
@@ -404,8 +407,10 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         frc = FunctionResultContent.from_function_call_content_and_result(
             function_call_content=function_call, result=invocation_context.function_result
         )
-        chat_history.add_message(message=frc.to_chat_message_content())
-        return None
+        if chat_history:
+            chat_history.add_message(message=frc.to_chat_message_content())
+            return None
+        return invocation_context
 
     async def _inner_auto_function_invoke_handler(self, context: AutoFunctionInvocationContext):
         """Inner auto function invocation handler."""

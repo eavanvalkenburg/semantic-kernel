@@ -79,6 +79,7 @@ class PromptExecutionSettings(KernelBaseModel):
             exclude={
                 "service_id",
                 "extension_data",
+                "function_choice_behavior",
             },
             exclude_none=True,
             by_alias=True,
