@@ -20,7 +20,7 @@ from semantic_kernel.functions import kernel_function
 
 auth_token: AccessToken | None = None
 
-ACA_TOKEN_ENDPOINT: str = "https://acasessions.io/.default"  # nosec
+ACA_TOKEN_ENDPOINT: str = "https://dynamicsessions.io/"  # nosec
 
 
 def auth_callback_factory(scope):
@@ -39,7 +39,13 @@ def auth_callback_factory(scope):
         current_utc_timestamp = int(datetime.datetime.now(datetime.timezone.utc).timestamp())
 
         if not auth_token or auth_token.expires_on < current_utc_timestamp:
-            credential = DefaultAzureCredential()
+            credential = DefaultAzureCredential(
+                interactive_browser_tenant_id=os.environ.get("AZURE_TENANT_ID"),
+                exclude_managed_identity_credential=True,
+                exclude_developer_cli_credential=True,
+                exclude_workload_identity_credential=True,
+                exclude_environment_credential=True,
+            )
 
             try:
                 auth_token = credential.get_token(scope)
@@ -123,7 +129,7 @@ async def auto_function_invocation_filter(context: AutoFunctionInvocationContext
         if name == "chat_history":
             print(f"    User message: {value.messages[-1]}")
         else:
-            print(f"    Arguments: {context.arguments[name]}")
+            print(f"    Argument {name}: {context.arguments[name]}")
     await next(context)
     print(f"    Result: {context.function_result}\n\033[0m")
 

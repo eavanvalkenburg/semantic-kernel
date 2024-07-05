@@ -20,7 +20,7 @@ from semantic_kernel.kernel import Kernel
 
 auth_token: AccessToken | None = None
 
-ACA_TOKEN_ENDPOINT: str = "https://acasessions.io/.default"  # nosec
+ACA_TOKEN_ENDPOINT: str = "https://dynamicsessions.io"  # nosec
 
 
 def auth_callback_factory(scope):
@@ -39,7 +39,13 @@ def auth_callback_factory(scope):
         current_utc_timestamp = int(datetime.datetime.now(datetime.timezone.utc).timestamp())
 
         if not auth_token or auth_token.expires_on < current_utc_timestamp:
-            credential = DefaultAzureCredential()
+            credential = DefaultAzureCredential(
+                interactive_browser_tenant_id=os.environ.get("AZURE_TENANT_ID"),
+                exclude_managed_identity_credential=True,
+                exclude_developer_cli_credential=True,
+                exclude_workload_identity_credential=True,
+                exclude_environment_credential=True,
+            )
 
             try:
                 auth_token = credential.get_token(scope)
@@ -84,7 +90,7 @@ kernel.add_plugin(sessions_tool, "SessionsTool")
 async def main() -> None:
     code = "def main():\n\tres = yield call_function('math-Add', input=1, amount=2)\n\treturn res"
     result = await kernel.invoke(
-        function_name="execute_function",
+        function_name="execute_generator",
         plugin_name="SessionsTool",
         main_function_name="main",
         code=code,

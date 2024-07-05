@@ -53,11 +53,13 @@ class Orchestrator:
 
 class FunctionCall:
     def __init__(self, function_name, kwargs):
+        if function_name.startswith("functions."):
+            function_name = function_name[10:]
         self.function_name = function_name
         self.args = kwargs
 
 
-def call_function(function_name, **kwargs):
+def call(function_name, **kwargs):
     return FunctionCall(function_name, kwargs)
 """
 
@@ -181,19 +183,18 @@ class SessionsPythonTool(KernelBaseModel):
         if not code:
             raise FunctionExecutionException("The provided code is empty")
         result = await self._run_code(code)
-        return f"Result: {result['result']}\nStdout: {result['stdout']}\nStderr: {result['stderr']}"
+        return f"Result:\n{result['result']}Stdout:\n{result['stdout']}Stderr:\n{result['stderr']}"
 
     @kernel_function(
-        description="""Executes the provided Python generator function.
+        description="""Execute a provided Python generator function.
                      Start and end the code snippet with double quotes to define it as a string.
                      Insert \\n within the string where a new line should appear.
                      Add spaces directly after \\n to replicate indentation.
                      Use \" to include double quotes within the code without ending the string.
                      Keep everything in a single line; the \\n sequences will represent line breaks
                      Define at least one function, with `def function_name():`.
-                     Use `val = yield call_function('plugin_name-function_name', input=1, amount=2)` 
-                     to call a different function, 
-                     that is defined as the other supplied tools, where the first argument is the function name, 
+                     Use `val = yield call('plugin_name-function_name', input=1, amount=2)` 
+                     to call a function defined in another plugin, where the first argument is the function name, 
                      and the rest are the arguments as kwargs.
                      The function defined in main_function_name is called and should be the generator function.""",
         name="execute_generator",
@@ -201,7 +202,12 @@ class SessionsPythonTool(KernelBaseModel):
     async def execute_generator(
         self,
         main_function_name: Annotated[str, "The name of the main function to execute"],
-        code: Annotated[str, "The valid Python code that defines the functions."],
+        code: Annotated[
+            str,
+            "The valid Python code that defines the generator function and potentially other functions as well"
+            ", uses other functions by doing yield call('plugin_name-function_name', **kwargs)."
+            " Can also use regular python functions (after import if necessary) to perform operations.",
+        ],
     ) -> str:
         """Executes the provided Python generator function.
 
@@ -285,8 +291,8 @@ class SessionsPythonTool(KernelBaseModel):
                 json=request_body,
             )
             response.raise_for_status()
-            result = response.json()["properties"]
-            return f"Result:\n{result['result']}Stdout:\n{result['stdout']}Stderr:\n{result['stderr']}"
+            return response.json()["properties"]
+
         except HTTPStatusError as e:
             error_message = e.response.text if e.response.text else e.response.reason_phrase
             raise FunctionExecutionException(
