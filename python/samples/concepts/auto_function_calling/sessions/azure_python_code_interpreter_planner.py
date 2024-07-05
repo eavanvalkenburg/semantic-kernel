@@ -3,26 +3,20 @@
 import asyncio
 import datetime
 import os
+from typing import Annotated
 
 from azure.core.credentials import AccessToken
 from azure.core.exceptions import ClientAuthenticationError
 from azure.identity import DefaultAzureCredential
 
-from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
-    AzureChatPromptExecutionSettings,
-)
-from semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion import AzureChatCompletion
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel import Kernel
+from semantic_kernel.connectors.ai import FunctionChoiceBehavior
+from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, AzureChatPromptExecutionSettings
+from semantic_kernel.contents import ChatHistory
 from semantic_kernel.core_plugins.sessions_python_tool.sessions_python_plugin import SessionsPythonTool
-from semantic_kernel.core_plugins.time_plugin import TimePlugin
-from semantic_kernel.exceptions.function_exceptions import FunctionExecutionException
-from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
-    AutoFunctionInvocationContext,
-)
-from semantic_kernel.filters.filter_types import FilterTypes
-from semantic_kernel.functions.kernel_arguments import KernelArguments
-from semantic_kernel.kernel import Kernel
+from semantic_kernel.exceptions import FunctionExecutionException
+from semantic_kernel.filters import AutoFunctionInvocationContext, FilterTypes
+from semantic_kernel.functions import kernel_function
 
 auth_token: AccessToken | None = None
 
@@ -60,7 +54,64 @@ def auth_callback_factory(scope):
     return auth_callback
 
 
+class DomoticaPlugin:
+    def __init__(self, lights: list[str]):
+        self.lights: dict[str, bool] = {light: False for light in lights}
+
+    @kernel_function
+    def list_lights(self) -> list[str]:
+        """Returns the list of lights, by name."""
+        return list(self.lights.keys())
+
+    @kernel_function
+    def is_on(self, light: Annotated[str, "the name of the light"]) -> bool:
+        """Indicates whether the light is on (true) or off (false)."""
+        return self.lights.get(light, False)
+
+    @kernel_function
+    def turn_on(self, light: Annotated[str, "the name of the light"]) -> str:
+        """Turns the light on."""
+        if light in self.lights:
+            self.lights[light] = True
+            return f"Turned on {light}"
+        return f"Light {light} not found"
+
+    @kernel_function
+    def turn_off(self, light: Annotated[str, "the name of the light"]) -> str:
+        """Turns the light off"""
+        if light in self.lights:
+            self.lights[light] = False
+            return f"Turned off {light}"
+        return f"Light {light} not found"
+
+    @kernel_function
+    def toggle(self, light: Annotated[str, "the name of the light"]) -> str:
+        """Toggles the light."""
+        if light in self.lights:
+            self.lights[light] = not self.lights[light]
+            return f"Toggled {light}"
+        return f"Light {light} not found"
+
+
 kernel = Kernel()
+kernel.add_service(AzureChatCompletion(service_id="gpt-4o"))
+kernel.add_plugin(DomoticaPlugin(["downstairs", "study", "kitchen", "master_bedroom"]), "house")
+kernel.add_plugin(
+    SessionsPythonTool(
+        auth_callback=auth_callback_factory(ACA_TOKEN_ENDPOINT),
+        kernel=kernel,
+    ),
+    "SessionsTool",
+)
+kernel.add_function(
+    prompt="{{$chat_history}}",
+    plugin_name="Chat",
+    function_name="Chat",
+    prompt_execution_settings=AzureChatPromptExecutionSettings(
+        service_id="gpt-4o",
+        function_choice_behavior=FunctionChoiceBehavior.Auto(filters={"excluded_plugins": ["Chat"]}),
+    ),
+)
 
 
 @kernel.filter(FilterTypes.AUTO_FUNCTION_INVOCATION)
@@ -68,40 +119,23 @@ async def auto_function_invocation_filter(context: AutoFunctionInvocationContext
     """A filter that will be called for each function call in the response."""
     print("\033[92m\n  Function called\033[0m")
     print(f"    \033[96mFunction: {context.function.fully_qualified_name}")
-    print(f"    Arguments: {context.arguments}")
+    for name, value in context.arguments.items():
+        if name == "chat_history":
+            print(f"    User message: {value.messages[-1]}")
+        else:
+            print(f"    Arguments: {context.arguments[name]}")
     await next(context)
     print(f"    Result: {context.function_result}\n\033[0m")
 
 
-service_id = "sessions-tool"
-chat_service = AzureChatCompletion(
-    service_id=service_id,
+chat_history = ChatHistory()
+chat_history.add_system_message(
+    "You are a agent working with people to control their home. "
+    "You have access to the lights and can list them, "
+    "turn them on, off or toggle."
+    "turning a light off that is already off should be avoided."
+    "You have access to a python code executor to perform more complex actions."
 )
-kernel.add_service(chat_service)
-
-sessions_tool = SessionsPythonTool(
-    auth_callback=auth_callback_factory(ACA_TOKEN_ENDPOINT),
-    kernel=kernel,
-)
-
-kernel.add_plugin(sessions_tool, "SessionsTool")
-kernel.add_plugin(TimePlugin(), "Time")
-
-chat_function = kernel.add_function(
-    prompt="{{$chat_history}}{{$user_input}}",
-    plugin_name="ChatBot",
-    function_name="Chat",
-)
-
-req_settings = AzureChatPromptExecutionSettings(service_id=service_id)
-
-req_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(
-    filters={"excluded_plugins": ["ChatBot"], "excluded_functions": ["SessionsTool-execute_code"]}
-)
-
-arguments = KernelArguments(settings=req_settings)
-
-history = ChatHistory()
 
 
 async def chat() -> bool:
@@ -118,15 +152,10 @@ async def chat() -> bool:
         print("\n\nExiting chat...")
         return False
 
-    arguments["chat_history"] = history
-    arguments["user_input"] = user_input
-    answer = await kernel.invoke(
-        function=chat_function,
-        arguments=arguments,
-    )
-    print(f"Mosscap:> {answer}")
-    history.add_user_message(user_input)
-    history.add_assistant_message(str(answer))
+    chat_history.add_user_message(user_input)
+    answer = await kernel.invoke(plugin_name="Chat", function_name="Chat", chat_history=chat_history)
+    print(f"Agent:> {answer}")
+    chat_history.add_message(answer.value[0])
     return True
 
 
@@ -134,7 +163,8 @@ async def main() -> None:
     print(
         "Welcome to the chat bot!\
         \n  Type 'exit' to exit.\
-        \n  Try a Python code execution question to see the function calling in action (i.e. what is 1+1?)."
+        \n  This can use python code to do complex things with lights in your home.\
+        \n  For instance checking which lights are on and turning all off, or toggling all."
     )
     chatting = True
     while chatting:

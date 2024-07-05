@@ -279,9 +279,6 @@ class SessionsPythonTool(KernelBaseModel):
             endpoint="code/execute/",
             params={"identifier": self.settings.session_id},
         )
-
-
-<< << << < HEAD
         try:
             response = await self.http_client.post(
                 url=url,
@@ -295,15 +292,6 @@ class SessionsPythonTool(KernelBaseModel):
             raise FunctionExecutionException(
                 f"Code execution failed with status code {e.response.status_code} and error: {error_message}"
             ) from e
-== == == =
-        response = await self.http_client.post(
-            url=url,
-            json=request_body,
-        )
-        response.raise_for_status()
-
-        return response.json()
->> >> >> > cf923d969(first stuff for local function combined with python)
 
     @kernel_function(name="upload_file", description="Uploads a file for the current Session ID")
     async def upload_file(
