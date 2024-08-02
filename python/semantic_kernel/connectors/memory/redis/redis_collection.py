@@ -16,6 +16,7 @@ import numpy as np
 from pydantic import ValidationError
 from redis.asyncio.client import Redis
 from redis.commands.search.indexDefinition import IndexDefinition
+from redis.commands.search.result import Result
 
 from semantic_kernel.connectors.memory.redis.const import INDEX_TYPE_MAP, RedisCollectionTypes
 from semantic_kernel.connectors.memory.redis.utils import RedisWrapper, data_model_definition_to_redis_fields
@@ -194,6 +195,11 @@ class RedisHashsetCollection(RedisCollection):
         return [result for result in results if result]
 
     @override
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Result:
+        # TODO (eavanvalkenburg): further implement
+        return await self.redis_database.ft(self.collection_name).search(query=query, **kwargs)
+
+    @override
     async def _inner_delete(self, keys: Sequence[str], **kwargs: Any) -> None:
         await self.redis_database.delete(*[self._get_redis_key(key) for key in keys])
 
@@ -289,6 +295,11 @@ class RedisJsonCollection(RedisCollection):
     async def _inner_get(self, keys: Sequence[str], **kwargs) -> Sequence[dict[bytes, bytes]] | None:
         results = await self.redis_database.json().mget([self._get_redis_key(key) for key in keys], "$", **kwargs)
         return [result[0] for result in results if result]
+
+    @override
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Result:
+        # TODO (eavanvalkenburg): further implement
+        return await self.redis_database.ft(self.collection_name).search(query=query, **kwargs)
 
     @override
     async def _inner_delete(self, keys: Sequence[str], **kwargs: Any) -> None:

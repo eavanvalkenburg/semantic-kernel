@@ -150,6 +150,11 @@ class AzureAISearchCollection(VectorStoreRecordCollection[str, TModel], Generic[
         return [res for res in result if not isinstance(res, BaseException)]
 
     @override
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Sequence[dict[str, Any]]:
+        results = await self.search_client.search(search_text=query, **kwargs)
+        return [result async for result in results]
+
+    @override
     async def _inner_delete(self, keys: Sequence[str], **kwargs: Any) -> None:
         await self.search_client.delete_documents(documents=[{self._key_field_name: key} for key in keys])
 

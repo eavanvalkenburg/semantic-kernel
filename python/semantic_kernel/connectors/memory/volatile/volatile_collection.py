@@ -72,3 +72,11 @@ class VolatileCollection(VectorStoreRecordCollection[KEY_TYPES, TModel]):
     @override
     async def does_collection_exist(self, **kwargs: Any) -> bool:
         return True
+
+    @override
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Sequence[dict[str, Any]]:
+        # TODO (eavanvalkenburg): further implement
+        results = []
+        if query in self.inner_storage:
+            results.append(self.inner_storage[query])
+        return results

@@ -71,7 +71,7 @@ class MyDataModelList:
 # configuration
 # specify which store (redis_json, redis_hash, qdrant, Azure AI Search or volatile) to use
 # and which model (vectors as list or as numpy arrays)
-store = "volatile"
+store = "ai_search"
 collection_name = "test"
 MyDataModel = MyDataModelArray
 
@@ -107,8 +107,12 @@ async def main():
     async with stores[store] as record_store:
         await record_store.create_collection_if_not_exists()
 
-        record1 = MyDataModel(content="My text", id="e6103c03-487f-4d7d-9c23-4723651c17f4")
-        record2 = MyDataModel(content="My other text", id="09caec77-f7e1-466a-bcec-f1d51c5b15be")
+        record1 = MyDataModel(
+            content="RAG stands for Retrieval Augmented Generation", id="e6103c03-487f-4d7d-9c23-4723651c17f4"
+        )
+        record2 = MyDataModel(
+            content="Microsoft is a large American multi-national company.", id="09caec77-f7e1-466a-bcec-f1d51c5b15be"
+        )
 
         records = await VectorStoreRecordUtils(kernel).add_vector_to_records(
             [record1, record2], data_model_type=MyDataModel
@@ -116,7 +120,7 @@ async def main():
         keys = await record_store.upsert_batch(records)
         print(f"upserted {keys=}")
 
-        results = await record_store.get_batch([record1.id, record2.id])
+        results = await record_store.search("what is rag?")
         if results:
             for result in results:
                 print(f"found {result.id=}")

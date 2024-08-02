@@ -100,6 +100,19 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         ...  # pragma: no cover
 
     @abstractmethod
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Sequence[Any] | None:
+        """Search for records, this should be overridden by the child class.
+
+        Args:
+            query: The query to execute.
+            **kwargs (Any): Additional arguments.
+
+        Returns:
+            The records from the store, not deserialized.
+        """
+        ...  # pragma: no cover
+
+    @abstractmethod
     async def _inner_delete(self, keys: Sequence[TKey], **kwargs: Any) -> None:
         """Delete the records, this should be overridden by the child class.
 
@@ -343,6 +356,29 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
             await self._inner_delete(keys, **kwargs)
         except Exception as exc:
             raise MemoryConnectorException(f"Error deleting records: {exc}") from exc
+
+    async def search(self, query: Any, **kwargs: Any) -> OneOrMany[TModel] | None:
+        """Search for records.
+
+        Args:
+            query (Any): The query to search with.
+            **kwargs (Any): Additional arguments.
+
+        Returns:
+            The records, either a list of TModel or the container type.
+        """
+        try:
+            records = await self._inner_search(query, **kwargs)
+        except Exception as exc:
+            raise MemoryConnectorException(f"Error getting records: {exc}") from exc
+
+        if not records:
+            return None
+
+        try:
+            return self.deserialize(records, **kwargs)
+        except Exception as exc:
+            raise MemoryConnectorException(f"Error deserializing record: {exc}") from exc
 
     # region Internal Serialization methods
 

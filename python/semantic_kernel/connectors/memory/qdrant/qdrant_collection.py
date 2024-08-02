@@ -12,7 +12,7 @@ else:
 
 from pydantic import ValidationError
 from qdrant_client.async_qdrant_client import AsyncQdrantClient
-from qdrant_client.models import PointStruct, VectorParams
+from qdrant_client.models import PointStruct, ScoredPoint, VectorParams
 
 from semantic_kernel.connectors.memory.qdrant.const import DISTANCE_FUNCTION_MAP, TYPE_MAPPER_VECTOR
 from semantic_kernel.connectors.memory.qdrant.utils import AsyncQdrantClientWrapper
@@ -152,6 +152,11 @@ class QdrantCollection(VectorStoreRecordCollection[str | int, TModel]):
             ids=keys,
             **kwargs,
         )
+
+    @override
+    async def _inner_search(self, query: Any, **kwargs: Any) -> Sequence[ScoredPoint]:
+        # TODO (eavanvalkenburg): further implement
+        return await self.qdrant_client.search(collection_name=self.collection_name, query_vector=query, **kwargs)
 
     @override
     async def _inner_delete(self, keys: Sequence[TKey], **kwargs: Any) -> None:
