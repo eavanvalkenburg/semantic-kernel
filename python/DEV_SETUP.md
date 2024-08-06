@@ -102,6 +102,7 @@ Read more about the extension [here](https://github.com/astral-sh/ruff-vscode).
   "python.testing.unittestEnabled": true,
   "python.testing.pytestEnabled": false,
   ```
+Also have a look at the [Pythonic Design Principles for Semantic Kernel](../docs/PYTHONIC_DESIGN_PRINCIPLES.md) for more information on how to design Python code for Semantic Kernel.
 
 ## LLM setup
 
