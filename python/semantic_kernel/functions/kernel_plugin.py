@@ -28,6 +28,7 @@ from semantic_kernel.functions.kernel_function_from_method import KernelFunction
 from semantic_kernel.functions.kernel_function_from_prompt import KernelFunctionFromPrompt
 from semantic_kernel.functions.types import KERNEL_FUNCTION_TYPE
 from semantic_kernel.kernel_pydantic import KernelBaseModel
+from semantic_kernel.kernel_types import OneOrMany
 from semantic_kernel.utils.validation import PLUGIN_NAME_REGEX
 
 if TYPE_CHECKING:
@@ -46,45 +47,6 @@ class KernelPlugin(KernelBaseModel):
     When you add a function, through `.set` or `__setitem__`, the function is copied, the metadata is deep-copied
     and the name of the plugin is set in the metadata and added to the dict of functions.
     This is done in the same way as a normal dict, so a existing key will be overwritten.
-
-    Attributes:
-        name (str): The name of the plugin. The name can be upper/lower
-            case letters and underscores.
-        description (str): The description of the plugin.
-        functions (Dict[str, KernelFunction]): The functions in the plugin,
-            indexed by their name.
-
-    Methods:
-        set: Set a function in the plugin.
-        __setitem__: Set a function in the plugin.
-        get: Get a function from the plugin.
-        __getitem__: Get a function from the plugin.
-        __contains__: Check if a function is in the plugin.
-        __iter__: Iterate over the functions in the plugin.
-        update: Update the plugin with the functions from another.
-        setdefault: Set a default value for a key.
-        get_functions_metadata: Get the metadata for the functions in the plugin.
-
-    Class methods:
-        from_object(plugin_name: str, plugin_instance: Any | dict[str, Any], description: str | None = None):
-            Create a plugin from a existing object, like a custom class with annotated functions.
-        from_directory(plugin_name: str, parent_directory: str, description: str | None = None):
-            Create a plugin from a directory, parsing:
-            .py files, .yaml files and directories with skprompt.txt and config.json files.
-        from_openapi(
-                plugin_name: str,
-                openapi_document_path: str,
-                execution_settings: OpenAPIFunctionExecutionParameters | None = None,
-                description: str | None = None):
-            Create a plugin from an OpenAPI document.
-        from_openai(
-                plugin_name: str,
-                plugin_url: str | None = None,
-                plugin_str: str | None = None,
-                execution_parameters: OpenAIFunctionExecutionParameters | None = None,
-                description: str | None = None):
-            Create a plugin from the Open AI manifest.
-
     """
 
     name: Annotated[str, StringConstraints(pattern=PLUGIN_NAME_REGEX, min_length=1)]
@@ -95,13 +57,10 @@ class KernelPlugin(KernelBaseModel):
         self,
         name: str,
         description: str | None = None,
-        functions: (
-            KERNEL_FUNCTION_TYPE
-            | "KernelPlugin"
-            | list[KERNEL_FUNCTION_TYPE | "KernelPlugin"]
-            | dict[str, KERNEL_FUNCTION_TYPE]
-            | None
-        ) = None,
+        functions: OneOrMany[KERNEL_FUNCTION_TYPE]
+        | OneOrMany["KernelPlugin"]
+        | dict[str, KERNEL_FUNCTION_TYPE]
+        | None = None,
     ):
         """Create a KernelPlugin.
 
@@ -109,12 +68,11 @@ class KernelPlugin(KernelBaseModel):
             name: The name of the plugin. The name can be upper/lower
                 case letters and underscores.
             description: The description of the plugin.
-            functions:
-                The functions in the plugin, will be rewritten to a dictionary of functions.
+            functions: The functions in the plugin, will be rewritten to a dictionary of functions.
 
         Raises:
-            ValueError: If the functions are not of the correct type.
-            PydanticError: If the name is not a valid plugin name.
+            PluginInitializationError: If the functions are not of the correct type.
+            ValidationError: If the name is not a valid plugin name.
         """
         super().__init__(
             name=name,
@@ -130,8 +88,8 @@ class KernelPlugin(KernelBaseModel):
         This function uses plugin[function_name] = function syntax.
 
         Args:
-            key (str): The name of the function.
-            value (KernelFunction): The function to set.
+            key: The name of the function.
+            value: The function to set.
 
         """
         self.functions[key] = KernelPlugin._parse_or_copy(value, self.name)
@@ -142,8 +100,8 @@ class KernelPlugin(KernelBaseModel):
         This function uses plugin.set(function_name, function) syntax.
 
         Args:
-            key (str): The name of the function.
-            value (KernelFunction): The function to set.
+            key: The name of the function.
+            value: The function to set.
 
         """
         self[key] = value
@@ -159,8 +117,8 @@ class KernelPlugin(KernelBaseModel):
         """Get a function from the plugin.
 
         Args:
-            key (str): The name of the function.
-            default (KernelFunction, optional): The default function to return if the key is not found.
+            key: The name of the function.
+            default: The default function to return if the key is not found.
         """
         return self.functions.get(key, default)
 
@@ -242,11 +200,11 @@ class KernelPlugin(KernelBaseModel):
         """Creates a plugin that wraps the specified target object and imports it into the kernel's plugin collection.
 
         Args:
-            plugin_name (str): The name of the plugin. Allows chars: upper, lower ASCII and underscores.
-            plugin_instance (Any | dict[str, Any]): The plugin instance. This can be a custom class or a
+            plugin_name: The name of the plugin. Allows chars: upper, lower ASCII and underscores.
+            plugin_instance: The plugin instance. This can be a custom class or a
                 dictionary of classes that contains methods with the kernel_function decorator for one or
                 several methods. See `TextMemoryPlugin` as an example.
-            description (str | None): The description of the plugin.
+            description: The description of the plugin.
 
         Returns:
             KernelPlugin: The imported plugin of type KernelPlugin.
@@ -277,10 +235,13 @@ class KernelPlugin(KernelBaseModel):
         """Create a plugin from a specified directory.
 
         This method does not recurse into subdirectories beyond one level deep from the specified plugin directory.
+
         For YAML files, function names are extracted from the content of the YAML files themselves (the name property).
+
         For directories, the function name is assumed to be the name of the directory. Each KernelFunction object is
         initialized with data parsed from the associated files and added to a list of functions that are then assigned
         to the created KernelPlugin object.
+
         A .py file is parsed and a plugin created,
         the functions within as then combined with any other functions found.
         The python file needs to contain a class with one or more kernel_function decorated methods.
@@ -290,27 +251,27 @@ class KernelPlugin(KernelBaseModel):
 
         Example:
             Assuming a plugin directory structure as follows:
-        MyPlugins/
+            MyPlugins/
             |--- pluginA.yaml
             |--- pluginB.yaml
             |--- native_function.py
             |--- Directory1/
-                |--- skprompt.txt
-                |--- config.json
+            |------- skprompt.txt
+            |------- config.json
             |--- Directory2/
-                |--- skprompt.txt
-                |--- config.json
+            |------- skprompt.txt
+            |------- config.json
 
             Calling `KernelPlugin.from_directory("MyPlugins", "/path/to")` will create a KernelPlugin object named
-                "MyPlugins", containing KernelFunction objects for `pluginA.yaml`, `pluginB.yaml`,
-                `Directory1`, and `Directory2`, each initialized with their respective configurations.
-                And functions for anything within native_function.py.
+            "MyPlugins", containing KernelFunction objects for `pluginA.yaml`, `pluginB.yaml`,
+            `Directory1`, and `Directory2`, each initialized with their respective configurations.
+            And functions for anything within native_function.py.
 
         Args:
-            plugin_name (str): The name of the plugin, this is the name of the directory within the parent directory
-            parent_directory (str): The parent directory path where the plugin directory resides
-            description (str | None): The description of the plugin
-            class_init_arguments (dict[str, dict[str, Any]] | None): The class initialization arguments
+            plugin_name: The name of the plugin, this is the name of the directory within the parent directory
+            parent_directory: The parent directory path where the plugin directory resides
+            description: The description of the plugin
+            class_init_arguments: The class initialization arguments
 
         Returns:
             KernelPlugin: The created plugin of type KernelPlugin.
@@ -368,10 +329,10 @@ class KernelPlugin(KernelBaseModel):
         """Create a plugin from an OpenAPI document.
 
         Args:
-            plugin_name (str): The name of the plugin
-            openapi_document_path (str): The path to the OpenAPI document
-            execution_settings (OpenAPIFunctionExecutionParameters | None): The execution parameters
-            description (str | None): The description of the plugin
+            plugin_name: The name of the plugin
+            openapi_document_path: The path to the OpenAPI document
+            execution_settings: The execution parameters
+            description: The description of the plugin
 
         Returns:
             KernelPlugin: The created plugin
@@ -404,11 +365,11 @@ class KernelPlugin(KernelBaseModel):
         """Create a plugin from the Open AI manifest.
 
         Args:
-            plugin_name (str): The name of the plugin
-            plugin_url (str | None): The URL of the plugin
-            plugin_str (str | None): The JSON string of the plugin
-            execution_parameters (OpenAIFunctionExecutionParameters | None): The execution parameters
-            description (str | None): The description of the plugin
+            plugin_name: The name of the plugin
+            plugin_url: The URL of the plugin
+            plugin_str: The JSON string of the plugin
+            execution_parameters: The execution parameters
+            description: The description of the plugin
 
         Returns:
             KernelPlugin: The created plugin
@@ -487,13 +448,7 @@ class KernelPlugin(KernelBaseModel):
 
     @staticmethod
     def _validate_functions(
-        functions: (
-            KERNEL_FUNCTION_TYPE
-            | list[KERNEL_FUNCTION_TYPE | "KernelPlugin"]
-            | dict[str, KERNEL_FUNCTION_TYPE]
-            | "KernelPlugin"
-            | None
-        ),
+        functions: OneOrMany[KERNEL_FUNCTION_TYPE] | OneOrMany["KernelPlugin"] | dict[str, KERNEL_FUNCTION_TYPE] | None,
         plugin_name: str,
     ) -> dict[str, "KernelFunction"]:
         """Validates the functions and returns a dictionary of functions."""
@@ -521,16 +476,14 @@ class KernelPlugin(KernelBaseModel):
                     function = KernelPlugin._parse_or_copy(function=function, plugin_name=plugin_name)
                     functions_dict[function.name] = function
                 elif isinstance(function, KernelPlugin):  # type: ignore
-                    functions_dict.update(
-                        {
-                            name: KernelPlugin._parse_or_copy(function=function, plugin_name=plugin_name)
-                            for name, function in function.functions.items()
-                        }
-                    )
+                    functions_dict.update({
+                        name: KernelPlugin._parse_or_copy(function=function, plugin_name=plugin_name)
+                        for name, function in function.functions.items()
+                    })
                 else:
                     raise ValueError(f"Invalid type for functions in list: {function} (type: {type(function)})")
             return functions_dict
-        raise ValueError(f"Invalid type for supplied functions: {functions} (type: {type(functions)})")
+        raise PluginInitializationError(f"Invalid type for supplied functions: {functions} (type: {type(functions)})")
 
     @staticmethod
     def _parse_or_copy(function: KERNEL_FUNCTION_TYPE, plugin_name: str) -> "KernelFunction":

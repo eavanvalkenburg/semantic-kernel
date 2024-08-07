@@ -69,18 +69,18 @@ class KernelFunctionFromPrompt(KernelFunction):
         """Initializes a new instance of the KernelFunctionFromPrompt class.
 
         Args:
-            function_name (str): The name of the function
-            plugin_name (str): The name of the plugin
-            description (str): The description for the function
+            function_name: The name of the function
+            plugin_name: The name of the plugin
+            description: The description for the function
 
-            prompt (Optional[str]): The prompt
-            template_format (Optional[str]): The template format, default is "semantic-kernel"
-            prompt_template (Optional[KernelPromptTemplate]): The prompt template
-            prompt_template_config (Optional[PromptTemplateConfig]): The prompt template configuration
-            prompt_execution_settings (Optional): instance, list or dict of PromptExecutionSettings to be used
+            prompt: The prompt
+            template_format: The template format, default is "semantic-kernel"
+            prompt_template: The prompt template
+            prompt_template_config: The prompt template configuration
+            prompt_execution_settings: instance, list or dict of PromptExecutionSettings to be used
                 by the function, can also be supplied through prompt_template_config,
                 but the supplied one is used if both are present.
-                prompt_template_config (Optional[PromptTemplateConfig]): the prompt template config.
+                prompt_template_config: the prompt template config.
         """
         if not prompt and not prompt_template_config and not prompt_template:
             raise FunctionInitializationError(

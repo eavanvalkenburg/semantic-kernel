@@ -78,11 +78,10 @@ class RedisStore(VectorStore):
         """Get a RedisCollection..
 
         Args:
-            collection_name (str): The name of the collection.
-            data_model_type (type[TModel]): The type of the data model.
-            data_model_definition (VectorStoreRecordDefinition | None): The model fields, optional.
-            collection_type (RedisCollectionTypes): The type of the collection, can be JSON or HASHSET.
-
+            collection_name: The name of the collection.
+            data_model_type: The type of the data model.
+            data_model_definition: The model fields, optional.
+            collection_type: The type of the collection, can be JSON or HASHSET.
             **kwargs: Additional keyword arguments, passed to the collection constructor.
         """
         if collection_name not in self.vector_record_collections:

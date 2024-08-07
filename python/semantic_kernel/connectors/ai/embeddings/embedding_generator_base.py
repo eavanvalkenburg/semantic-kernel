@@ -26,9 +26,9 @@ class EmbeddingGeneratorBase(AIServiceClientBase, ABC):
         """Returns embeddings for the given texts as ndarray.
 
         Args:
-            texts (List[str]): The texts to generate embeddings for.
-            settings (PromptExecutionSettings): The settings to use for the request, optional.
-            kwargs (Any): Additional arguments to pass to the request.
+            texts: The texts to generate embeddings for.
+            settings: The settings to use for the request, optional.
+            kwargs: Additional arguments to pass to the request.
         """
         pass
 
@@ -43,8 +43,8 @@ class EmbeddingGeneratorBase(AIServiceClientBase, ABC):
         This is not implemented for all embedding services, falling back to the generate_embeddings method.
 
         Args:
-            texts (List[str]): The texts to generate embeddings for.
-            settings (PromptExecutionSettings): The settings to use for the request, optional.
-            kwargs (Any): Additional arguments to pass to the request.
+            texts: The texts to generate embeddings for.
+            settings: The settings to use for the request, optional.
+            kwargs: Additional arguments to pass to the request.
         """
         return await self.generate_embeddings(texts, settings, **kwargs)

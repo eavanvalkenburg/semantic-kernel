@@ -62,15 +62,15 @@ class RedisMemoryStore(MemoryStoreBase):
         See documentation about vector attributes: https://redis.io/docs/stack/search/reference/vectors.
 
         Args:
-            connection_string (str): Provide connection URL to a Redis instance
-            vector_size (str): Size of vectors, defaults to 1536
-            vector_distance_metric (str): Metric for measuring vector distances, defaults to COSINE
-            vector_type (str): Vector type, defaults to FLOAT32
-            vector_index_algorithm (str): Indexing algorithm for vectors, defaults to HNSW
-            query_dialect (int): Query dialect, must be 2 or greater for vector similarity searching, defaults to 2
-            env_file_path (str | None): Use the environment settings file as a fallback to
+            connection_string: Provide connection URL to a Redis instance
+            vector_size: Size of vectors, defaults to 1536
+            vector_distance_metric: Metric for measuring vector distances, defaults to COSINE
+            vector_type: Vector type, defaults to FLOAT32
+            vector_index_algorithm: Indexing algorithm for vectors, defaults to HNSW
+            query_dialect: Query dialect, must be 2 or greater for vector similarity searching, defaults to 2
+            env_file_path: Use the environment settings file as a fallback to
                 environment variables, defaults to False
-            env_file_encoding (str | None): Encoding of the environment settings file, defaults to "utf-8"
+            env_file_encoding: Encoding of the environment settings file, defaults to "utf-8"
         """
         try:
             redis_settings = RedisSettings.create(
@@ -106,7 +106,7 @@ class RedisMemoryStore(MemoryStoreBase):
         If a collection of the name exists, it is left unchanged.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
+            collection_name: Name for a collection of embeddings
         """
         if await self.does_collection_exist(collection_name):
             logger.info(f'Collection "{collection_name}" already exists.')
@@ -147,8 +147,8 @@ class RedisMemoryStore(MemoryStoreBase):
         If the collection does not exist, the database is left unchanged.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            delete_records (bool): Delete all data associated with the collection, default to True
+            collection_name: Name for a collection of embeddings
+            delete_records: Delete all data associated with the collection, default to True
         """
         if await self.does_collection_exist(collection_name):
             self._ft(collection_name).dropindex(delete_documents=delete_records)
@@ -157,7 +157,7 @@ class RedisMemoryStore(MemoryStoreBase):
         """Determines if a collection exists in the data store.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
+            collection_name: Name for a collection of embeddings
 
         Returns:
             True if the collection exists, False if not
@@ -179,8 +179,8 @@ class RedisMemoryStore(MemoryStoreBase):
         it will not be detected to belong to the collection in Redis.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            record (MemoryRecord): Memory record to upsert
+            collection_name: Name for a collection of embeddings
+            record: Memory record to upsert
 
         Returns:
             str: Redis key associated with the upserted memory record
@@ -213,8 +213,8 @@ class RedisMemoryStore(MemoryStoreBase):
         they will not be detected to belong to the collection in Redis.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            records (List[MemoryRecord]): List of memory records to upsert
+            collection_name: Name for a collection of embeddings
+            records: List of memory records to upsert
 
         Returns:
             List[str]: Redis keys associated with the upserted memory records
@@ -230,9 +230,9 @@ class RedisMemoryStore(MemoryStoreBase):
         """Gets a memory record from the data store. Does not guarantee that the collection exists.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            key (str): ID associated with the memory to get
-            with_embedding (bool): Include embedding with the memory record, default to False
+            collection_name: Name for a collection of embeddings
+            key: ID associated with the memory to get
+            with_embedding: Include embedding with the memory record, default to False
 
         Returns:
             MemoryRecord: The memory record if found, else None
@@ -260,9 +260,9 @@ class RedisMemoryStore(MemoryStoreBase):
         Does not guarantee that the collection exists.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            keys (List[str]): IDs associated with the memory records to get
-            with_embeddings (bool): Include embeddings with the memory records, default to False
+            collection_name: Name for a collection of embeddings
+            keys: IDs associated with the memory records to get
+            with_embeddings: Include embeddings with the memory records, default to False
 
         Returns:
             List[MemoryRecord]: The memory records if found, else an empty list
@@ -282,8 +282,8 @@ class RedisMemoryStore(MemoryStoreBase):
         If the key does not exist, do nothing.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            key (str): ID associated with the memory to remove
+            collection_name: Name for a collection of embeddings
+            key: ID associated with the memory to remove
         """
         if not await self.does_collection_exist(collection_name):
             raise ServiceResourceNotFoundError(f'Collection "{collection_name}" does not exist')
@@ -294,8 +294,8 @@ class RedisMemoryStore(MemoryStoreBase):
         """Removes a batch of memory records from the data store. Does not guarantee that the collection exists.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            keys (List[str]): IDs associated with the memory records to remove
+            collection_name: Name for a collection of embeddings
+            keys: IDs associated with the memory records to remove
         """
         if not await self.does_collection_exist(collection_name):
             raise ServiceResourceNotFoundError(f'Collection "{collection_name}" does not exist')
@@ -313,11 +313,11 @@ class RedisMemoryStore(MemoryStoreBase):
         """Get the nearest matches to an embedding using the configured similarity algorithm.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            embedding (ndarray): Embedding to find the nearest matches to
-            limit (int): Maximum number of matches to return
-            min_relevance_score (float): Minimum relevance score of the matches, default to 0.0
-            with_embeddings (bool): Include embeddings in the resultant memory records, default to False
+            collection_name: Name for a collection of embeddings
+            embedding: Embedding to find the nearest matches to
+            limit: Maximum number of matches to return
+            min_relevance_score: Minimum relevance score of the matches, default to 0.0
+            with_embeddings: Include embeddings in the resultant memory records, default to False
 
         Returns:
             List[Tuple[MemoryRecord, float]]: Records and their relevance scores by descending
@@ -365,10 +365,10 @@ class RedisMemoryStore(MemoryStoreBase):
         """Get the nearest match to an embedding using the configured similarity algorithm.
 
         Args:
-            collection_name (str): Name for a collection of embeddings
-            embedding (ndarray): Embedding to find the nearest match to
-            min_relevance_score (float): Minimum relevance score of the match, default to 0.0
-            with_embedding (bool): Include embedding in the resultant memory record, default to False
+            collection_name: Name for a collection of embeddings
+            embedding: Embedding to find the nearest match to
+            min_relevance_score: Minimum relevance score of the match, default to 0.0
+            with_embedding: Include embedding in the resultant memory record, default to False
 
         Returns:
             Tuple[MemoryRecord, float]: Record and the relevance score, or None if not found

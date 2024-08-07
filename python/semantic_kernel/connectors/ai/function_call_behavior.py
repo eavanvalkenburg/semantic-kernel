@@ -31,12 +31,12 @@ class FunctionCallBehavior(KernelBaseModel):
     DEPRECATED: This class has been replaced by FunctionChoiceBehavior.
 
     Args:
-        enable_kernel_functions (bool): Enable kernel functions.
-        max_auto_invoke_attempts (int): The maximum number of auto invoke attempts.
+        enable_kernel_functions: Enable kernel functions.
+        max_auto_invoke_attempts: The maximum number of auto invoke attempts.
 
     Attributes:
-        enable_kernel_functions (bool): Enable kernel functions.
-        max_auto_invoke_attempts (int): The maximum number of auto invoke attempts.
+        enable_kernel_functions: Enable kernel functions.
+        max_auto_invoke_attempts: The maximum number of auto invoke attempts.
 
     Properties:
         auto_invoke_kernel_functions: Check if the kernel functions should be auto-invoked.
@@ -201,9 +201,9 @@ class RequiredFunction(FunctionCallBehavior):
             self.max_auto_invoke_attempts = 1
         update_settings_callback(
             FunctionCallConfiguration(
-                required_functions=kernel.get_list_of_function_metadata(
-                    {"included_functions": [self.function_fully_qualified_name]}
-                )
+                required_functions=kernel.get_list_of_function_metadata({
+                    "included_functions": [self.function_fully_qualified_name]
+                })
             ),
             settings,
         )

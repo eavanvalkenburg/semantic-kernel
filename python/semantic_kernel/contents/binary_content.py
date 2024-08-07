@@ -55,17 +55,17 @@ class BinaryContent(KernelContent):
         """Create a Binary Content object, either from a data_uri or data.
 
         Args:
-            uri (Url | None): The reference uri of the content.
-            data_uri (DataUrl | None): The data uri of the content.
-            data (str | bytes | None): The data of the content.
-            data_format (str | None): The format of the data (e.g. base64).
-            mime_type (str | None): The mime type of the image, only used with data.
-            kwargs (Any): Any additional arguments:
-                inner_content (Any): The inner content of the response,
-                    this should hold all the information from the response so even
-                    when not creating a subclass a developer can leverage the full thing.
-                ai_model_id (str | None): The id of the AI model that generated this response.
-                metadata (dict[str, Any]): Any metadata that should be attached to the response.
+            uri: The reference uri of the content.
+            data_uri: The data uri of the content.
+            data: The data of the content.
+            data_format: The format of the data (e.g. base64).
+            mime_type: The mime type of the image, only used with data.
+            kwargs: Any additional arguments:
+                inner_content - The inner content of the response,
+                this should hold all the information from the response so even
+                when not creating a subclass a developer can leverage the full thing.
+                ai_model_id - The id of the AI model that generated this response.
+                metadata - Any metadata that should be attached to the response.
         """
         _data_uri = None
         if data_uri:

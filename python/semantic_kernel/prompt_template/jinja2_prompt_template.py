@@ -36,10 +36,10 @@ class Jinja2PromptTemplate(PromptTemplateBase):
     which are allowed in Python function names.
 
     Args:
-        prompt_template_config (PromptTemplateConfig): The configuration object for the prompt template.
+        prompt_template_config: The configuration object for the prompt template.
             This should specify the template format as 'jinja2' and include any necessary
             configuration details required for rendering the template.
-        allow_dangerously_set_content (bool = False): Allow content without encoding throughout, this overrides
+        allow_dangerously_set_content: Allow content without encoding throughout, this overrides
             the same settings in the prompt template config and input variables.
             This reverts the behavior to unencoded input.
 
@@ -89,19 +89,17 @@ class Jinja2PromptTemplate(PromptTemplateBase):
         helpers: dict[str, Callable[..., Any]] = {}
         helpers.update(JINJA2_SYSTEM_HELPERS)
         for plugin in kernel.plugins.values():
-            helpers.update(
-                {
-                    function.fully_qualified_name.replace("-", "_"): create_template_helper_from_function(
-                        function,
-                        kernel,
-                        arguments,
-                        self.prompt_template_config.template_format,
-                        allow_unsafe_function_output,
-                        enable_async=True,
-                    )
-                    for function in plugin
-                }
-            )
+            helpers.update({
+                function.fully_qualified_name.replace("-", "_"): create_template_helper_from_function(
+                    function,
+                    kernel,
+                    arguments,
+                    self.prompt_template_config.template_format,
+                    allow_unsafe_function_output,
+                    enable_async=True,
+                )
+                for function in plugin
+            })
         if self.prompt_template_config.template is None:
             raise Jinja2TemplateRenderException("Error rendering template, template is None")
         try:

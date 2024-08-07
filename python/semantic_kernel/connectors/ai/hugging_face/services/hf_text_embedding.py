@@ -40,13 +40,14 @@ class HuggingFaceTextEmbedding(EmbeddingGeneratorBase):
     ) -> None:
         """Initializes a new instance of the HuggingFaceTextEmbedding class.
 
-        Args:
-            ai_model_id (str): Hugging Face model card string, see
-                https://huggingface.co/sentence-transformers
-            device (int): Device to run the model on, -1 for CPU, 0+ for GPU. (optional)
-            service_id (str): Service ID for the model. (optional)
-
         Note that this model will be downloaded from the Hugging Face model hub.
+
+        Args:
+            ai_model_id: Hugging Face model card string, see
+                https://huggingface.co/sentence-transformers
+            device: Device to run the model on, -1 for CPU, 0+ for GPU. (optional)
+            service_id: Service ID for the model. (optional)
+
         """
         resolved_device = f"cuda:{device}" if device >= 0 and torch.cuda.is_available() else "cpu"
         super().__init__(

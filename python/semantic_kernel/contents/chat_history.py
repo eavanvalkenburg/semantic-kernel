@@ -23,12 +23,12 @@ logger = logging.getLogger(__name__)
 class ChatHistory(KernelBaseModel):
     """This class holds the history of chat messages from a chat conversation.
 
-    Note: the constructor takes a system_message parameter, which is not part
+    The constructor takes a system_message parameter, which is not part
     of the class definition. This is to allow the system_message to be passed in
     as a keyword argument, but not be part of the class definition.
 
     Attributes:
-        messages (List[ChatMessageContent]): The list of chat messages in the history.
+        messages: The list of chat messages in the history.
     """
 
     messages: list[ChatMessageContent]
@@ -45,16 +45,15 @@ class ChatHistory(KernelBaseModel):
         initialized with the 'system_message' as its first item. If 'messages' are provided without a
         'system_message', the chat history is initialized with the provided messages as is.
 
-        Note: The 'system_message' is not retained as part of the class's attributes; it's used during
+        The 'system_message' is not retained as part of the class's attributes; it's used during
         initialization and then discarded. The rest of the keyword arguments are passed to the superclass
         constructor and handled according to the Pydantic model's behavior.
 
         Args:
-            **data: Arbitrary keyword arguments.
-                The constructor looks for two optional keys:
-                - 'messages': Optional[List[ChatMessageContent]], a list of chat messages to include in the history.
-                - 'system_message' Optional[str]: An optional string representing a system-generated message to be
-                    included at the start of the chat history.
+            **data: Arbitrary keyword arguments. The constructor looks for two optional keys:
+                messages - a list of chat messages to include in the history.
+                system_message - An optional string representing a system-generated message to be
+                included at the start of the chat history.
 
         """
         system_message_content = data.pop("system_message", None)
@@ -155,10 +154,10 @@ class ChatHistory(KernelBaseModel):
         dictionary with the necessary information to construct a ChatMessageContent instance.
 
         Args:
-            message (Union[ChatMessageContent, dict]): The message to add, either as
+            message: The message to add, either as
                 a pre-constructed ChatMessageContent instance or a dictionary specifying 'role' and 'content'.
-            encoding (Optional[str]): The encoding of the message. Required if 'message' is a dict.
-            metadata (Optional[dict[str, Any]]): Any metadata to attach to the message. Required if 'message' is a dict.
+            encoding: The encoding of the message. Required if 'message' is a dict.
+            metadata: Any metadata to attach to the message. Required if 'message' is a dict.
         """
         if isinstance(message, ChatMessageContent):
             self.messages.append(message)
@@ -186,7 +185,7 @@ class ChatHistory(KernelBaseModel):
         """Remove a message from the history.
 
         Args:
-            message (ChatMessageContent): The message to remove.
+            message: The message to remove.
 
         Returns:
             bool: True if the message was removed, False if the message was not found.
@@ -205,7 +204,7 @@ class ChatHistory(KernelBaseModel):
         """Get a message from the history using the [] operator.
 
         Args:
-            index (int): The index of the message to get.
+            index: The index of the message to get.
 
         Returns:
             ChatMessageContent: The message at the specified index.
@@ -216,7 +215,7 @@ class ChatHistory(KernelBaseModel):
         """Check if a message is in the history.
 
         Args:
-            item (ChatMessageContent): The message to check for.
+            item: The message to check for.
 
         Returns:
             bool: True if the message is in the history, False otherwise.
@@ -253,7 +252,7 @@ class ChatHistory(KernelBaseModel):
         """Create a ChatHistory instance from a rendered prompt.
 
         Args:
-            rendered_prompt (str): The rendered prompt to convert to a ChatHistory instance.
+            rendered_prompt: The rendered prompt to convert to a ChatHistory instance.
 
         Returns:
             ChatHistory: The ChatHistory instance created from the rendered prompt.
@@ -299,7 +298,7 @@ class ChatHistory(KernelBaseModel):
         """Restores a ChatHistory instance from a JSON string.
 
         Args:
-            chat_history_json (str): The JSON string to deserialize
+            chat_history_json: The JSON string to deserialize
                 into a ChatHistory instance.
 
         Returns:
@@ -318,7 +317,7 @@ class ChatHistory(KernelBaseModel):
         """Stores the serialized ChatHistory to a file.
 
         Args:
-            file_path (str): The path to the file where the serialized data will be stored.
+            file_path: The path to the file where the serialized data will be stored.
         """
         json_str = self.serialize()
         with open(file_path, "w") as file:
@@ -329,7 +328,7 @@ class ChatHistory(KernelBaseModel):
         """Loads the ChatHistory from a file.
 
         Args:
-            file_path (str): The path to the file from which to load the ChatHistory.
+            file_path: The path to the file from which to load the ChatHistory.
 
         Returns:
             ChatHistory: The deserialized ChatHistory instance.

@@ -13,7 +13,7 @@ class PineconeSettings(KernelBaseSettings):
     """Pinecone model settings.
 
     Args:
-    - api_key: SecretStr - Pinecone API key
+        api_key: SecretStr - Pinecone API key
         (Env var PINECONE_API_KEY)
     """
 

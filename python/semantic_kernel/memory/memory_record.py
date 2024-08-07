@@ -36,15 +36,15 @@ class MemoryRecord:
         """Initialize a new instance of MemoryRecord.
 
         Args:
-            is_reference (bool): Whether the record is a reference record.
-            external_source_name (Optional[str]): The name of the external source.
-            id (str): A unique for the record.
-            description (Optional[str]): The description of the record.
-            text (Optional[str]): The text of the record.
-            additional_metadata (Optional[str]): Custom metadata for the record.
-            embedding (ndarray): The embedding of the record.
-            key (Optional[str]): The key of the record.
-            timestamp (Optional[datetime]): The timestamp of the record.
+            is_reference: Whether the record is a reference record.
+            external_source_name: The name of the external source.
+            id: A unique for the record.
+            description: The description of the record.
+            text: The text of the record.
+            additional_metadata: Custom metadata for the record.
+            embedding: The embedding of the record.
+            key: The key of the record.
+            timestamp: The timestamp of the record.
         """
         self._key = key
         self._timestamp = timestamp
@@ -67,11 +67,11 @@ class MemoryRecord:
         """Create a reference record.
 
         Args:
-            external_id (str): The external id of the record.
-            source_name (str): The name of the external source.
-            description (Optional[str]): The description of the record.
-            additional_metadata (Optional[str]): Custom metadata for the record.
-            embedding (ndarray): The embedding of the record.
+            external_id: The external id of the record.
+            source_name: The name of the external source.
+            description: The description of the record.
+            additional_metadata: Custom metadata for the record.
+            embedding: The embedding of the record.
 
         Returns:
             MemoryRecord: The reference record.
@@ -98,12 +98,12 @@ class MemoryRecord:
         """Create a local record.
 
         Args:
-            id (str): A unique for the record.
-            text (str): The text of the record.
-            description (Optional[str]): The description of the record.
-            additional_metadata (Optional[str]): Custom metadata for the record.
-            embedding (ndarray): The embedding of the record.
-            timestamp (Optional[datetime]): The timestamp of the record.
+            id: A unique for the record.
+            text: The text of the record.
+            description: The description of the record.
+            additional_metadata: Custom metadata for the record.
+            embedding: The embedding of the record.
+            timestamp: The timestamp of the record.
 
         Returns:
             MemoryRecord: The local record.

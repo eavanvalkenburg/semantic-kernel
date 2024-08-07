@@ -55,9 +55,9 @@ def get_search_index_client(
     """Return a client for Azure Cognitive Search.
 
     Args:
-        azure_ai_search_settings (AzureAISearchSettings): Azure Cognitive Search settings.
-        azure_credential (AzureKeyCredential): Optional Azure credentials (default: {None}).
-        token_credential (TokenCredential): Optional Token credential (default: {None}).
+        azure_ai_search_settings: Azure Cognitive Search settings.
+        azure_credential: Optional Azure credentials (default: {None}).
+        token_credential: Optional Token credential (default: {None}).
     """
     # Credentials
     credential: "AzureKeyCredential | AsyncTokenCredential | TokenCredential | None" = None

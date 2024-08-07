@@ -53,15 +53,15 @@ class AzureAISearchStore(VectorStore):
         """Initializes a new instance of the AzureAISearchStore client.
 
         Args:
-        search_endpoint (str): The endpoint of the Azure AI Search service, optional.
-            Can be read from environment variables.
-        api_key (str): Azure AI Search API key, optional. Can be read from environment variables.
-        azure_credentials (AzureKeyCredential ): Azure AI Search credentials, optional.
-        token_credentials (AsyncTokenCredential | TokenCredential): Azure AI Search token credentials, optional.
-        search_index_client (SearchIndexClient): The search index client, optional.
-        env_file_path (str): Use the environment settings file as a fallback
-            to environment variables.
-        env_file_encoding (str): The encoding of the environment settings file.
+            search_endpoint: The endpoint of the Azure AI Search service, optional.
+                Can be read from environment variables.
+            api_key: Azure AI Search API key, optional. Can be read from environment variables.
+            azure_credentials: Azure AI Search credentials, optional.
+            token_credentials: Azure AI Search token credentials, optional.
+            search_index_client: The search index client, optional.
+            env_file_path: Use the environment settings file as a fallback
+                to environment variables.
+            env_file_encoding: The encoding of the environment settings file.
 
         """
         from semantic_kernel.connectors.memory.azure_ai_search.azure_ai_search_settings import (
@@ -98,10 +98,10 @@ class AzureAISearchStore(VectorStore):
         """Get a AzureAISearchCollection tied to a collection.
 
         Args:
-            collection_name (str): The name of the collection.
-            data_model_type (type[TModel]): The type of the data model.
-            data_model_definition (VectorStoreRecordDefinition | None): The model fields, optional.
-            search_client (SearchClient | None): The search client for interacting with Azure AI Search,
+            collection_name: The name of the collection.
+            data_model_type: The type of the data model.
+            data_model_definition: The model fields, optional.
+            search_client: The search client for interacting with Azure AI Search,
                 will be created if not supplied.
             **kwargs: Additional keyword arguments, passed to the collection constructor.
         """

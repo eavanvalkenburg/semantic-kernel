@@ -80,8 +80,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Upsert the records, this should be overridden by the child class.
 
         Args:
-            records (Sequence[Any]): The records, the format is specific to the store.
-            **kwargs (Any): Additional arguments, to be passed to the store.
+            records: The records, the format is specific to the store.
+            **kwargs: Additional arguments, to be passed to the store.
 
         Returns:
             The keys of the upserted records.
@@ -93,8 +93,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Get the records, this should be overridden by the child class.
 
         Args:
-            keys (Sequence[TKey]): The keys to get.
-            **kwargs (Any): Additional arguments.
+            keys: The keys to get.
+            **kwargs: Additional arguments.
 
         Returns:
             The records from the store, not deserialized.
@@ -106,8 +106,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Delete the records, this should be overridden by the child class.
 
         Args:
-            keys (Sequence[TKey]): The keys.
-            **kwargs (Any): Additional arguments.
+            keys: The keys.
+            **kwargs: Additional arguments.
         """
         ...  # pragma: no cover
 
@@ -200,12 +200,12 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Upsert a record.
 
         Args:
-            record (TModel): The record.
-            embedding_generation_function (Callable): Supply this function to generate embeddings.
+            record: The record.
+            embedding_generation_function: Supply this function to generate embeddings.
                 This will be called with the data model definition and the records,
                 should return the records with vectors.
                 This can be supplied by using the add_vector_to_records method from the VectorStoreRecordUtils.
-            **kwargs (Any): Additional arguments.
+            **kwargs: Additional arguments.
 
         Returns:
             The key of the upserted record or a list of keys, when a container type is used.
@@ -239,12 +239,12 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Upsert a batch of records.
 
         Args:
-            records (Sequence[TModel] | TModel): The records to upsert, can be a list of records, or a single container.
-            embedding_generation_function (Callable): Supply this function to generate embeddings.
+            records: The records to upsert, can be a list of records, or a single container.
+            embedding_generation_function: Supply this function to generate embeddings.
                 This will be called with the data model definition and the records,
                 should return the records with vectors.
                 This can be supplied by using the add_vector_to_records method from the VectorStoreRecordUtils.
-            **kwargs (Any): Additional arguments.
+            **kwargs: Additional arguments.
 
         Returns:
             Sequence[TKey]: The keys of the upserted records, this is always a list,
@@ -267,8 +267,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Get a record.
 
         Args:
-            key (TKey): The key.
-            **kwargs (Any): Additional arguments.
+            key: The key.
+            **kwargs: Additional arguments.
 
         Returns:
             TModel: The record.
@@ -301,8 +301,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Get a batch of records.
 
         Args:
-            keys (Sequence[TKey]): The keys.
-            **kwargs (Any): Additional arguments.
+            keys: The keys.
+            **kwargs: Additional arguments.
 
         Returns:
             The records, either a list of TModel or the container type.
@@ -324,8 +324,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Delete a record.
 
         Args:
-            key (TKey): The key.
-            **kwargs (Any): Additional arguments.
+            key: The key.
+            **kwargs: Additional arguments.
 
         """
         try:
@@ -337,8 +337,8 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
         """Delete a batch of records.
 
         Args:
-            keys (Sequence[TKey]): The keys.
-            **kwargs (Any): Additional arguments.
+            keys: The keys.
+            **kwargs: Additional arguments.
 
         """
         try:
@@ -353,7 +353,7 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
 
         This method follows the following steps:
         1. Check if the data model has a serialize method.
-            Use that method to serialize and return the result.
+        Use that method to serialize and return the result.
         2. Serialize the records into a dict, using the data model specific method.
         3. Convert the dict to the store model, using the store specific method.
 
@@ -382,7 +382,7 @@ class VectorStoreRecordCollection(KernelBaseModel, Generic[TKey, TModel]):
 
         This method follows the following steps:
         1. Check if the data model has a deserialize method.
-            Use that method to deserialize and return the result.
+        Use that method to deserialize and return the result.
         2. Deserialize the store model to a dict, using the store specific method.
         3. Convert the dict to the data model, using the data model specific method.
         """

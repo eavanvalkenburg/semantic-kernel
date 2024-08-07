@@ -36,18 +36,18 @@ class OpenAIConfigBase(OpenAIHandler):
         different types of AI model interactions, like chat or text completion.
 
         Args:
-            ai_model_id (str): OpenAI model identifier. Must be non-empty.
+            ai_model_id: OpenAI model identifier. Must be non-empty.
                 Default to a preset value.
-            api_key (str): OpenAI API key for authentication.
+            api_key: OpenAI API key for authentication.
                 Must be non-empty. (Optional)
-            ai_model_type (OpenAIModelTypes): The type of OpenAI
+            ai_model_type: The type of OpenAI
                 model to interact with. Defaults to CHAT.
-            org_id (str): OpenAI organization ID. This is optional
+            org_id: OpenAI organization ID. This is optional
                 unless the account belongs to multiple organizations.
-            service_id (str): OpenAI service ID. This is optional.
-            default_headers (Mapping[str, str]): Default headers
+            service_id: OpenAI service ID. This is optional.
+            default_headers: Default headers
                 for HTTP requests. (Optional)
-            client (AsyncOpenAI): An existing OpenAI client, optional.
+            client: An existing OpenAI client, optional.
 
         """
         # Merge APP_INFO into the headers if it exists

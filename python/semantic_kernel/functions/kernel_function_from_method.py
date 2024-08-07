@@ -36,12 +36,12 @@ class KernelFunctionFromMethod(KernelFunction):
         """Initializes a new instance of the KernelFunctionFromMethod class.
 
         Args:
-            method (Callable[..., Any]): The method to be called
-            plugin_name (str | None): The name of the plugin
-            stream_method (Callable[..., Any] | None): The stream method for the function
-            parameters (list[KernelParameterMetadata] | None): The parameters of the function
-            return_parameter (KernelParameterMetadata | None): The return parameter of the function
-            additional_metadata (dict[str, Any] | None): Additional metadata for the function
+            method: The method to be called
+            plugin_name: The name of the plugin
+            stream_method: The stream method for the function
+            parameters: The parameters of the function
+            return_parameter: The return parameter of the function
+            additional_metadata: Additional metadata for the function
         """
         if method is None:
             raise FunctionInitializationError("Method cannot be `None`")

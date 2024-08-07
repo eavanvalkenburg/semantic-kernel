@@ -30,8 +30,8 @@ class ContentFilterResult:
         """Creates a ContentFilterResult from the inner error results.
 
         Args:
-            key (str): The key to get the inner error result from.
-            inner_error_results (Dict[str, Any]): The inner error results.
+            key: The key to get the inner error result from.
+            inner_error_results: The inner error results.
 
         Returns:
             ContentFilterResult: The ContentFilterResult.
@@ -72,8 +72,8 @@ class ContentFilterAIException(ServiceContentFilterException):
         """Initializes a new instance of the ContentFilterAIException class.
 
         Args:
-            message (str): The error message.
-            inner_exception (Exception): The inner exception.
+            message: The error message.
+            inner_exception: The inner exception.
         """
         super().__init__(message)
 

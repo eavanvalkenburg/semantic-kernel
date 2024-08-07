@@ -22,9 +22,9 @@ class PromptExecutionSettings(KernelBaseModel):
     prompt execution settings that each services returns by using the service.get_prompt_execution_settings() method.
 
     Attributes:
-        service_id (str | None): The service ID to use for the request.
-        extension_data (Dict[str, Any]): Any additional data to send with the request.
-        function_choice_behavior (FunctionChoiceBehavior | None): The function choice behavior settings.
+        service_id: The service ID to use for the request.
+        extension_data: Any additional data to send with the request.
+        function_choice_behavior: The function choice behavior settings.
 
     Methods:
         prepare_settings_dict: Prepares the settings as a dictionary for sending to the AI service.
@@ -52,8 +52,8 @@ class PromptExecutionSettings(KernelBaseModel):
         """Initialize the prompt execution settings.
 
         Args:
-            service_id (str): The service ID to use for the request.
-            kwargs (Any): Additional keyword arguments,
+            service_id: The service ID to use for the request.
+            kwargs: Additional keyword arguments,
                 these are attempted to parse into the keys of the specific prompt execution settings.
         """
         extension_data = kwargs.pop("extension_data", {})

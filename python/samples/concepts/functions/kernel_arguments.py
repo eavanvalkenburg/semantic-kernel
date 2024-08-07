@@ -23,7 +23,7 @@ class StaticTextPlugin:
         """Convert text to uppercase.
 
         Args:
-            text (str): The text to convert to uppercase.
+            text: The text to convert to uppercase.
 
         Returns:
             str: The text in uppercase.
@@ -37,8 +37,8 @@ class StaticTextPlugin:
         """Append the day variable.
 
         Args:
-            input (str): The input text to append the day to.
-            day (str): The day to append.
+            input: The input text to append the day to.
+            day: The day to append.
 
         Returns:
             str: The text with the day appended.

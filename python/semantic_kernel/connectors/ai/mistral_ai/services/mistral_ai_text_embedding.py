@@ -1,12 +1,12 @@
 # Copyright (c) Microsoft. All rights reserved.
 
+import logging
 import sys
 
 if sys.version_info >= (3, 12):
     from typing import Any, override  # pragma: no cover
 else:
     from typing_extensions import Any, override  # pragma: no cover
-import logging
 
 from mistralai.async_client import MistralAsyncClient
 from mistralai.models.embeddings import EmbeddingResponse
@@ -45,12 +45,12 @@ class MistralAITextEmbedding(EmbeddingGeneratorBase):
         - MISTRALAI_EMBEDDING_MODEL_ID
 
         Args:
-            ai_model_id: (str | None): A string that is used to identify the model such as the model name. 
-            api_key (str | None): The API key for the Mistral AI service deployment. 
-            service_id (str | None): Service ID for the embedding completion service. 
-            env_file_path (str | None): The path to the environment file. 
-            env_file_encoding (str | None): The encoding of the environment file. 
-            client (MistralAsyncClient | None): The Mistral AI client to use. 
+            ai_model_id: A string that is used to identify the model such as the model name.
+            api_key: The API key for the Mistral AI service deployment.
+            service_id: Service ID for the embedding completion service.
+            env_file_path: The path to the environment file.
+            env_file_encoding: The encoding of the environment file.
+            client: The Mistral AI client to use.
 
         Raises:
             ServiceInitializationError: If an error occurs during initialization.
@@ -69,9 +69,7 @@ class MistralAITextEmbedding(EmbeddingGeneratorBase):
             raise ServiceInitializationError("The MistralAI embedding model ID is required.")
 
         if not client:
-            client = MistralAsyncClient(
-                api_key=mistralai_settings.api_key.get_secret_value()
-            )
+            client = MistralAsyncClient(api_key=mistralai_settings.api_key.get_secret_value())
 
         super().__init__(
             service_id=service_id or mistralai_settings.embedding_model_id,
@@ -98,11 +96,7 @@ class MistralAITextEmbedding(EmbeddingGeneratorBase):
     ) -> Any:
         """Generate embeddings from the Mistral AI service."""
         try:
-
-            embedding_response: EmbeddingResponse = await self.client.embeddings(
-                model=self.ai_model_id,
-                input=texts
-            )
+            embedding_response: EmbeddingResponse = await self.client.embeddings(model=self.ai_model_id, input=texts)
         except Exception as ex:
             raise ServiceResponseException(
                 f"{type(self)} service failed to complete the embedding request.",

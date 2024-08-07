@@ -254,9 +254,9 @@ class QdrantMemoryStore(MemoryStoreBase):
         """Gets an existing record based upon payload id.
 
         Args:
-            collection_name (str): The name of the collection.
-            payload_id (str): The payload id to search for.
-            with_embedding (bool): If true, the embedding will be returned in the memory records.
+            collection_name: The name of the collection.
+            payload_id: The payload id to search for.
+            with_embedding: If true, the embedding will be returned in the memory records.
 
         Returns:
             Optional[ScoredPoint]: The existing record if found; otherwise, None.

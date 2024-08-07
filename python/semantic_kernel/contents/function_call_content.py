@@ -58,19 +58,19 @@ class FunctionCallContent(KernelContent):
 
         Args:
             content_type: The content type.
-            inner_content (Any | None): The inner content.
-            ai_model_id (str | None): The id of the AI model.
-            id (str | None): The id of the function call.
-            index (int | None): The index of the function call.
-            name (str | None): The name of the function call.
+            inner_content: The inner content.
+            ai_model_id: The id of the AI model.
+            id: The id of the function call.
+            index: The index of the function call.
+            name: The name of the function call.
                 When not supplied function_name and plugin_name should be supplied.
-            function_name (str | None): The function name.
+            function_name: The function name.
                 Not used when 'name' is supplied.
-            plugin_name (str | None): The plugin name.
+            plugin_name: The plugin name.
                 Not used when 'name' is supplied.
-            arguments (str | dict[str, Any] | None): The arguments of the function call.
-            metadata (dict[str, Any] | None): The metadata of the function call.
-            kwargs (Any): Additional arguments.
+            arguments: The arguments of the function call.
+            metadata: The metadata of the function call.
+            kwargs: Additional arguments.
         """
         if function_name and plugin_name and not name:
             name = f"{plugin_name}-{function_name}"

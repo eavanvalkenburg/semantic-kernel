@@ -31,9 +31,9 @@ class _USearchCollection:
     """Represents a collection for USearch with embeddings and related data.
 
     Attributes:
-        embeddings_index (Index): The index of embeddings.
-        embeddings_data_table (pa.Table): The PyArrow table holding embeddings data.
-        embeddings_id_to_label (Dict[str, int]): Mapping of embeddings ID to label.
+        embeddings_index: The index of embeddings.
+        embeddings_data_table: The PyArrow table holding embeddings data.
+        embeddings_id_to_label: Mapping of embeddings ID to label.
     """
 
     embeddings_index: Index
@@ -45,7 +45,7 @@ class _USearchCollection:
         """Create a default `_USearchCollection` using a given embeddings index.
 
         Args:
-            embeddings_index (Index): The index of embeddings to be used for the default collection.
+            embeddings_index: The index of embeddings to be used for the default collection.
 
         Returns:
             _USearchCollection: A default `_USearchCollection` initialized with the given embeddings index.
@@ -99,8 +99,8 @@ def pyarrow_table_to_memoryrecords(table: pa.Table, vectors: ndarray | None = No
     """Convert a PyArrow Table to a list of MemoryRecords.
 
     Args:
-        table (pa.Table): The PyArrow Table to convert.
-        vectors (Optional[ndarray], optional): An array of vectors to include as embeddings in the MemoryRecords.
+        table: The PyArrow Table to convert.
+        vectors: An array of vectors to include as embeddings in the MemoryRecords.
             The length and order of the vectors should match the rows in the table. Defaults to None.
 
     Returns:
@@ -131,7 +131,7 @@ class USearchMemoryStore(MemoryStoreBase):
         Otherwise, it should be called explicitly.
 
         Args:
-            persist_directory (Optional[os.PathLike], default=None): Directory for loading and saving collections.
+            persist_directory: Directory for loading and saving collections.
             If None, collections are not loaded nor saved.
         """
         self._persist_directory = Path(persist_directory) if persist_directory is not None else None
@@ -144,8 +144,8 @@ class USearchMemoryStore(MemoryStoreBase):
         """Get the path for the given collection name and file type.
 
         Args:
-            collection_name (str): Name of the collection.
-            file_type (_CollectionFileType): The file type.
+            collection_name: Name of the collection.
+            file_type: The file type.
 
         Returns:
             Path: Path to the collection file.
@@ -173,15 +173,15 @@ class USearchMemoryStore(MemoryStoreBase):
         """Create a new collection.
 
         Args:
-            collection_name (str): Name of the collection. Case-insensitive.
+            collection_name: Name of the collection. Case-insensitive.
                 Must have name that is valid file name for the current OS environment.
-            ndim (int, optional): Number of dimensions. Defaults to 0.
-            metric (Union[str, MetricKind, CompiledMetric], optional): Metric kind. Defaults to MetricKind.IP.
-            dtype (Optional[Union[str, ScalarKind]], optional): Data type. Defaults to None.
-            connectivity (int, optional): Connectivity parameter. Defaults to None.
-            expansion_add (int, optional): Expansion add parameter. Defaults to None.
-            expansion_search (int, optional): Expansion search parameter. Defaults to None.
-            view (bool, optional): Viewing flag. Defaults to False.
+            ndim: Number of dimensions. Defaults to 0.
+            metric: Metric kind. Defaults to MetricKind.IP.
+            dtype: Data type. Defaults to None.
+            connectivity: Connectivity parameter. Defaults to None.
+            expansion_add: Expansion add parameter. Defaults to None.
+            expansion_search: Expansion search parameter. Defaults to None.
+            view: Viewing flag. Defaults to False.
 
         Raises:
             ValueError: If collection with the given name already exists.
@@ -218,7 +218,7 @@ class USearchMemoryStore(MemoryStoreBase):
         """Read embeddings from the provided path and generate an ID to label mapping.
 
         Args:
-            path (os.PathLike): Path to the embeddings.
+            path: Path to the embeddings.
 
         Returns:
             Tuple of embeddings table and a dictionary mapping from record ID to its label.
@@ -308,13 +308,13 @@ class USearchMemoryStore(MemoryStoreBase):
         """Upsert a batch of MemoryRecords and return their IDs.
 
         Args:
-            collection_name (str): Name of the collection to search within.
-            records (List[MemoryRecord]): Records to upsert.
-            compact (bool, optional): Removes links to removed nodes (expensive). Defaults to False.
-            copy (bool, optional): Should the index store a copy of vectors. Defaults to True.
-            threads (int, optional): Optimal number of cores to use. Defaults to 0.
-            log (Union[str, bool], optional): Whether to print the progress bar. Defaults to False.
-            batch_size (int, optional): Number of vectors to process at once. Defaults to 0.
+            collection_name: Name of the collection to search within.
+            records: Records to upsert.
+            compact: Removes links to removed nodes (expensive). Defaults to False.
+            copy: Should the index store a copy of vectors. Defaults to True.
+            threads: Optimal number of cores to use. Defaults to 0.
+            log: Whether to print the progress bar. Defaults to False.
+            batch_size: Number of vectors to process at once. Defaults to 0.
 
         Raises:
             KeyError: If collection not exist
@@ -436,12 +436,12 @@ class USearchMemoryStore(MemoryStoreBase):
         USearch returns distances for vectors. Distance is converted to relevance score by inverse function.
 
         Args:
-            collection_name (str): Name of the collection to search within.
-            embedding (ndarray): The embedding vector to search for.
-            min_relevance_score (float, optional): The minimum relevance score for vectors. Supposed to be from 0 to 1.
+            collection_name: Name of the collection to search within.
+            embedding: The embedding vector to search for.
+            min_relevance_score: The minimum relevance score for vectors. Supposed to be from 0 to 1.
                 Only vectors with greater or equal relevance score are returned. Defaults to 0.0.
-            with_embedding (bool, optional): If True, include the embedding in the result. Defaults to True.
-            exact (bool, optional): Perform exhaustive linear-time exact search. Defaults to False.
+            with_embedding: If True, include the embedding in the result. Defaults to True.
+            exact: Perform exhaustive linear-time exact search. Defaults to False.
 
         Returns:
             Tuple[MemoryRecord, float]: The nearest matching record and its relevance score.
@@ -478,16 +478,16 @@ class USearchMemoryStore(MemoryStoreBase):
         USearch returns distances for vectors. Distance is converted to relevance score by inverse function.
 
         Args:
-            collection_name (str): Name of the collection to search within.
-            embedding (ndarray): The embedding vector to search for.
-            limit (int): maximum amount of embeddings to search for.
-            min_relevance_score (float, optional): The minimum relevance score for vectors. Supposed to be from 0 to 1.
+            collection_name: Name of the collection to search within.
+            embedding: The embedding vector to search for.
+            limit: maximum amount of embeddings to search for.
+            min_relevance_score: The minimum relevance score for vectors. Supposed to be from 0 to 1.
                 Only vectors with greater or equal relevance score are returned. Defaults to 0.0.
-            with_embeddings (bool, optional): If True, include the embedding in the result. Defaults to True.
-            threads (int, optional): Optimal number of cores to use. Defaults to 0.
-            exact (bool, optional): Perform exhaustive linear-time exact search. Defaults to False.
-            log (Union[str, bool], optional): Whether to print the progress bar. Defaults to False.
-            batch_size (int, optional): Number of vectors to process at once. Defaults to 0.
+            with_embeddings: If True, include the embedding in the result. Defaults to True.
+            threads: Optimal number of cores to use. Defaults to 0.
+            exact: Perform exhaustive linear-time exact search. Defaults to False.
+            log: Whether to print the progress bar. Defaults to False.
+            batch_size: Number of vectors to process at once. Defaults to 0.
 
         Raises:
             KeyError: if a collection with specified name does not exist

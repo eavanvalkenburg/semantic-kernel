@@ -51,10 +51,10 @@ class SequentialPlanner:
         """Initializes a new instance of the SequentialPlanner class.
 
         Args:
-            kernel (Kernel): The kernel instance to use for planning
-            service_id (str): The service id to use to get the AI service
-            config (SequentialPlannerConfig, optional): The configuration to use for planning. Defaults to None.
-            prompt (str, optional): The prompt to use for planning. Defaults to None.
+            kernel: The kernel instance to use for planning
+            service_id: The service id to use to get the AI service
+            config: The configuration to use for planning. Defaults to None.
+            prompt: The prompt to use for planning. Defaults to None.
         """
         self.config = config or SequentialPlannerConfig()
 

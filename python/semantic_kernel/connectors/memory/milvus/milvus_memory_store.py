@@ -53,7 +53,7 @@ def memoryrecord_to_milvus_dict(mem: MemoryRecord) -> dict[str, Any]:
     """Convert a memoryrecord into a dict.
 
     Args:
-        mem (MemoryRecord): MemoryRecord to convert.
+        mem: MemoryRecord to convert.
 
     Returns:
         dict: Dict result.
@@ -74,7 +74,7 @@ def milvus_dict_to_memoryrecord(milvus_dict: dict[str, Any]) -> MemoryRecord:
     """Convert Milvus search result dict into MemoryRecord.
 
     Args:
-        milvus_dict (dict): Search hit
+        milvus_dict: Search hit
 
     Returns:
         MemoryRecord
@@ -162,11 +162,11 @@ class MilvusMemoryStore(MemoryStoreBase):
 
 
         Args:
-            uri (str, optional): The uri of the cluster. Defaults to
+            uri: The uri of the cluster. Defaults to
                 "http://localhost:19530".
-            token (Optional[str], optional): The token to connect to the cluster if
+            token: The token to connect to the cluster if
                 authentication is required. Defaults to None.
-            **kwargs (Any): Unused.
+            **kwargs: Unused.
         """
         connections.connect("default", uri=uri, token=token)
         self.collections: dict[str, Collection] = {}
@@ -182,14 +182,14 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Create a Milvus collection.
 
         Args:
-            collection_name (str): The name of the collection.
-            dimension_num (Optional[int], optional): The size of the embeddings being
+            collection_name: The name of the collection.
+            dimension_num: The size of the embeddings being
                 stored. Defaults to 1536.
-            distance_type (Optional[str], optional): Which distance function, at the
+            distance_type: Which distance function, at the
                 moment only "IP" and "L2" are supported. Defaults to "IP".
-            overwrite (bool, optional): Whether to overwrite any existing collection
+            overwrite: Whether to overwrite any existing collection
                 with the same name. Defaults to False.
-            consistency (str, optional): Which consistency level to use:
+            consistency: Which consistency level to use:
                 Strong, Session, Bounded, Eventually. Defaults to "Session".
         """
         schema = CollectionSchema(
@@ -221,8 +221,8 @@ class MilvusMemoryStore(MemoryStoreBase):
         If all is True, all collections in the cluster will be removed.
 
         Args:
-            collection_name (str, optional): The name of the collection to delete. Defaults to "".
-            all (bool, optional): Whether to delete all collections. Defaults to False.
+            collection_name: The name of the collection to delete. Defaults to "".
+            all: Whether to delete all collections. Defaults to False.
         """
         if collection_name and utility.has_collection(collection_name):
             utility.drop_collection(collection_name)
@@ -237,7 +237,7 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Return if the collection exists in the cluster.
 
         Args:
-            collection_name (str): The name of the collection.
+            collection_name: The name of the collection.
 
         Returns:
             bool: True if it exists, False otherwise.
@@ -248,8 +248,8 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Upsert a single MemoryRecord into the collection.
 
         Args:
-            collection_name (str): The name of the collection.
-            record (MemoryRecord): The record to store.
+            collection_name: The name of the collection.
+            record: The record to store.
 
         Returns:
             str: The ID of the inserted record.
@@ -266,9 +266,9 @@ class MilvusMemoryStore(MemoryStoreBase):
         """_summary_.
 
         Args:
-            collection_name (str): The collection name.
-            records (List[MemoryRecord]): A list of memory records.
-            batch_size (int, optional): Batch size of the insert, 0 is a batch
+            collection_name: The collection name.
+            records: A list of memory records.
+            batch_size: Batch size of the insert, 0 is a batch
                 size of total size. Defaults to 100.
 
         Raises:
@@ -296,9 +296,9 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Get the MemoryRecord corresponding to the key.
 
         Args:
-            collection_name (str): The collection to get from.
-            key (str): The ID to grab.
-            with_embedding (bool): Whether to include the embedding in the results.
+            collection_name: The collection to get from.
+            key: The ID to grab.
+            with_embedding: Whether to include the embedding in the results.
 
         Returns:
             MemoryRecord: The MemoryRecord for the key.
@@ -310,9 +310,9 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Get the MemoryRecords corresponding to the keys.
 
         Args:
-            collection_name (str): _description_
-            keys (List[str]): _description_
-            with_embeddings (bool): _description_
+            collection_name: _description_
+            keys: _description_
+            with_embeddings: _description_
 
         Raises:
             Exception: _description_
@@ -341,8 +341,8 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Remove the specified record based on key.
 
         Args:
-            collection_name (str): Collection to remove from.
-            key (str): The key to remove.
+            collection_name: Collection to remove from.
+            key: The key to remove.
         """
         await self.remove_batch(collection_name=collection_name, keys=[key])
 
@@ -350,8 +350,8 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Remove multiple records based on keys.
 
         Args:
-            collection_name (str): Collection to remove from
-            keys (List[str]): The list of keys.
+            collection_name: Collection to remove from
+            keys: The list of keys.
 
         Raises:
             Exception: Collection doesnt exist.
@@ -386,11 +386,11 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Find the nearest `limit` matches for an embedding.
 
         Args:
-            collection_name (str): The collection to search.
-            embedding (ndarray): The embedding to search.
-            limit (int): The total results to display.
-            min_relevance_score (float, optional): Minimum distance to include. Defaults to None.
-            with_embeddings (bool, optional): Whether to include embeddings in result. Defaults to False.
+            collection_name: The collection to search.
+            embedding: The embedding to search.
+            limit: The total results to display.
+            min_relevance_score: Minimum distance to include. Defaults to None.
+            with_embeddings: Whether to include embeddings in result. Defaults to False.
 
         Raises:
             Exception: Missing collection
@@ -437,10 +437,10 @@ class MilvusMemoryStore(MemoryStoreBase):
         """Find the nearest match for an embedding.
 
         Args:
-            collection_name (str): The collection to search.
-            embedding (ndarray): The embedding to search for.
-            min_relevance_score (float, optional): T. Defaults to 0.0.
-            with_embedding (bool, optional): Whether to include embedding in result. Defaults to False.
+            collection_name: The collection to search.
+            embedding: The embedding to search for.
+            min_relevance_score: T. Defaults to 0.0.
+            with_embedding: Whether to include embedding in result. Defaults to False.
 
         Returns:
             Tuple[MemoryRecord, float]: A tuple of record and distance.

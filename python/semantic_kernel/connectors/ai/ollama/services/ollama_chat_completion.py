@@ -50,13 +50,13 @@ class OllamaChatCompletion(OllamaBase, TextCompletionClientBase, ChatCompletionC
         """Initialize an OllamaChatCompletion service.
 
         Args:
-            service_id (Optional[str]): Service ID tied to the execution settings. (Optional)
-            ai_model_id (Optional[str]): The model name. (Optional)
-            host (Optional[str]): URL of the Ollama server, defaults to None and
+            service_id: Service ID tied to the execution settings. (Optional)
+            ai_model_id: The model name. (Optional)
+            host: URL of the Ollama server, defaults to None and
                 will use the default Ollama service address: http://127.0.0.1:11434. (Optional)
-            client (Optional[AsyncClient]): A custom Ollama client to use for the service. (Optional)
-            env_file_path (str | None): Use the environment settings file as a fallback to using env vars.
-            env_file_encoding (str | None): The encoding of the environment settings file, defaults to 'utf-8'.
+            client: A custom Ollama client to use for the service. (Optional)
+            env_file_path: Use the environment settings file as a fallback to using env vars.
+            env_file_encoding: The encoding of the environment settings file, defaults to 'utf-8'.
         """
         try:
             ollama_settings = OllamaSettings.create(
@@ -83,10 +83,10 @@ class OllamaChatCompletion(OllamaBase, TextCompletionClientBase, ChatCompletionC
         """This is the method that is called from the kernel to get a response from a chat-optimized LLM.
 
         Args:
-            chat_history (ChatHistory): A chat history that contains a list of chat messages,
+            chat_history: A chat history that contains a list of chat messages,
                 that can be rendered into a set of messages, from system, user, assistant and function.
-            settings (PromptExecutionSettings): Settings for the request.
-            kwargs (Dict[str, Any]): The optional arguments.
+            settings: Settings for the request.
+            kwargs: The optional arguments.
 
         Returns:
             List[ChatMessageContent]: A list of ChatMessageContent objects representing the response(s) from the LLM.
@@ -127,10 +127,10 @@ class OllamaChatCompletion(OllamaBase, TextCompletionClientBase, ChatCompletionC
         Note that this method does not support multiple responses.
 
         Args:
-            chat_history (ChatHistory): A chat history that contains a list of chat messages,
+            chat_history: A chat history that contains a list of chat messages,
                 that can be rendered into a set of messages, from system, user, assistant and function.
-            settings (PromptExecutionSettings): Request settings.
-            kwargs (Dict[str, Any]): The optional arguments.
+            settings: Request settings.
+            kwargs: The optional arguments.
 
         Yields:
             List[StreamingChatMessageContent]: Stream of StreamingChatMessageContent objects.
@@ -170,8 +170,8 @@ class OllamaChatCompletion(OllamaBase, TextCompletionClientBase, ChatCompletionC
         """This is the method that is called from the kernel to get a response from a text-optimized LLM.
 
         Args:
-            prompt (str): A prompt to complete
-            settings (PromptExecutionSettings): Settings for the request.
+            prompt: A prompt to complete
+            settings: Settings for the request.
 
         Returns:
             List["TextContent"]: The completion result(s).
@@ -210,8 +210,8 @@ class OllamaChatCompletion(OllamaBase, TextCompletionClientBase, ChatCompletionC
         Note that this method does not support multiple responses.
 
         Args:
-            prompt (str): A chat history that contains the prompt to complete.
-            settings (PromptExecutionSettings): Request settings.
+            prompt: A chat history that contains the prompt to complete.
+            settings: Request settings.
 
         Yields:
             List["StreamingTextContent"]: The result stream made up of StreamingTextContent objects.

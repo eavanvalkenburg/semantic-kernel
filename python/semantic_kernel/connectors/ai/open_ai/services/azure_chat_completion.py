@@ -36,7 +36,7 @@ TChatMessageContent = TypeVar("TChatMessageContent", ChatMessageContent, Streami
 
 
 class AzureChatCompletion(AzureOpenAIConfigBase, OpenAIChatCompletionBase, OpenAITextCompletionBase):
-    """Azure Chat completion class."""
+    """Azure Chat completion."""
 
     def __init__(
         self,
@@ -56,24 +56,24 @@ class AzureChatCompletion(AzureOpenAIConfigBase, OpenAIChatCompletionBase, OpenA
         """Initialize an AzureChatCompletion service.
 
         Args:
-            service_id (str | None): The service ID for the Azure deployment. (Optional)
-            api_key  (str | None): The optional api key. If provided, will override the value in the
+            service_id: The service ID for the Azure deployment. (Optional)
+            api_key: The optional api key. If provided, will override the value in the
                 env vars or .env file.
-            deployment_name  (str | None): The optional deployment. If provided, will override the value
+            deployment_name: The optional deployment. If provided, will override the value
                 (chat_deployment_name) in the env vars or .env file.
-            endpoint (str | None): The optional deployment endpoint. If provided will override the value
+            endpoint: The optional deployment endpoint. If provided will override the value
                 in the env vars or .env file.
-            base_url (str | None): The optional deployment base_url. If provided will override the value
+            base_url: The optional deployment base_url. If provided will override the value
                 in the env vars or .env file.
-            api_version (str | None): The optional deployment api version. If provided will override the value
+            api_version: The optional deployment api version. If provided will override the value
                 in the env vars or .env file.
-            ad_token (str | None): The Azure Active Directory token. (Optional)
-            ad_token_provider (AsyncAzureADTokenProvider): The Azure Active Directory token provider. (Optional)
-            default_headers (Mapping[str, str]): The default headers mapping of string keys to
+            ad_token: The Azure Active Directory token. (Optional)
+            ad_token_provider: The Azure Active Directory token provider. (Optional)
+            default_headers: The default headers mapping of string keys to
                 string values for HTTP requests. (Optional)
-            async_client (AsyncAzureOpenAI | None): An existing client to use. (Optional)
-            env_file_path (str | None): Use the environment settings file as a fallback to using env vars.
-            env_file_encoding (str | None): The encoding of the environment settings file, defaults to 'utf-8'.
+            async_client: An existing client to use. (Optional)
+            env_file_path: Use the environment settings file as a fallback to using env vars.
+            env_file_encoding: The encoding of the environment settings file, defaults to 'utf-8'.
         """
         try:
             azure_openai_settings = AzureOpenAISettings.create(
@@ -115,7 +115,7 @@ class AzureChatCompletion(AzureOpenAIConfigBase, OpenAIChatCompletionBase, OpenA
         Args:
             settings: A dictionary of settings for the service.
                 should contain keys: service_id, and optionally:
-                    ad_auth, ad_token_provider, default_headers
+                ad_auth, ad_token_provider, default_headers
         """
         return AzureChatCompletion(
             service_id=settings.get("service_id"),

@@ -86,7 +86,7 @@ class SessionsPythonTool(KernelBaseModel):
         Remove whitespace, backtick & python (if llm mistakes python console as terminal).
 
         Args:
-            code (str): The query to sanitize
+            code: The query to sanitize
         Returns:
             str: The sanitized query
         """
@@ -99,7 +99,7 @@ class SessionsPythonTool(KernelBaseModel):
         """Construct the remote file path.
 
         Args:
-            remote_file_path (str): The remote file path.
+            remote_file_path: The remote file path.
 
         Returns:
             str: The remote file path.
@@ -136,7 +136,7 @@ class SessionsPythonTool(KernelBaseModel):
         """Executes the provided Python code.
 
         Args:
-            code (str): The valid Python code to execute
+            code: The valid Python code to execute
         Returns:
             str: The result of the Python code execution in the form of Result, Stdout, and Stderr
         Raises:
@@ -152,13 +152,11 @@ class SessionsPythonTool(KernelBaseModel):
 
         logger.info(f"Executing Python code: {code}")
 
-        self.http_client.headers.update(
-            {
-                "Authorization": f"Bearer {auth_token}",
-                "Content-Type": "application/json",
-                USER_AGENT: SESSIONS_USER_AGENT,
-            }
-        )
+        self.http_client.headers.update({
+            "Authorization": f"Bearer {auth_token}",
+            "Content-Type": "application/json",
+            USER_AGENT: SESSIONS_USER_AGENT,
+        })
 
         self.settings.python_code = code
 
@@ -198,8 +196,8 @@ class SessionsPythonTool(KernelBaseModel):
         """Upload a file to the session pool.
 
         Args:
-            remote_file_path (str): The path to the file in the session.
-            local_file_path (str): The path to the file on the local machine.
+            remote_file_path: The path to the file in the session.
+            local_file_path: The path to the file on the local machine.
 
         Returns:
             RemoteFileMetadata: The metadata of the uploaded file.
@@ -213,12 +211,10 @@ class SessionsPythonTool(KernelBaseModel):
         remote_file_path = self._construct_remote_file_path(remote_file_path or os.path.basename(local_file_path))
 
         auth_token = await self._ensure_auth_token()
-        self.http_client.headers.update(
-            {
-                "Authorization": f"Bearer {auth_token}",
-                USER_AGENT: SESSIONS_USER_AGENT,
-            }
-        )
+        self.http_client.headers.update({
+            "Authorization": f"Bearer {auth_token}",
+            USER_AGENT: SESSIONS_USER_AGENT,
+        })
 
         url = self._build_url_with_version(
             base_url=str(self.pool_management_endpoint),
@@ -247,12 +243,10 @@ class SessionsPythonTool(KernelBaseModel):
             list[SessionsRemoteFileMetadata]: The metadata for the files in the session pool
         """
         auth_token = await self._ensure_auth_token()
-        self.http_client.headers.update(
-            {
-                "Authorization": f"Bearer {auth_token}",
-                USER_AGENT: SESSIONS_USER_AGENT,
-            }
-        )
+        self.http_client.headers.update({
+            "Authorization": f"Bearer {auth_token}",
+            USER_AGENT: SESSIONS_USER_AGENT,
+        })
 
         url = self._build_url_with_version(
             base_url=str(self.pool_management_endpoint),
@@ -290,12 +284,10 @@ class SessionsPythonTool(KernelBaseModel):
             BufferedReader: The data of the downloaded file.
         """
         auth_token = await self._ensure_auth_token()
-        self.http_client.headers.update(
-            {
-                "Authorization": f"Bearer {auth_token}",
-                USER_AGENT: SESSIONS_USER_AGENT,
-            }
-        )
+        self.http_client.headers.update({
+            "Authorization": f"Bearer {auth_token}",
+            USER_AGENT: SESSIONS_USER_AGENT,
+        })
 
         url = self._build_url_with_version(
             base_url=str(self.pool_management_endpoint),

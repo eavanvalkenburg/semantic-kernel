@@ -554,6 +554,3 @@ async def test_upsert_with_vectorizing(vector_store_record_collection):
     assert len(vector_store_record_collection.inner_storage) == 0
     await vector_store_record_collection.upsert_batch([record2], embedding_generation_function=embedding_func)
     assert vector_store_record_collection.inner_storage["test_id"]["vector"] == [1.0, 2.0, 3.0]
-
-
-# TODO (eavanvalkenburg): pandas container test

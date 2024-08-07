@@ -62,16 +62,16 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
                 await memory.<...>
 
         Args:
-            vector_size (int): Embedding vector size.
-            search_endpoint (str | None): The endpoint of the Azure Cognitive Search service
+            vector_size: Embedding vector size.
+            search_endpoint: The endpoint of the Azure Cognitive Search service
                 (default: {None}).
-            admin_key (str | None): Azure Cognitive Search API key (default: {None}).
-            azure_credentials (AzureKeyCredential | None): Azure Cognitive Search credentials (default: {None}).
-            token_credentials (TokenCredential | None): Azure Cognitive Search token credentials
+            admin_key: Azure Cognitive Search API key (default: {None}).
+            azure_credentials: Azure Cognitive Search credentials (default: {None}).
+            token_credentials: Azure Cognitive Search token credentials
                 (default: {None}).
-            env_file_path (str | None): Use the environment settings file as a fallback
+            env_file_path: Use the environment settings file as a fallback
                 to environment variables
-            env_file_encoding (str | None): The encoding of the environment settings file
+            env_file_encoding: The encoding of the environment settings file
 
         """
         from semantic_kernel.connectors.memory.azure_cognitive_search.azure_ai_search_settings import (
@@ -110,11 +110,11 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Creates a new collection if it does not exist.
 
         Args:
-            collection_name (str): The name of the collection to create.
-            vector_config (HnswVectorSearchAlgorithmConfiguration): Optional search algorithm configuration
+            collection_name: The name of the collection to create.
+            vector_config: Optional search algorithm configuration
                                                                       (default: {None}).
-            semantic_config (SemanticConfiguration): Optional search index configuration (default: {None}).
-            search_resource_encryption_key (SearchResourceEncryptionKey): Optional Search Encryption Key
+            semantic_config: Optional search index configuration (default: {None}).
+            search_resource_encryption_key: Optional Search Encryption Key
                                                                                        (default: {None}).
 
         Returns:
@@ -186,7 +186,7 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Deletes a collection.
 
         Args:
-            collection_name (str): The name of the collection to delete.
+            collection_name: The name of the collection to delete.
 
         Returns:
             None
@@ -197,7 +197,7 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Checks if a collection exists.
 
         Args:
-            collection_name (str): The name of the collection to check.
+            collection_name: The name of the collection to check.
 
         Returns:
             bool: True if the collection exists; otherwise, False.
@@ -213,8 +213,8 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Upsert a record.
 
         Args:
-            collection_name (str): The name of the collection to upsert the record into.
-            record (MemoryRecord): The record to upsert.
+            collection_name: The name of the collection to upsert the record into.
+            record: The record to upsert.
 
         Returns:
             str: The unique record id of the record.
@@ -228,8 +228,8 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Upsert a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to upsert the records into.
-            records (List[MemoryRecord]): The records to upsert.
+            collection_name: The name of the collection to upsert the records into.
+            records: The records to upsert.
 
         Returns:
             List[str]: The unique database keys of the records.
@@ -263,9 +263,9 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Gets a record.
 
         Args:
-            collection_name (str): The name of the collection to get the record from.
-            key (str): The unique database key of the record.
-            with_embedding (bool): Whether to include the embedding in the result. (default: {False})
+            collection_name: The name of the collection to get the record from.
+            key: The unique database key of the record.
+            with_embedding: Whether to include the embedding in the result. (default: {False})
 
         Returns:
             MemoryRecord: The record.
@@ -292,9 +292,9 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Gets a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to get the records from.
-            keys (List[str]): The unique database keys of the records.
-            with_embeddings (bool): Whether to include the embeddings in the results. (default: {False})
+            collection_name: The name of the collection to get the records from.
+            keys: The unique database keys of the records.
+            with_embeddings: Whether to include the embeddings in the results. (default: {False})
 
         Returns:
             List[MemoryRecord]: The records.
@@ -315,8 +315,8 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Removes a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to remove the records from.
-            keys (List[str]): The unique database keys of the records to remove.
+            collection_name: The name of the collection to remove the records from.
+            keys: The unique database keys of the records to remove.
 
         Returns:
             None
@@ -328,8 +328,8 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Removes a record.
 
         Args:
-            collection_name (str): The name of the collection to remove the record from.
-            key (str): The unique database key of the record to remove.
+            collection_name: The name of the collection to remove the record from.
+            key: The unique database key of the record to remove.
 
         Returns:
             None
@@ -351,10 +351,10 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         """Gets the nearest match to an embedding using vector configuration parameters.
 
         Args:
-            collection_name (str): The name of the collection to get the nearest match from.
-            embedding (ndarray): The embedding to find the nearest match to.
-            min_relevance_score (float): The minimum relevance score of the match. (default: {0.0})
-            with_embedding (bool): Whether to include the embedding in the result. (default: {False})
+            collection_name: The name of the collection to get the nearest match from.
+            embedding: The embedding to find the nearest match to.
+            min_relevance_score: The minimum relevance score of the match. (default: {0.0})
+            with_embedding: Whether to include the embedding in the result. (default: {False})
 
         Returns:
             Tuple[MemoryRecord, float]: The record and the relevance score.
@@ -384,9 +384,9 @@ class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
         Parameters:
             collection_name (str)      : The name of the collection to get the nearest matches from.
             embedding (ndarray)        : The embedding to find the nearest matches to.
-            limit (int): The maximum number of matches to return.
-            min_relevance_score (float): The minimum relevance score of the matches. (default: {0.0})
-            with_embeddings (bool): Whether to include the embeddings in the results. (default: {False})
+            limit: The maximum number of matches to return.
+            min_relevance_score: The minimum relevance score of the matches. (default: {0.0})
+            with_embeddings: Whether to include the embeddings in the results. (default: {False})
 
         Returns:
             List[Tuple[MemoryRecord, float]]: The records and their relevance scores.

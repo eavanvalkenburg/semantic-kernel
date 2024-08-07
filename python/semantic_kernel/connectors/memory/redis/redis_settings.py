@@ -10,11 +10,10 @@ from semantic_kernel.utils.experimental_decorator import experimental_class
 
 @experimental_class
 class RedisSettings(KernelBaseSettings):
-    """Redis model settings.
+    """Redis settings.
 
     Args:
-    - connection_string (str | None):
-        Redis connection string (Env var REDIS_CONNECTION_STRING)
+        connection_string: Redis connection string (Env var REDIS_CONNECTION_STRING)
     """
 
     env_prefix: ClassVar[str] = "REDIS_"

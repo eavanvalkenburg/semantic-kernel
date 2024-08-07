@@ -42,26 +42,26 @@ class HuggingFaceTextCompletion(TextCompletionClientBase):
     ) -> None:
         """Initializes a new instance of the HuggingFaceTextCompletion class.
 
+        Note that this model will be downloaded from the Hugging Face model hub.
+
         Args:
-            ai_model_id (str): Hugging Face model card string, see
+            ai_model_id: Hugging Face model card string, see
                 https://huggingface.co/models
-            device (int): Device to run the model on, defaults to CPU, 0+ for GPU,
+            device: Device to run the model on, defaults to CPU, 0+ for GPU,
                 -- None if using device_map instead. (If both device and device_map
                 are specified, device overrides device_map. If unintended,
                 it can lead to unexpected behavior.) (optional)
-            service_id (str): Service ID for the AI service. (optional)
-            task (str): Model completion task type, options are:
-                - summarization: takes a long text and returns a shorter summary.
-                - text-generation: takes incomplete text and returns a set of completion candidates.
-                - text2text-generation (default): takes an input prompt and returns a completion.
-                text2text-generation is the default as it behaves more like GPT-3+. (optional)
-            model_kwargs (dict[str, Any]): Additional dictionary of keyword arguments
+            service_id: Service ID for the AI service. (optional)
+            task: Model completion task type, options are:
+                - summarization - takes a long text and returns a shorter summary.
+                - text-generation - takes incomplete text and returns a set of completion candidates.
+                - text2text-generation - takes an input prompt and returns a completion.
+                text2text-generation is the default as it behaves most like GPT models. (optional)
+            model_kwargs: Additional dictionary of keyword arguments
                 passed along to the model's `from_pretrained(..., **model_kwargs)` function. (optional)
-            pipeline_kwargs (dict[str, Any]): Additional keyword arguments passed along
+            pipeline_kwargs: Additional keyword arguments passed along
                 to the specific pipeline init (see the documentation for the corresponding pipeline class
                 for possible values). (optional)
-
-        Note that this model will be downloaded from the Hugging Face model hub.
         """
         generator = pipeline(
             task=task,
@@ -87,8 +87,8 @@ class HuggingFaceTextCompletion(TextCompletionClientBase):
         """This is the method that is called from the kernel to get a response from a text-optimized LLM.
 
         Args:
-            prompt (str): The prompt to send to the LLM.
-            settings (HuggingFacePromptExecutionSettings): Settings for the request.
+            prompt: The prompt to send to the LLM.
+            settings: Settings for the request.
 
         Returns:
             List[TextContent]: A list of TextContent objects representing the response(s) from the LLM.
@@ -122,8 +122,8 @@ class HuggingFaceTextCompletion(TextCompletionClientBase):
         Note that this method does not support multiple responses.
 
         Args:
-            prompt (str): Prompt to complete.
-            settings (HuggingFacePromptExecutionSettings): Request settings.
+            prompt: Prompt to complete.
+            settings: Request settings.
 
         Yields:
             List[StreamingTextContent]: List of StreamingTextContent objects.

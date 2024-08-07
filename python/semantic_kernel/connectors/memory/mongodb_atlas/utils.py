@@ -23,8 +23,8 @@ def document_to_memory_record(data: dict, with_embeddings: bool) -> MemoryRecord
     """Converts a search result to a MemoryRecord.
 
     Args:
-        data (dict): Azure Cognitive Search result data.
-        with_embeddings (bool): Whether to include embeddings.
+        data: Azure Cognitive Search result data.
+        with_embeddings: Whether to include embeddings.
 
     Returns:
         MemoryRecord: The MemoryRecord from Azure Cognitive Search Data Result.
@@ -48,10 +48,10 @@ def memory_record_to_mongo_document(record: MemoryRecord) -> dict:
     """Convert a MemoryRecord to a dictionary.
 
     Args:
-        record (MemoryRecord): The MemoryRecord from Azure Cognitive Search Data Result.
+        record: The MemoryRecord from Azure Cognitive Search Data Result.
 
     Returns:
-        data (dict): Dictionary data.
+        data: Dictionary data.
     """
     return {
         MONGODB_FIELD_ID: record._id,

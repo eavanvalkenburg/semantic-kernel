@@ -55,22 +55,22 @@ class QdrantStore(VectorStore):
         When using qdrant client, make sure to supply url and api_key.
         When using qdrant server, make sure to supply url or host and optionally port.
         When using qdrant local, either supply path to use a persisted qdrant instance
-            or set location to ":memory:" to use an in-memory qdrant instance.
+        or set location to ":memory:" to use an in-memory qdrant instance.
         When nothing is supplied, it defaults to an in-memory qdrant instance.
         You can also supply a async qdrant client directly.
 
         Args:
-            url (str): The URL of the Qdrant server (default: {None}).
-            api_key (str): The API key for the Qdrant server (default: {None}).
-            host (str): The host of the Qdrant server (default: {None}).
-            port (int): The port of the Qdrant server (default: {None}).
-            grpc_port (int): The gRPC port of the Qdrant server (default: {None}).
-            path (str): The path of the Qdrant server (default: {None}).
-            location (str): The location of the Qdrant server (default: {None}).
-            prefer_grpc (bool): If true, gRPC will be preferred (default: {None}).
-            client (AsyncQdrantClient): The Qdrant client to use (default: {None}).
-            env_file_path (str): Use the environment settings file as a fallback to environment variables.
-            env_file_encoding (str): The encoding of the environment settings file.
+            url: The URL of the Qdrant server (default: {None}).
+            api_key: The API key for the Qdrant server (default: {None}).
+            host: The host of the Qdrant server (default: {None}).
+            port: The port of the Qdrant server (default: {None}).
+            grpc_port: The gRPC port of the Qdrant server (default: {None}).
+            path: The path of the Qdrant server (default: {None}).
+            location: The location of the Qdrant server (default: {None}).
+            prefer_grpc: If true, gRPC will be preferred (default: {None}).
+            client: The Qdrant client to use (default: {None}).
+            env_file_path: Use the environment settings file as a fallback to environment variables.
+            env_file_encoding: The encoding of the environment settings file.
             **kwargs: Additional keyword arguments passed to the client constructor.
 
         """
@@ -114,9 +114,9 @@ class QdrantStore(VectorStore):
         """Get a QdrantCollection tied to a collection.
 
         Args:
-            collection_name (str): The name of the collection.
-            data_model_type (type[TModel]): The type of the data model.
-            data_model_definition (VectorStoreRecordDefinition | None): The model fields, optional.
+            collection_name: The name of the collection.
+            data_model_type: The type of the data model.
+            data_model_definition: The model fields, optional.
             **kwargs: Additional keyword arguments, passed to the collection constructor.
         """
         if collection_name not in self.vector_record_collections:

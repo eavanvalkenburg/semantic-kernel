@@ -63,18 +63,18 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         See KernelPlugin.from_directory for more details on how the directory is parsed.
 
         Args:
-            plugin (KernelPlugin | Any | dict[str, Any]): The plugin to add.
+            plugin: The plugin to add.
                 This can be a KernelPlugin, in which case it is added straightaway and other parameters are ignored,
                 a custom class that contains methods with the kernel_function decorator
                 or a dictionary of functions with the kernel_function decorator for one or
                 several methods.
-            plugin_name (str | None): The name of the plugin, used if the plugin is not a KernelPlugin,
+            plugin_name: The name of the plugin, used if the plugin is not a KernelPlugin,
                 if the plugin is None and the parent_directory is set,
                 KernelPlugin.from_directory is called with those parameters,
                 see `KernelPlugin.from_directory` for details.
-            parent_directory (str | None): The parent directory path where the plugin directory resides
-            description (str | None): The description of the plugin, used if the plugin is not a KernelPlugin.
-            class_init_arguments (dict[str, dict[str, Any]] | None): The class initialization arguments
+            parent_directory: The parent directory path where the plugin directory resides
+            description: The description of the plugin, used if the plugin is not a KernelPlugin.
+            class_init_arguments: The class initialization arguments
 
         Returns:
             KernelPlugin: The plugin that was added.
@@ -107,7 +107,7 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Adds a list of plugins to the kernel's collection of plugins.
 
         Args:
-            plugins (list[KernelPlugin] | dict[str, KernelPlugin]): The plugins to add to the kernel
+            plugins: The plugins to add to the kernel
         """
         if isinstance(plugins, list):
             for plug in plugins:
@@ -135,18 +135,18 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Adds a function to the specified plugin.
 
         Args:
-            plugin_name (str): The name of the plugin to add the function to
-            function (KernelFunction | Callable[..., Any]): The function to add
-            function_name (str): The name of the function
-            plugin_name (str): The name of the plugin
-            description (str | None): The description of the function
-            prompt (str | None): The prompt template.
-            prompt_template_config (PromptTemplateConfig | None): The prompt template configuration
+            plugin_name: The name of the plugin to add the function to
+            function: The function to add
+            function_name: The name of the function
+            plugin_name: The name of the plugin
+            description: The description of the function
+            prompt: The prompt template.
+            prompt_template_config: The prompt template configuration
             prompt_execution_settings: The execution settings, will be parsed into a dict.
-            template_format (str | None): The format of the prompt template
-            prompt_template (PromptTemplateBase | None): The prompt template
-            return_plugin (bool): If True, the plugin is returned instead of the function
-            kwargs (Any): Additional arguments
+            template_format: The format of the prompt template
+            prompt_template: The prompt template
+            return_plugin: If True, the plugin is returned instead of the function
+            kwargs: Additional arguments
 
         Returns:
             KernelFunction | KernelPlugin: The function that was added, or the plugin if return_plugin is True
@@ -191,8 +191,8 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Adds a list of functions to the specified plugin.
 
         Args:
-            plugin_name (str): The name of the plugin to add the functions to
-            functions (list[KernelFunction] | dict[str, KernelFunction]): The functions to add
+            plugin_name: The name of the plugin to add the functions to
+            functions: The functions to add
 
         Returns:
             KernelPlugin: The plugin that the functions were added to.
@@ -213,10 +213,10 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Add a plugin from the OpenAPI manifest.
 
         Args:
-            plugin_name (str): The name of the plugin
-            openapi_document_path (str): The path to the OpenAPI document
-            execution_settings (OpenAPIFunctionExecutionParameters | None): The execution parameters
-            description (str | None): The description of the plugin
+            plugin_name: The name of the plugin
+            openapi_document_path: The path to the OpenAPI document
+            execution_settings: The execution parameters
+            description: The description of the plugin
 
         Returns:
             KernelPlugin: The imported plugin
@@ -244,11 +244,11 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Add a plugin from an OpenAPI document.
 
         Args:
-            plugin_name (str): The name of the plugin
-            plugin_url (str | None): The URL of the plugin
-            plugin_str (str | None): The JSON string of the plugin
-            execution_parameters (OpenAIFunctionExecutionParameters | None): The execution parameters
-            description (str | None): The description of the plugin
+            plugin_name: The name of the plugin
+            plugin_url: The URL of the plugin
+            plugin_str: The JSON string of the plugin
+            execution_parameters: The execution parameters
+            description: The description of the plugin
 
         Returns:
             KernelPlugin: The imported plugin
@@ -270,7 +270,7 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Get a plugin by name.
 
         Args:
-            plugin_name (str): The name of the plugin
+            plugin_name: The name of the plugin
 
         Returns:
             KernelPlugin: The plugin
@@ -287,8 +287,8 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Get a function by plugin_name and function_name.
 
         Args:
-            plugin_name (str | None): The name of the plugin
-            function_name (str): The name of the function
+            plugin_name: The name of the plugin
+            function_name: The name of the function
 
         Returns:
             KernelFunction: The function
@@ -313,7 +313,7 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Get a function by its fully qualified name (<plugin_name>-<function_name>).
 
         Args:
-            fully_qualified_function_name (str): The fully qualified name of the function,
+            fully_qualified_function_name: The fully qualified name of the function,
                 if there is no '-' in the name, it is assumed that it is only a function_name.
 
         Returns:
@@ -351,8 +351,8 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Get a list of the function metadata in the plugin collection.
 
         Args:
-            include_prompt (bool): Whether to include semantic functions in the list.
-            include_native (bool): Whether to include native functions in the list.
+            include_prompt: Whether to include semantic functions in the list.
+            include_native: Whether to include native functions in the list.
 
         Returns:
             A list of KernelFunctionMetadata objects in the collection.
@@ -376,7 +376,7 @@ class KernelFunctionExtension(KernelBaseModel, ABC):
         """Get a list of Kernel Function Metadata based on filters.
 
         Args:
-            filters (dict[str, list[str]]): The filters to apply to the function list.
+            filters: The filters to apply to the function list.
                 The keys are:
                     - included_plugins: A list of plugin names to include.
                     - excluded_plugins: A list of plugin names to exclude.

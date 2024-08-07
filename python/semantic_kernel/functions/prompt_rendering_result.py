@@ -10,10 +10,10 @@ class PromptRenderingResult(KernelBaseModel):
     """Represents the result of rendering a prompt template.
 
     Attributes:
-        rendered_prompt (str): The rendered prompt.
-        ai_service (Any): The AI service that rendered the prompt.
-        execution_settings (PromptExecutionSettings): The execution settings for the prompt.
-        function_result (FunctionResult): The result of executing the prompt.
+        rendered_prompt: The rendered prompt.
+        ai_service: The AI service that rendered the prompt.
+        execution_settings: The execution settings for the prompt.
+        function_result: The result of executing the prompt.
     """
 
     rendered_prompt: str

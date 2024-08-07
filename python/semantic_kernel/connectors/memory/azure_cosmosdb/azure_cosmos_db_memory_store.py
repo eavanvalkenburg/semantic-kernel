@@ -138,7 +138,7 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Creates a new collection in the data store.
 
         Args:
-            collection_name (str): The name associated with a collection of embeddings.
+            collection_name: The name associated with a collection of embeddings.
 
         Returns:
             None
@@ -157,7 +157,7 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Deletes a collection.
 
         Args:
-            collection_name (str): The name of the collection to delete.
+            collection_name: The name of the collection to delete.
 
         Returns:
             None
@@ -168,7 +168,7 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Checks if a collection exists.
 
         Args:
-            collection_name (str): The name of the collection to check.
+            collection_name: The name of the collection to check.
 
         Returns:
             bool: True if the collection exists; otherwise, False.
@@ -179,8 +179,8 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Upsert a record.
 
         Args:
-            collection_name (str): The name of the collection to upsert the record into.
-            record (MemoryRecord): The record to upsert.
+            collection_name: The name of the collection to upsert the record into.
+            record: The record to upsert.
 
         Returns:
             str: The unique record id of the record.
@@ -191,8 +191,8 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Upsert a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to upsert the records into.
-            records (List[MemoryRecord]): The records to upsert.
+            collection_name: The name of the collection to upsert the records into.
+            records: The records to upsert.
 
         Returns:
             List[str]: The unique database keys of the records.
@@ -203,9 +203,9 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Gets a record.
 
         Args:
-            collection_name (str): The name of the collection to get the record from.
-            key (str): The unique database key of the record.
-            with_embedding (bool): Whether to include the embedding in the result. (default: {False})
+            collection_name: The name of the collection to get the record from.
+            key: The unique database key of the record.
+            with_embedding: Whether to include the embedding in the result. (default: {False})
 
         Returns:
             MemoryRecord: The record.
@@ -216,9 +216,9 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Gets a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to get the records from.
-            keys (List[str]): The unique database keys of the records.
-            with_embeddings (bool): Whether to include the embeddings in the results. (default: {False})
+            collection_name: The name of the collection to get the records from.
+            keys: The unique database keys of the records.
+            with_embeddings: Whether to include the embeddings in the results. (default: {False})
 
         Returns:
             List[MemoryRecord]: The records.
@@ -229,8 +229,8 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Removes a record.
 
         Args:
-            collection_name (str): The name of the collection to remove the record from.
-            key (str): The unique database key of the record to remove.
+            collection_name: The name of the collection to remove the record from.
+            key: The unique database key of the record to remove.
 
         Returns:
             None
@@ -241,8 +241,8 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Removes a batch of records.
 
         Args:
-            collection_name (str): The name of the collection to remove the records from.
-            keys (List[str]): The unique database keys of the records to remove.
+            collection_name: The name of the collection to remove the records from.
+            keys: The unique database keys of the records to remove.
 
         Returns:
             None
@@ -262,9 +262,9 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         Parameters:
             collection_name (str)      : The name of the collection to get the nearest matches from.
             embedding (ndarray)        : The embedding to find the nearest matches to.
-            limit (int): The maximum number of matches to return.
-            min_relevance_score (float): The minimum relevance score of the matches. (default: {0.0})
-            with_embeddings (bool): Whether to include the embeddings in the results. (default: {False})
+            limit: The maximum number of matches to return.
+            min_relevance_score: The minimum relevance score of the matches. (default: {0.0})
+            with_embeddings: Whether to include the embeddings in the results. (default: {False})
 
         Returns:
             List[Tuple[MemoryRecord, float]]: The records and their relevance scores.
@@ -281,10 +281,10 @@ class AzureCosmosDBMemoryStore(MemoryStoreBase):
         """Gets the nearest match to an embedding using vector configuration parameters.
 
         Args:
-            collection_name (str): The name of the collection to get the nearest match from.
-            embedding (ndarray): The embedding to find the nearest match to.
-            min_relevance_score (float): The minimum relevance score of the match. (default: {0.0})
-            with_embedding (bool): Whether to include the embedding in the result. (default: {False})
+            collection_name: The name of the collection to get the nearest match from.
+            embedding: The embedding to find the nearest match to.
+            min_relevance_score: The minimum relevance score of the match. (default: {0.0})
+            with_embedding: Whether to include the embedding in the result. (default: {False})
 
         Returns:
             Tuple[MemoryRecord, float]: The record and the relevance score.

@@ -73,12 +73,12 @@ class VertexAIChatCompletion(VertexAIBase, ChatCompletionClientBase):
         - VERTEX_AI_REGION
 
         Args:
-            project_id (str): The Google Cloud project ID.
-            region (str): The Google Cloud region.
-            gemini_model_id (str): The Gemini model ID.
-            service_id (str): The Vertex AI service ID.
-            env_file_path (str): The path to the environment file.
-            env_file_encoding (str): The encoding of the environment file.
+            project_id: The Google Cloud project ID.
+            region: The Google Cloud region.
+            gemini_model_id: The Gemini model ID.
+            service_id: The Vertex AI service ID.
+            env_file_path: The path to the environment file.
+            env_file_encoding: The encoding of the environment file.
         """
         try:
             vertex_ai_settings = VertexAISettings.create(

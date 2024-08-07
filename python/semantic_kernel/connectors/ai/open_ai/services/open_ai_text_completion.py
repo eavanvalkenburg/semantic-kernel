@@ -18,7 +18,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class OpenAITextCompletion(OpenAITextCompletionBase, OpenAIConfigBase):
-    """OpenAI Text Completion class."""
+    """OpenAI Text Completion."""
 
     def __init__(
         self,
@@ -34,19 +34,19 @@ class OpenAITextCompletion(OpenAITextCompletionBase, OpenAIConfigBase):
         """Initialize an OpenAITextCompletion service.
 
         Args:
-            ai_model_id (str | None): OpenAI model name, see
+            ai_model_id: OpenAI model name, see
                 https://platform.openai.com/docs/models
-            service_id (str | None): Service ID tied to the execution settings.
-            api_key (str | None): The optional API key to use. If provided will override,
+            service_id: Service ID tied to the execution settings.
+            api_key: The optional API key to use. If provided will override,
                 the env vars or .env file value.
-            org_id (str | None): The optional org ID to use. If provided will override,
+            org_id: The optional org ID to use. If provided will override,
                 the env vars or .env file value.
             default_headers: The default headers mapping of string keys to
                 string values for HTTP requests. (Optional)
-            async_client (Optional[AsyncOpenAI]): An existing client to use. (Optional)
-            env_file_path (str | None): Use the environment settings file as a fallback to
+            async_client: An existing client to use. (Optional)
+            env_file_path: Use the environment settings file as a fallback to
                 environment variables. (Optional)
-            env_file_encoding (str | None): The encoding of the environment settings file. (Optional)
+            env_file_encoding: The encoding of the environment settings file. (Optional)
         """
         try:
             openai_settings = OpenAISettings.create(

@@ -47,13 +47,13 @@ class OllamaTextEmbedding(OllamaBase, EmbeddingGeneratorBase):
         """Initialize an OllamaChatCompletion service.
 
         Args:
-            service_id (Optional[str]): Service ID tied to the execution settings. (Optional)
-            ai_model_id (Optional[str]): The model name. (Optional)
-            host (Optional[str]): URL of the Ollama server, defaults to None and
+            service_id: Service ID tied to the execution settings. (Optional)
+            ai_model_id: The model name. (Optional)
+            host: URL of the Ollama server, defaults to None and
                 will use the default Ollama service address: http://127.0.0.1:11434. (Optional)
-            client (Optional[AsyncClient]): A custom Ollama client to use for the service. (Optional)
-            env_file_path (str | None): Use the environment settings file as a fallback to using env vars.
-            env_file_encoding (str | None): The encoding of the environment settings file, defaults to 'utf-8'.
+            client: A custom Ollama client to use for the service. (Optional)
+            env_file_path: Use the environment settings file as a fallback to using env vars.
+            env_file_encoding: The encoding of the environment settings file, defaults to 'utf-8'.
         """
         try:
             ollama_settings = OllamaSettings.create(

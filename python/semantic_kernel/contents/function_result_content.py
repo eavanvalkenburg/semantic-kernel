@@ -55,19 +55,19 @@ class FunctionResultContent(KernelContent):
 
         Args:
             content_type: The content type.
-            inner_content (Any | None): The inner content.
-            ai_model_id (str | None): The id of the AI model.
-            id (str | None): The id of the function call that the result relates to.
-            name (str | None): The name of the function.
+            inner_content: The inner content.
+            ai_model_id: The id of the AI model.
+            id: The id of the function call that the result relates to.
+            name: The name of the function.
                 When not supplied function_name and plugin_name should be supplied.
-            function_name (str | None): The function name.
+            function_name: The function name.
                 Not used when 'name' is supplied.
-            plugin_name (str | None): The plugin name.
+            plugin_name: The plugin name.
                 Not used when 'name' is supplied.
-            result (Any | None): The result of the function.
-            encoding (str | None): The encoding of the result.
-            metadata (dict[str, Any] | None): The metadata of the function call.
-            kwargs (Any): Additional arguments.
+            result: The result of the function.
+            encoding: The encoding of the result.
+            metadata: The metadata of the function call.
+            kwargs: Additional arguments.
         """
         if function_name and plugin_name and not name:
             name = f"{plugin_name}-{function_name}"
