@@ -49,11 +49,11 @@ class GoogleAITextCompletion(GoogleAIBase, TextCompletionClientBase):
         - GOOGLE_AI_API_KEY
 
         Args:
-            gemini_model_id (str | None): The Gemini model ID. (Optional)
-            api_key (str | None): The API key. (Optional)
-            service_id (str | None): The service ID. (Optional)
-            env_file_path (str | None): The path to the .env file. (Optional)
-            env_file_encoding (str | None): The encoding of the .env file. (Optional)
+            gemini_model_id: The Gemini model ID. (Optional)
+            api_key: The API key. (Optional)
+            service_id: The service ID. (Optional)
+            env_file_path: The path to the .env file. (Optional)
+            env_file_encoding: The encoding of the .env file. (Optional)
 
         Raises:
             ServiceInitializationError: If an error occurs during initialization.

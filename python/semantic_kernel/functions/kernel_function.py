@@ -48,19 +48,19 @@ class KernelFunction(KernelBaseModel):
     """Semantic Kernel function.
 
     Attributes:
-        name (str): The name of the function. Must be upper/lower case letters and
+        name: The name of the function. Must be upper/lower case letters and
             underscores with a minimum length of 1.
-        plugin_name (str): The name of the plugin that contains this function. Must be upper/lower
+        plugin_name: The name of the plugin that contains this function. Must be upper/lower
             case letters and underscores with a minimum length of 1.
-        description (Optional[str]): The description of the function.
-        is_prompt (bool): Whether the function is semantic.
-        stream_function (Optional[Callable[..., Any]]): The stream function for the function.
-        parameters (List[KernelParameterMetadata]): The parameters for the function.
-        return_parameter (Optional[KernelParameterMetadata]): The return parameter for the function.
-        function (Callable[..., Any]): The function to call.
-        prompt_execution_settings (PromptExecutionSettings): The AI prompt execution settings.
-        prompt_template_config (PromptTemplateConfig): The prompt template configuration.
-        metadata (Optional[KernelFunctionMetadata]): The metadata for the function.
+        description: The description of the function.
+        is_prompt: Whether the function is semantic.
+        stream_function: The stream function for the function.
+        parameters: The parameters for the function.
+        return_parameter: The return parameter for the function.
+        function: The function to call.
+        prompt_execution_settings: The AI prompt execution settings.
+        prompt_template_config: The prompt template configuration.
+        metadata: The metadata for the function.
     """
 
     # some attributes are now properties, still listed here for documentation purposes
@@ -156,11 +156,11 @@ class KernelFunction(KernelBaseModel):
         """Invoke the function with the given arguments.
 
         Args:
-            kernel (Kernel): The kernel
-            arguments (KernelArguments | None): The Kernel arguments.
+            kernel: The kernel
+            arguments: The Kernel arguments.
                 Optional, defaults to None.
-            metadata (Dict[str, Any]): Additional metadata.
-            kwargs (Dict[str, Any]): Additional keyword arguments that will be
+            metadata: Additional metadata.
+            kwargs: Additional keyword arguments that will be
 
         Returns:
             FunctionResult: The result of the function
@@ -175,7 +175,7 @@ class KernelFunction(KernelBaseModel):
         It relies on updating the context with the result from the function.
 
         Args:
-            context (FunctionInvocationContext): The invocation context.
+            context: The invocation context.
 
         """
         pass
@@ -190,10 +190,10 @@ class KernelFunction(KernelBaseModel):
         """Invoke the function with the given arguments.
 
         Args:
-            kernel (Kernel): The kernel
-            arguments (KernelArguments): The Kernel arguments
-            metadata (Dict[str, Any]): Additional metadata.
-            kwargs (Any): Additional keyword arguments that will be
+            kernel: The kernel
+            arguments: The Kernel arguments
+            metadata: Additional metadata.
+            kwargs: Additional keyword arguments that will be
                 added to the KernelArguments.
 
         Returns:
@@ -231,10 +231,10 @@ class KernelFunction(KernelBaseModel):
         """Invoke a stream async function with the given arguments.
 
         Args:
-            kernel (Kernel): The kernel
-            arguments (KernelArguments): The Kernel arguments
-            metadata (Dict[str, Any]): Additional metadata.
-            kwargs (Any): Additional keyword arguments that will be
+            kernel: The kernel
+            arguments: The Kernel arguments
+            metadata: Additional metadata.
+            kwargs: Additional keyword arguments that will be
                 added to the KernelArguments.
 
         Yields:
@@ -267,7 +267,7 @@ class KernelFunction(KernelBaseModel):
         """Copy the function, can also override the plugin_name.
 
         Args:
-            plugin_name (str): The new plugin name.
+            plugin_name: The new plugin name.
 
         Returns:
             KernelFunction: The copied function.

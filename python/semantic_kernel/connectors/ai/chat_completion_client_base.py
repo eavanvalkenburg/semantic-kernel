@@ -26,10 +26,10 @@ class ChatCompletionClientBase(AIServiceClientBase, ABC):
         """Create chat message contents, in the number specified by the settings.
 
         Args:
-            chat_history (ChatHistory): A list of chats in a chat_history object, that can be
+            chat_history: A list of chats in a chat_history object, that can be
                 rendered into messages from system, user, assistant and tools.
-            settings (PromptExecutionSettings): Settings for the request.
-            **kwargs (Any): The optional arguments.
+            settings: Settings for the request.
+            **kwargs: The optional arguments.
 
         Returns:
             A list of chat message contents representing the response(s) from the LLM.
@@ -42,10 +42,10 @@ class ChatCompletionClientBase(AIServiceClientBase, ABC):
         """This is the method that is called from the kernel to get a response from a chat-optimized LLM.
 
         Args:
-            chat_history (ChatHistory): A list of chat chat_history, that can be rendered into a
+            chat_history: A list of chat chat_history, that can be rendered into a
                 set of chat_history, from system, user, assistant and function.
-            settings (PromptExecutionSettings): Settings for the request.
-            kwargs (Dict[str, Any]): The optional arguments.
+            settings: Settings for the request.
+            kwargs: The optional arguments.
 
         Returns:
             A string representing the response from the LLM.
@@ -66,10 +66,10 @@ class ChatCompletionClientBase(AIServiceClientBase, ABC):
         """Create streaming chat message contents, in the number specified by the settings.
 
         Args:
-            chat_history (ChatHistory): A list of chat chat_history, that can be rendered into a
+            chat_history: A list of chat chat_history, that can be rendered into a
                 set of chat_history, from system, user, assistant and function.
-            settings (PromptExecutionSettings): Settings for the request.
-            kwargs (Dict[str, Any]): The optional arguments.
+            settings: Settings for the request.
+            kwargs: The optional arguments.
 
         Yields:
             A stream representing the response(s) from the LLM.
@@ -85,10 +85,10 @@ class ChatCompletionClientBase(AIServiceClientBase, ABC):
         """This is the method that is called from the kernel to get a stream response from a chat-optimized LLM.
 
         Args:
-            chat_history (ChatHistory): A list of chat chat_history, that can be rendered into a
+            chat_history: A list of chat chat_history, that can be rendered into a
                 set of chat_history, from system, user, assistant and function.
-            settings (PromptExecutionSettings): Settings for the request.
-            kwargs (Dict[str, Any]): The optional arguments.
+            settings: Settings for the request.
+            kwargs: The optional arguments.
 
         Yields:
             A stream representing the response(s) from the LLM.
@@ -119,11 +119,11 @@ class ChatCompletionClientBase(AIServiceClientBase, ABC):
         Override this method to customize the formatting of the chat history for a request.
 
         Args:
-            chat_history (ChatHistory): The chat history to prepare.
-            role_key (str): The key name for the role/author.
-            content_key (str): The key name for the content/message.
+            chat_history: The chat history to prepare.
+            role_key: The key name for the role/author.
+            content_key: The key name for the content/message.
 
         Returns:
-            prepared_chat_history (Any): The prepared chat history for a request.
+            prepared_chat_history: The prepared chat history for a request.
         """
         return [message.to_dict(role_key=role_key, content_key=content_key) for message in chat_history.messages]

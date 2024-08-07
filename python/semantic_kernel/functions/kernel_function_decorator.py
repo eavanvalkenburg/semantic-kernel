@@ -39,9 +39,9 @@ def kernel_function(
     and that is stored as a bool in __kernel_function_streaming__.
 
     Args:
-        func (Callable[..., object] | None): The function to decorate, can be None (if used as @kernel_function
-        name (str | None): The name of the function, if not supplied, the function name will be used.
-        description (str | None): The description of the function,
+        func: The function to decorate, can be None (if used as @kernel_function
+        name: The name of the function, if not supplied, the function name will be used.
+        description: The description of the function,
             if not supplied, the function docstring will be used, can be None.
 
     """

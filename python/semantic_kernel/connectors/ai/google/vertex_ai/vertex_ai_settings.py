@@ -16,17 +16,17 @@ class VertexAISettings(KernelBaseSettings):
     are ignored; however, validation will fail alerting that the
     settings are missing.
 
-    Required settings for prefix 'VERTEX_AI_' are:
-    - gemini_model_id: str - The Gemini model ID for the Vertex AI service, i.e. gemini-1.5-pro
-                This value can be found in the Vertex AI service deployment.
-                (Env var VERTEX_AI_GEMINI_MODEL_ID)
-    - embedding_model_id: str - The embedding model ID for the Vertex AI service, i.e. text-embedding-004
-                This value can be found in the Vertex AI service deployment.
-                (Env var VERTEX_AI_EMBEDDING_MODEL_ID)
-    - project_id: str - The Google Cloud project ID.
-                (Env var VERTEX_AI_PROJECT_ID)
-    - region: str - The Google Cloud region.
-                (Env var VERTEX_AI_REGION)
+    Args:
+        gemini_model_id: The Gemini model ID for the Vertex AI service, i.e. gemini-1.5-pro
+            This value can be found in the Vertex AI service deployment.
+            (Env var VERTEX_AI_GEMINI_MODEL_ID)
+        embedding_model_id: The embedding model ID for the Vertex AI service, i.e. text-embedding-004
+            This value can be found in the Vertex AI service deployment.
+            (Env var VERTEX_AI_EMBEDDING_MODEL_ID)
+        project_id: The Google Cloud project ID.
+            (Env var VERTEX_AI_PROJECT_ID)
+        region: The Google Cloud region.
+            (Env var VERTEX_AI_REGION)
     """
 
     env_prefix: ClassVar[str] = "VERTEX_AI_"

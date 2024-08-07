@@ -20,7 +20,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 @experimental_class
 class AzureTextEmbedding(AzureOpenAIConfigBase, OpenAITextEmbeddingBase):
-    """Azure Text Embedding class."""
+    """Azure Text Embedding."""
 
     def __init__(
         self,
@@ -38,25 +38,22 @@ class AzureTextEmbedding(AzureOpenAIConfigBase, OpenAITextEmbeddingBase):
     ) -> None:
         """Initialize an AzureTextEmbedding service.
 
-        service_id: The service ID. (Optional)
-        api_key  {str | None}: The optional api key. If provided, will override the value in the
-                env vars or .env file.
-        deployment_name  {str | None}: The optional deployment. If provided, will override the value
-            (text_deployment_name) in the env vars or .env file.
-        endpoint {str | None}: The optional deployment endpoint. If provided will override the value
-            in the env vars or .env file.
-        base_url {str | None}: The optional deployment base_url. If provided will override the value
-            in the env vars or .env file.
-        api_version {str | None}: The optional deployment api version. If provided will override the value
-            in the env vars or .env file.
-        ad_token {str | None}: The Azure AD token for authentication. (Optional)
-        ad_auth {AsyncAzureADTokenProvider | None}: Whether to use Azure Active Directory authentication.
-            (Optional) The default value is False.
-        default_headers: The default headers mapping of string keys to
-                string values for HTTP requests. (Optional)
-        async_client (Optional[AsyncAzureOpenAI]): An existing client to use. (Optional)
-        env_file_path (str | None): Use the environment settings file as a fallback to
-            environment variables. (Optional)
+        All values supplied in the constructor are optional. If a value is not supplied, the service will attempt to
+        load it from the environment or a .env file. When supplied the values have precedence over the environment or
+        .env file.
+
+        Args:
+            service_id: The service ID. (Optional)
+            api_key: The api key. (Optional)
+            deployment_name: The deployment name. (Optional)
+            endpoint: The deployment endpoint. (Optional)
+            base_url: The deployment base_url. (Optional)
+            api_version: The deployment api version. (Optional)
+            ad_token: The Azure AD token for authentication. (Optional)
+            ad_token_provider: The Azure AD token provider for authentication. (Optional)
+            default_headers: The default headers mapping of string keys to string values for HTTP requests. (Optional)
+            async_client: An existing client to use. (Optional)
+            env_file_path: Use the environment settings file as a fallback to environment variables. (Optional)
         """
         try:
             azure_openai_settings = AzureOpenAISettings.create(

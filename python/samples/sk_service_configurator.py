@@ -20,10 +20,10 @@ def add_service(
     Configure the AI service for the kernel
 
     Args:
-        kernel (Kernel): The kernel to configure
-        use_chat (bool): Whether to use the chat completion model, or the text completion model
-        env_file_path (str | None): The absolute or relative file path to the .env file.
-        env_file_encoding (str | None): The desired type of encoding. Defaults to utf-8.
+        kernel: The kernel to configure
+        use_chat: Whether to use the chat completion model, or the text completion model
+        env_file_path: The absolute or relative file path to the .env file.
+        env_file_encoding: The desired type of encoding. Defaults to utf-8.
 
     Returns:
         Kernel: The configured kernel

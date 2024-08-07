@@ -38,8 +38,8 @@ class ConversationSummaryPlugin:
         The template for this plugin is built-in, and will overwrite any template passed in the prompt_template_config.
 
         Args:
-            prompt_template_config (PromptTemplateConfig): The prompt template configuration.
-            return_key (str): The key to use for the return value.
+            prompt_template_config: The prompt template configuration.
+            return_key: The key to use for the return value.
             **kwargs: Additional keyword arguments, not used only for compatibility.
 
         """
@@ -74,9 +74,9 @@ class ConversationSummaryPlugin:
         """Given a long conversation transcript, summarize the conversation.
 
         Args:
-            input (str): A long conversation transcript.
-            kernel (Kernel): The kernel for function execution.
-            arguments (KernelArguments): Arguments used by the kernel.
+            input: A long conversation transcript.
+            kernel: The kernel for function execution.
+            arguments: Arguments used by the kernel.
 
         Returns:
             KernelArguments with the summarized conversation result in key self.return_key.

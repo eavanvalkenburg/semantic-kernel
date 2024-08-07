@@ -91,8 +91,8 @@ def chroma_compute_similarity_scores(embedding: ndarray, embedding_array: ndarra
     """Computes the cosine similarity scores between a query embedding and a group of embeddings.
 
     Args:
-        embedding (ndarray): The query embedding.
-        embedding_array (ndarray): The group of embeddings.
+        embedding: The query embedding.
+        embedding_array: The group of embeddings.
         **kwargs: Additional keyword arguments.
 
     Returns:

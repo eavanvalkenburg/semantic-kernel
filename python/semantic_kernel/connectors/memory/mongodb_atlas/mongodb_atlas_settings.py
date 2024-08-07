@@ -14,7 +14,7 @@ class MongoDBAtlasSettings(KernelBaseSettings):
     """MongoDB Atlas model settings.
 
     Args:
-    - connection_string: str - MongoDB Atlas connection string
+        connection_string: str - MongoDB Atlas connection string
         (Env var MONGODB_ATLAS_CONNECTION_STRING)
     """
 

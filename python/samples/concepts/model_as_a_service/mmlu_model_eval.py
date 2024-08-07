@@ -86,10 +86,10 @@ class MMLUPlugin:
         """Run a sample and return if the answer was correct.
 
         Args:
-            sample (str): The sample containing the question and the correct answer.
-            subject (str): The subject of the sample.
-            kernel (Kernel): The kernel.
-            service_id (str): The service id.
+            sample: The sample containing the question and the correct answer.
+            subject: The subject of the sample.
+            kernel: The kernel.
+            service_id: The service id.
 
         Returns:
             bool: Whether the answer was correct.
@@ -118,17 +118,15 @@ class MMLUPlugin:
 
 
 async def main():
-    datasets = load_mmlu_dataset(
-        [
-            "college_computer_science",
-            "astronomy",
-            "college_biology",
-            "college_chemistry",
-            "elementary_mathematics",
-            # Add more subjects here.
-            # See here for a full list of subjects: https://huggingface.co/datasets/cais/mmlu/viewer
-        ]
-    )
+    datasets = load_mmlu_dataset([
+        "college_computer_science",
+        "astronomy",
+        "college_biology",
+        "college_chemistry",
+        "elementary_mathematics",
+        # Add more subjects here.
+        # See here for a full list of subjects: https://huggingface.co/datasets/cais/mmlu/viewer
+    ])
     kernel = setup_kernel()
     ai_services = kernel.get_services_by_type(ChatCompletionClientBase).keys()
 

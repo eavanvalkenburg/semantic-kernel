@@ -28,8 +28,8 @@ class TextMemoryPlugin(KernelBaseModel):
         """Initialize a new instance of the TextMemoryPlugin.
 
         Args:
-            memory (SemanticTextMemoryBase): the underlying Semantic Text Memory to use
-            embeddings_kwargs (Optional[Dict[str, Any]]): the keyword arguments to pass to the embedding generator
+            memory: the underlying Semantic Text Memory to use
+            embeddings_kwargs: the keyword arguments to pass to the embedding generator
         """
         super().__init__(memory=memory, embeddings_kwargs=embeddings_kwargs)
 

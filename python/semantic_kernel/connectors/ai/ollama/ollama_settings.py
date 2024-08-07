@@ -16,11 +16,9 @@ class OllamaSettings(KernelBaseSettings):
     are ignored; however, validation will fail alerting that the
     settings are missing.
 
-    Required settings for prefix 'OLLAMA' are:
-    - model: str - Model name. (Env var OLLAMA_MODEL)
-
-    Optional settings for prefix 'OLLAMA' are:
-    - host: HttpsUrl - The endpoint of the Ollama service. (Env var OLLAMA_HOST)
+    Args:
+        model: Model name. (Env var OLLAMA_MODEL)
+        host: Optional, the endpoint of the Ollama service. (Env var OLLAMA_HOST)
     """
 
     env_prefix: ClassVar[str] = "OLLAMA_"

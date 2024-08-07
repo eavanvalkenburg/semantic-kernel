@@ -42,11 +42,11 @@ class GoogleAITextEmbedding(GoogleAIBase, EmbeddingGeneratorBase):
         - GOOGLE_AI_API_KEY
 
         Args:
-            embedding_model_id (str | None): The embedding model ID. (Optional)
-            api_key (str | None): The API key. (Optional)
-            service_id (str | None): The service ID. (Optional)
-            env_file_path (str | None): The path to the .env file. (Optional)
-            env_file_encoding (str | None): The encoding of the .env file. (Optional)
+            embedding_model_id: The embedding model ID. (Optional)
+            api_key: The API key. (Optional)
+            service_id: The service ID. (Optional)
+            env_file_path: The path to the .env file. (Optional)
+            env_file_encoding: The encoding of the .env file. (Optional)
 
         Raises:
             ServiceInitializationError: If an error occurs during initialization.

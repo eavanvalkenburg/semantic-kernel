@@ -149,8 +149,8 @@ class Plan:
         """Invoke the plan asynchronously.
 
         Args:
-            kernel (Kernel): The kernel to use for invocation.
-            arguments (KernelArguments, optional): The context to use. Defaults to None.
+            kernel: The kernel to use for invocation.
+            arguments: The context to use. Defaults to None.
 
         Returns:
             FunctionResult: The result of the function.

@@ -10,13 +10,12 @@ from semantic_kernel.utils.experimental_decorator import experimental_class
 
 @experimental_class
 class WeaviateSettings(KernelBaseSettings):
-    """Weaviate model settings.
+    """Weaviate settings.
 
     Args:
-        url: HttpsUrl | None - Weaviate URL (Env var WEAVIATE_URL)
-        api_key: SecretStr | None - Weaviate token (Env var WEAVIATE_API_KEY)
-        use_embed: bool - Whether to use the client embedding options
-          (Env var WEAVIATE_USE_EMBED)
+        url: Weaviate URL (Env var WEAVIATE_URL)
+        api_key: Weaviate token (Env var WEAVIATE_API_KEY)
+        use_embed: whether to use the client embedding options (Env var WEAVIATE_USE_EMBED)
     """
 
     env_prefix: ClassVar[str] = "WEAVIATE_"

@@ -34,7 +34,7 @@ class KernelFunctionMetadata(KernelBaseModel):
         """Compare to another KernelFunctionMetadata instance.
 
         Args:
-            other (KernelFunctionMetadata): The other KernelFunctionMetadata instance.
+            other: The other KernelFunctionMetadata instance.
 
         Returns:
             True if the two instances are equal, False otherwise.

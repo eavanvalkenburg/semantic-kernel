@@ -28,13 +28,13 @@ class BingConnector(ConnectorBase):
         """Initializes a new instance of the BingConnector class.
 
         Args:
-            api_key (str | None): The Bing Search API key. If provided, will override
+            api_key: The Bing Search API key. If provided, will override
                 the value in the env vars or .env file.
-            custom_config (str | None): The Bing Custom Search instance's unique identifier.
+            custom_config: The Bing Custom Search instance's unique identifier.
                 If provided, will override the value in the env vars or .env file.
-            env_file_path (str | None): The optional path to the .env file. If provided,
+            env_file_path: The optional path to the .env file. If provided,
                 the settings are read from this file path location.
-            env_file_encoding (str | None): The optional encoding of the .env file.
+            env_file_encoding: The optional encoding of the .env file.
         """
         try:
             self._settings = BingSettings.create(

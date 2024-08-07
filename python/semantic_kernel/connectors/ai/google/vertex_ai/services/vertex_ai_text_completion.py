@@ -1,9 +1,13 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-
 import sys
 from collections.abc import AsyncGenerator, AsyncIterable
 from typing import Any
+
+if sys.version_info >= (3, 12):
+    from typing import override  # pragma: no cover
+else:
+    from typing_extensions import override  # pragma: no cover
 
 import vertexai
 from pydantic import ValidationError
@@ -19,11 +23,6 @@ from semantic_kernel.connectors.ai.text_completion_client_base import TextComple
 from semantic_kernel.contents.streaming_text_content import StreamingTextContent
 from semantic_kernel.contents.text_content import TextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
-
-if sys.version_info >= (3, 12):
-    from typing import override  # pragma: no cover
-else:
-    from typing_extensions import override  # pragma: no cover
 
 
 class VertexAITextCompletion(VertexAIBase, TextCompletionClientBase):
@@ -46,12 +45,12 @@ class VertexAITextCompletion(VertexAIBase, TextCompletionClientBase):
         - VERTEX_AI_PROJECT_ID
 
         Args:
-            project_id (str): The Google Cloud project ID.
-            region (str): The Google Cloud region.
-            gemini_model_id (str): The Gemini model ID.
-            service_id (str): The Vertex AI service ID.
-            env_file_path (str): The path to the environment file.
-            env_file_encoding (str): The encoding of the environment file.
+            project_id: The Google Cloud project ID.
+            region: The Google Cloud region.
+            gemini_model_id: The Gemini model ID.
+            service_id: The Vertex AI service ID.
+            env_file_path: The path to the environment file.
+            env_file_encoding: The encoding of the environment file.
         """
         try:
             vertex_ai_settings = VertexAISettings.create(

@@ -27,8 +27,8 @@ def get_redis_key(collection_name: str, record_id: str) -> str:  # pragma: no co
     """Returns the Redis key for an element called record_id within collection_name.
 
     Args:
-        collection_name (str): Name for a collection of embeddings
-        record_id (str): ID associated with a memory record
+        collection_name: Name for a collection of embeddings
+        record_id: ID associated with a memory record
 
     Returns:
         str: Redis key in the format collection_name:id
@@ -40,7 +40,7 @@ def split_redis_key(redis_key: str) -> tuple[str, str]:  # pragma: no cover
     """Split a Redis key into its collection name and record ID.
 
     Args:
-        redis_key (str): Redis key
+        redis_key: Redis key
 
     Returns:
         tuple[str, str]: Tuple of the collection name and ID

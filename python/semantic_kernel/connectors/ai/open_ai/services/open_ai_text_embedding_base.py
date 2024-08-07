@@ -47,10 +47,10 @@ class OpenAITextEmbeddingBase(OpenAIHandler, EmbeddingGeneratorBase):
         """Returns embeddings for the given texts in the unedited format.
 
         Args:
-            texts (List[str]): The texts to generate embeddings for.
-            settings (PromptExecutionSettings): The settings to use for the request.
-            batch_size (int): The batch size to use for the request.
-            kwargs (Dict[str, Any]): Additional arguments to pass to the request.
+            texts: The texts to generate embeddings for.
+            settings: The settings to use for the request.
+            batch_size: The batch size to use for the request.
+            kwargs: Additional arguments to pass to the request.
         """
         if not settings:
             settings = OpenAIEmbeddingPromptExecutionSettings(ai_model_id=self.ai_model_id)

@@ -68,7 +68,6 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         services: A dict with the services registered with the Kernel, from KernelServicesExtension.
         ai_service_selector: The AI service selector to be used by the kernel, from KernelServicesExtension.
         retry_mechanism: The retry mechanism to be used by the kernel, from KernelReliabilityExtension.
-
     """
 
     def __init__(
@@ -118,16 +117,16 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         When multiple functions are provided only the last one is streamed, the rest is executed as a pipeline.
 
         Args:
-            function (KernelFunction): The function to execute,
+            function: The function to execute,
                 this value has precedence when supplying both this and using function_name and plugin_name,
                 if this is none, function_name and plugin_name are used and cannot be None.
-            arguments (KernelArguments | None): The arguments to pass to the function(s), optional
-            function_name (str | None): The name of the function to execute
-            plugin_name (str | None): The name of the plugin to execute
-            metadata (dict[str, Any]): The metadata to pass to the function(s)
-            return_function_results (bool): If True, the function results are yielded as a list[FunctionResult]
+            arguments: The arguments to pass to the function(s), optional
+            function_name: The name of the function to execute
+            plugin_name: The name of the plugin to execute
+            metadata: The metadata to pass to the function(s)
+            return_function_results: If True, the function results are yielded as a list[FunctionResult]
             in addition to the streaming content, otherwise only the streaming content is yielded.
-            kwargs (dict[str, Any]): arguments that can be used instead of supplying KernelArguments
+            kwargs: arguments that can be used instead of supplying KernelArguments
 
         Yields:
             StreamingContentMixin: The content of the stream of the last function provided.
@@ -177,14 +176,14 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         """Execute a function and return the FunctionResult.
 
         Args:
-            function (KernelFunction): The function or functions to execute,
+            function: The function or functions to execute,
                 this value has precedence when supplying both this and using function_name and plugin_name,
                 if this is none, function_name and plugin_name are used and cannot be None.
-            arguments (KernelArguments): The arguments to pass to the function(s), optional
-            function_name (str | None): The name of the function to execute
-            plugin_name (str | None): The name of the plugin to execute
-            metadata (dict[str, Any]): The metadata to pass to the function(s)
-            kwargs (dict[str, Any]): arguments that can be used instead of supplying KernelArguments
+            arguments: The arguments to pass to the function(s), optional
+            function_name: The name of the function to execute
+            plugin_name: The name of the plugin to execute
+            metadata: The metadata to pass to the function(s)
+            kwargs: arguments that can be used instead of supplying KernelArguments
 
         Raises:
             KernelInvokeException: If an error occurs during function invocation
@@ -229,12 +228,12 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         """Invoke a function from the provided prompt.
 
         Args:
-            prompt (str): The prompt to use
-            function_name (str): The name of the function, optional
-            plugin_name (str): The name of the plugin, optional
-            arguments (KernelArguments | None): The arguments to pass to the function(s), optional
-            template_format (str | None): The format of the prompt template
-            kwargs (dict[str, Any]): arguments that can be used instead of supplying KernelArguments
+            prompt: The prompt to use
+            function_name: The name of the function, optional
+            plugin_name: The name of the plugin, optional
+            arguments: The arguments to pass to the function(s), optional
+            template_format: The format of the prompt template
+            kwargs: arguments that can be used instead of supplying KernelArguments
 
         Returns:
             FunctionResult | list[FunctionResult] | None: The result of the function(s)
@@ -269,13 +268,13 @@ class Kernel(KernelFilterExtension, KernelFunctionExtension, KernelServicesExten
         """Invoke a function from the provided prompt and stream the results.
 
         Args:
-            prompt (str): The prompt to use
-            function_name (str): The name of the function, optional
-            plugin_name (str): The name of the plugin, optional
-            arguments (KernelArguments | None): The arguments to pass to the function(s), optional
-            template_format (str | None): The format of the prompt template
-            return_function_results (bool): If True, the function results are yielded as a list[FunctionResult]
-            kwargs (dict[str, Any]): arguments that can be used instead of supplying KernelArguments
+            prompt: The prompt to use
+            function_name: The name of the function, optional
+            plugin_name: The name of the plugin, optional
+            arguments: The arguments to pass to the function(s), optional
+            template_format: The format of the prompt template
+            return_function_results: If True, the function results are yielded as a list[FunctionResult]
+            kwargs: arguments that can be used instead of supplying KernelArguments
 
         Returns:
             AsyncIterable[StreamingContentMixin]: The content of the stream of the last function provided.

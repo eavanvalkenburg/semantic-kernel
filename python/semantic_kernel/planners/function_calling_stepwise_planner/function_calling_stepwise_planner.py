@@ -71,8 +71,8 @@ class FunctionCallingStepwisePlanner(KernelBaseModel):
         read from the default yaml plan file and the step prompt file.
 
         Args:
-            service_id (str): The service id
-            options (Optional[FunctionCallingStepwisePlannerOptions], optional): The options for
+            service_id: The service id
+            options: The options for
                 the function calling stepwise planner. Defaults to None.
         """
         options = options or FunctionCallingStepwisePlannerOptions()

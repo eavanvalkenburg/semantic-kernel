@@ -3,6 +3,11 @@
 import sys
 from typing import Any
 
+if sys.version_info >= (3, 12):
+    from typing import override  # pragma: no cover
+else:
+    from typing_extensions import override  # pragma: no cover
+
 import vertexai
 from numpy import array, ndarray
 from pydantic import ValidationError
@@ -16,11 +21,6 @@ from semantic_kernel.connectors.ai.google.vertex_ai.vertex_ai_prompt_execution_s
 from semantic_kernel.connectors.ai.google.vertex_ai.vertex_ai_settings import VertexAISettings
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
-
-if sys.version_info >= (3, 12):
-    from typing import override  # pragma: no cover
-else:
-    from typing_extensions import override  # pragma: no cover
 
 
 class VertexAITextEmbedding(VertexAIBase, EmbeddingGeneratorBase):
@@ -43,12 +43,12 @@ class VertexAITextEmbedding(VertexAIBase, EmbeddingGeneratorBase):
         - VERTEX_AI_PROJECT_ID
 
         Args:
-            project_id (str): The Google Cloud project ID.
-            region (str): The Google Cloud region.
-            embedding_model_id (str): The Gemini model ID.
-            service_id (str): The Vertex AI service ID.
-            env_file_path (str): The path to the environment file.
-            env_file_encoding (str): The encoding of the environment file.
+            project_id: The Google Cloud project ID.
+            region: The Google Cloud region.
+            embedding_model_id: The Gemini model ID.
+            service_id: The Vertex AI service ID.
+            env_file_path: The path to the environment file.
+            env_file_encoding: The encoding of the environment file.
         """
         try:
             vertex_ai_settings = VertexAISettings.create(

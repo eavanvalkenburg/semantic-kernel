@@ -27,7 +27,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 class ChatCompletionAgent(Agent):
     """A KernelAgent specialization based on ChatCompletionClientBase.
 
-    Note: enable `function_choice_behavior` on the PromptExecutionSettings to enable function
+    Enable `function_choice_behavior` on the PromptExecutionSettings to enable function
     choice behavior which allows the kernel to utilize plugins and functions registered in
     the kernel.
     """
@@ -50,11 +50,10 @@ class ChatCompletionAgent(Agent):
 
         Args:
             service_id: The service id for the chat completion service. (optional) If not provided,
-                the default service name `default` will be used.
+                the default service name 'default' will be used.
             kernel: The kernel instance. (optional)
             name: The name of the agent. (optional)
-            id: The unique identifier for the agent. (optional) If not provided,
-                a unique GUID will be generated.
+            id: The unique identifier for the agent. (optional) If not provided, a unique GUID will be generated.
             description: The description of the agent. (optional)
             instructions: The instructions for the agent. (optional)
             execution_settings: The execution settings for the agent. (optional)
@@ -80,10 +79,9 @@ class ChatCompletionAgent(Agent):
         """Invoke the chat history handler.
 
         Args:
-            kernel: The kernel instance.
             history: The chat history.
 
-        Returns:
+        Yields:
             An async iterable of ChatMessageContent.
         """
         # Get the chat completion service
@@ -133,10 +131,9 @@ class ChatCompletionAgent(Agent):
         """Invoke the chat history handler in streaming mode.
 
         Args:
-            kernel: The kernel instance.
             history: The chat history.
 
-        Returns:
+        Yields:
             An async generator of StreamingChatMessageContent.
         """
         # Get the chat completion service

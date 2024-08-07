@@ -41,18 +41,18 @@ class AzureOpenAIConfigBase(OpenAIHandler):
         This is necessary for types like `HttpsUrl` and `OpenAIModelTypes`.
 
         Args:
-            deployment_name (str): Name of the deployment.
-            ai_model_type (OpenAIModelTypes): The type of OpenAI model to deploy.
-            endpoint (HttpsUrl): The specific endpoint URL for the deployment. (Optional)
-            base_url (HttpsUrl): The base URL for Azure services. (Optional)
-            api_version (str): Azure API version. Defaults to the defined DEFAULT_AZURE_API_VERSION.
-            service_id (str): Service ID for the deployment. (Optional)
-            api_key (str): API key for Azure services. (Optional)
-            ad_token (str): Azure AD token for authentication. (Optional)
-            ad_token_provider (Callable[[], Union[str, Awaitable[str]]]): A callable
+            deployment_name: Name of the deployment.
+            ai_model_type: The type of OpenAI model to deploy.
+            endpoint: The specific endpoint URL for the deployment. (Optional)
+            base_url: The base URL for Azure services. (Optional)
+            api_version: Azure API version. Defaults to the defined DEFAULT_AZURE_API_VERSION.
+            service_id: Service ID for the deployment. (Optional)
+            api_key: API key for Azure services. (Optional)
+            ad_token: Azure AD token for authentication. (Optional)
+            ad_token_provider: A callable
                 or coroutine function providing Azure AD tokens. (Optional)
-            default_headers (Union[Mapping[str, str], None]): Default headers for HTTP requests. (Optional)
-            client (AsyncAzureOpenAI): An existing client to use. (Optional)
+            default_headers: Default headers for HTTP requests. (Optional)
+            client: An existing client to use. (Optional)
 
         """
         # Merge APP_INFO into the headers if it exists

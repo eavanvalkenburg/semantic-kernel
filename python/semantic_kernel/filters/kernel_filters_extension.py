@@ -42,8 +42,8 @@ class KernelFilterExtension(KernelBaseModel, ABC):
         but it will also be the last executed for the part after `await next(context)`.
 
         Args:
-            filter_type (str): The type of the filter to add (function_invocation, prompt_rendering)
-            filter (object): The filter to add
+            filter_type: The type of the filter to add (function_invocation, prompt_rendering)
+            filter: The filter to add
 
         """
         if not isinstance(filter_type, FilterTypes):
@@ -76,8 +76,8 @@ class KernelFilterExtension(KernelBaseModel, ABC):
         Args:
             filter_type (str | FilterTypes | None):
                 The type of the filter to remove.
-            filter_id (int): The id of the hook to remove
-            position (int): The position of the filter in the list
+            filter_id: The id of the hook to remove
+            position: The position of the filter in the list
 
         """
         if filter_type and not isinstance(filter_type, FilterTypes):

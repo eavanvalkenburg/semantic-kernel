@@ -34,13 +34,13 @@ def create_template_helper_from_function(
     """Create a helper function for both the Handlebars and Jinja2 templating engines from a kernel function.
 
     Args:
-        function (KernelFunction): The kernel function to create a helper for.
-        kernel (Kernel): The kernel to use for invoking the function.
-        base_arguments (KernelArguments): The base arguments to use when invoking the function.
-        template_format (TEMPLATE_FORMAT_TYPES): The template format to create the helper for.
-        allow_dangerously_set_content (bool, optional): Return the content of the function result
+        function: The kernel function to create a helper for.
+        kernel: The kernel to use for invoking the function.
+        base_arguments: The base arguments to use when invoking the function.
+        template_format: The template format to create the helper for.
+        allow_dangerously_set_content: Return the content of the function result
             without encoding it or not.
-        enable_async (bool, optional): Enable async helper function. Defaults to False.
+        enable_async: Enable async helper function. Defaults to False.
             Currently only works for Jinja2 templates.
 
     Returns:

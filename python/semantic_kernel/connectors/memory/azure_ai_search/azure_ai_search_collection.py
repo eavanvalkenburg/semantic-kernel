@@ -52,21 +52,21 @@ class AzureAISearchCollection(VectorStoreRecordCollection[str, TModel], Generic[
         """Initializes a new instance of the AzureAISearchCollection class.
 
         Args:
-            data_model_type (type[TModel]): The type of the data model.
-            data_model_definition (VectorStoreRecordDefinition): The model definition, optional.
-            collection_name (str): The name of the collection, optional.
-            search_index_client (SearchIndexClient): The search index client for interacting with Azure AI Search,
+            data_model_type: The type of the data model.
+            data_model_definition: The model definition, optional.
+            collection_name: The name of the collection, optional.
+            search_index_client: The search index client for interacting with Azure AI Search,
                 used for creating and deleting indexes.
-            search_client (SearchClient): The search client for interacting with Azure AI Search,
+            search_client: The search client for interacting with Azure AI Search,
                 used for record operations.
             **kwargs: Additional keyword arguments, including:
                 The same keyword arguments used for AzureAISearchVectorStore:
-                    search_endpoint: str | None = None,
-                    api_key: str | None = None,
-                    azure_credentials: AzureKeyCredential | None = None,
-                    token_credentials: AsyncTokenCredential | TokenCredential | None = None,
-                    env_file_path: str | None = None,
-                    env_file_encoding: str | None = None
+                search_endpoint: str | None = None,
+                api_key: str | None = None,
+                azure_credentials: AzureKeyCredential | None = None,
+                token_credentials: AsyncTokenCredential | TokenCredential | None = None,
+                env_file_path: str | None = None,
+                env_file_encoding: str | None = None
 
         """
         if search_client and search_index_client:
@@ -169,10 +169,9 @@ class AzureAISearchCollection(VectorStoreRecordCollection[str, TModel], Generic[
 
         Args:
             **kwargs: Additional keyword arguments.
-                index (SearchIndex): The search index to create, if this is supplied
-                    this is used instead of a index created based on the definition.
-                encryption_key (SearchResourceEncryptionKey): The encryption key to use,
-                    not used when index is supplied.
+                index - The search index to create, if this is supplied
+                this is used instead of a index created based on the definition.
+                encryption_key - The encryption key to use, not used when index is supplied.
                 other kwargs are passed to the create_index method.
         """
         if index := kwargs.pop("index", None):

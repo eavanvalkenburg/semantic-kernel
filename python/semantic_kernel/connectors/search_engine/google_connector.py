@@ -28,13 +28,13 @@ class GoogleConnector(ConnectorBase):
         """Initializes a new instance of the GoogleConnector class.
 
         Args:
-            api_key (str | None): The Google Custom Search API key. If provided, will override
+            api_key: The Google Custom Search API key. If provided, will override
                 the value in the env vars or .env file.
-            search_engine_id (str | None): The Google search engine ID. If provided, will override
+            search_engine_id: The Google search engine ID. If provided, will override
                 the value in the env vars or .env file.
-            env_file_path (str | None): The optional path to the .env file. If provided,
+            env_file_path: The optional path to the .env file. If provided,
                 the settings are read from this file path location.
-            env_file_encoding (str | None): The optional encoding of the .env file.
+            env_file_encoding: The optional encoding of the .env file.
         """
         try:
             self._settings = GoogleSearchSettings.create(
@@ -53,9 +53,9 @@ class GoogleConnector(ConnectorBase):
         """Returns the search results of the query provided by pinging the Google Custom search API.
 
         Args:
-            query (str): The search query.
-            num_results (int): The number of search results to return. Default is 1.
-            offset (int): The offset of the search results. Default is 0.
+            query: The search query.
+            num_results: The number of search results to return. Default is 1.
+            offset: The offset of the search results. Default is 0.
 
         Returns:
             list[str]: A list of search results snippets.

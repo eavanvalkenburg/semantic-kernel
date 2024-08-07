@@ -108,28 +108,28 @@ class OpenAIAssistantBase(Agent):
         """Initialize an OpenAIAssistant Base.
 
         Args:
-            ai_model_id (str): The AI model id. Defaults to None.
-            client (AsyncOpenAI): The client, either AsyncOpenAI or AsyncAzureOpenAI.
-            service_id (str): The service id.
-            kernel (Kernel): The kernel. (optional)
-            id (str): The id. Defaults to None. (optional)
-            name (str): The name. Defaults to None. (optional)
-            description (str): The description. Defaults to None. (optional)
-            default_headers (dict[str, str]): The default headers. Defaults to None. (optional)
-            instructions (str): The instructions. Defaults to None. (optional)
-            enable_code_interpreter (bool): Enable code interpreter. Defaults to False. (optional)
-            enable_file_search (bool): Enable file search. Defaults to False. (optional)
-            enable_json_response (bool): Enable JSON response. Defaults to False. (optional)
-            file_ids (list[str]): The file ids. Defaults to []. (optional)
-            temperature (float): The temperature. Defaults to None. (optional)
-            top_p (float): The top p. Defaults to None. (optional)
-            vector_store_id (str): The vector store id. Defaults to None. (optional)
-            metadata (dict[str, Any]): The metadata. Defaults to {}. (optional)
-            max_completion_tokens (int): The max completion tokens. Defaults to None. (optional)
-            max_prompt_tokens (int): The max prompt tokens. Defaults to None. (optional)
-            parallel_tool_calls_enabled (bool): Enable parallel tool calls. Defaults to True. (optional)
-            truncation_message_count (int): The truncation message count. Defaults to None. (optional)
-            kwargs (Any): The keyword arguments.
+            ai_model_id: The AI model id. Defaults to None.
+            client: The client, either AsyncOpenAI or AsyncAzureOpenAI.
+            service_id: The service id.
+            kernel: The kernel. (optional)
+            id: The id. Defaults to None. (optional)
+            name: The name. Defaults to None. (optional)
+            description: The description. Defaults to None. (optional)
+            default_headers: The default headers. Defaults to None. (optional)
+            instructions: The instructions. Defaults to None. (optional)
+            enable_code_interpreter: Enable code interpreter. Defaults to False. (optional)
+            enable_file_search: Enable file search. Defaults to False. (optional)
+            enable_json_response: Enable JSON response. Defaults to False. (optional)
+            file_ids: The file ids. Defaults to []. (optional)
+            temperature: The temperature. Defaults to None. (optional)
+            top_p: The top p. Defaults to None. (optional)
+            vector_store_id: The vector store id. Defaults to None. (optional)
+            metadata: The metadata. Defaults to {}. (optional)
+            max_completion_tokens: The max completion tokens. Defaults to None. (optional)
+            max_prompt_tokens: The max prompt tokens. Defaults to None. (optional)
+            parallel_tool_calls_enabled: Enable parallel tool calls. Defaults to True. (optional)
+            truncation_message_count: The truncation message count. Defaults to None. (optional)
+            kwargs: The keyword arguments.
         """
         args: dict[str, Any] = {}
 
@@ -180,16 +180,16 @@ class OpenAIAssistantBase(Agent):
         """Create the assistant.
 
         Args:
-            ai_model_id (str): The AI model id. Defaults to None. (optional)
-            description (str): The description. Defaults to None. (optional)
-            instructions (str): The instructions. Defaults to None. (optional)
-            name (str): The name. Defaults to None. (optional)
-            enable_code_interpreter (bool): Enable code interpreter. Defaults to None. (optional)
-            enable_file_search (bool): Enable file search. Defaults to None. (optional)
-            file_ids (list[str]): The file ids. Defaults to None. (optional)
-            vector_store_id (str): The vector store id. Defaults to None. (optional)
-            metadata (dict[str, str]): The metadata. Defaults to {}. (optional)
-            kwargs (Any): Extra keyword arguments.
+            ai_model_id: The AI model id. Defaults to None. (optional)
+            description: The description. Defaults to None. (optional)
+            instructions: The instructions. Defaults to None. (optional)
+            name: The name. Defaults to None. (optional)
+            enable_code_interpreter: Enable code interpreter. Defaults to None. (optional)
+            enable_file_search: Enable file search. Defaults to None. (optional)
+            file_ids: The file ids. Defaults to None. (optional)
+            vector_store_id: The vector store id. Defaults to None. (optional)
+            metadata: The metadata. Defaults to {}. (optional)
+            kwargs: Extra keyword arguments.
 
         Returns:
             Assistant: The assistant
@@ -370,10 +370,10 @@ class OpenAIAssistantBase(Agent):
         """Create a thread.
 
         Args:
-            code_interpreter_file_ids (list[str]): The code interpreter file ids. Defaults to []. (optional)
-            messages (list[ChatMessageContent]): The chat messages. Defaults to []. (optional)
-            vector_store_id (str): The vector store id. Defaults to None. (optional)
-            metadata (dict[str, str]): The metadata. Defaults to {}. (optional)
+            code_interpreter_file_ids: The code interpreter file ids. Defaults to []. (optional)
+            messages: The chat messages. Defaults to []. (optional)
+            vector_store_id: The vector store id. Defaults to None. (optional)
+            metadata: The metadata. Defaults to {}. (optional)
 
         Returns:
             str: The thread id.
@@ -413,7 +413,7 @@ class OpenAIAssistantBase(Agent):
         """Delete a thread.
 
         Args:
-            thread_id (str): The thread id.
+            thread_id: The thread id.
         """
         await self.client.beta.threads.delete(thread_id)
 
@@ -432,8 +432,8 @@ class OpenAIAssistantBase(Agent):
         """Add a file.
 
         Args:
-            file_path (str): The file path.
-            purpose (str): The purpose. Can be "assistants" or "vision".
+            file_path: The file path.
+            purpose: The purpose. Can be "assistants" or "vision".
 
         Returns:
             str: The file id.
@@ -452,8 +452,8 @@ class OpenAIAssistantBase(Agent):
         """Add a chat message.
 
         Args:
-            thread_id (str): The thread id.
-            message (ChatMessageContent): The chat message.
+            thread_id: The thread id.
+            message: The chat message.
 
         Returns:
             Message: The message.
@@ -480,7 +480,7 @@ class OpenAIAssistantBase(Agent):
         """Get the messages for the specified thread.
 
         Args:
-            thread_id (str): The thread id.
+            thread_id: The thread id.
 
         Yields:
             ChatMessageContent: The chat message.
@@ -526,19 +526,19 @@ class OpenAIAssistantBase(Agent):
         The supplied arguments will take precedence over the specified assistant level attributes.
 
         Args:
-            thread_id (str): The thread id.
-            ai_model_id (str): The AI model id. Defaults to None. (optional)
-            enable_code_interpreter (bool): Enable code interpreter. Defaults to False. (optional)
-            enable_file_search (bool): Enable file search. Defaults to False. (optional)
-            enable_json_response (bool): Enable JSON response. Defaults to False. (optional)
-            max_completion_tokens (int): The max completion tokens. Defaults to None. (optional)
-            max_prompt_tokens (int): The max prompt tokens. Defaults to None. (optional)
-            parallel_tool_calls_enabled (bool): Enable parallel tool calls. Defaults to True. (optional)
-            truncation_message_count (int): The truncation message count. Defaults to None. (optional)
-            temperature (float): The temperature. Defaults to None. (optional)
-            top_p (float): The top p. Defaults to None. (optional)
-            metadata (dict[str, str]): The metadata. Defaults to {}. (optional)
-            kwargs (Any): Extra keyword arguments.
+            thread_id: The thread id.
+            ai_model_id: The AI model id. Defaults to None. (optional)
+            enable_code_interpreter: Enable code interpreter. Defaults to False. (optional)
+            enable_file_search: Enable file search. Defaults to False. (optional)
+            enable_json_response: Enable JSON response. Defaults to False. (optional)
+            max_completion_tokens: The max completion tokens. Defaults to None. (optional)
+            max_prompt_tokens: The max prompt tokens. Defaults to None. (optional)
+            parallel_tool_calls_enabled: Enable parallel tool calls. Defaults to True. (optional)
+            truncation_message_count: The truncation message count. Defaults to None. (optional)
+            temperature: The temperature. Defaults to None. (optional)
+            top_p: The top p. Defaults to None. (optional)
+            metadata: The metadata. Defaults to {}. (optional)
+            kwargs: Extra keyword arguments.
 
         Yields:
             ChatMessageContent: The chat message content.
@@ -583,19 +583,19 @@ class OpenAIAssistantBase(Agent):
         The supplied arguments will take precedence over the specified assistant level attributes.
 
         Args:
-            thread_id (str): The thread id.
-            ai_model_id (str): The AI model id. Defaults to None. (optional)
-            enable_code_interpreter (bool): Enable code interpreter. Defaults to False. (optional)
-            enable_file_search (bool): Enable file search. Defaults to False. (optional)
-            enable_json_response (bool): Enable JSON response. Defaults to False. (optional)
-            max_completion_tokens (int): The max completion tokens. Defaults to None. (optional)
-            max_prompt_tokens (int): The max prompt tokens. Defaults to None. (optional)
-            parallel_tool_calls_enabled (bool): Enable parallel tool calls. Defaults to True. (optional)
-            truncation_message_count (int): The truncation message count. Defaults to None. (optional)
-            temperature (float): The temperature. Defaults to None. (optional)
-            top_p (float): The top p. Defaults to None. (optional)
-            metadata (dict[str, str]): The metadata. Defaults to {}. (optional)
-            kwargs (Any): Extra keyword arguments.
+            thread_id: The thread id.
+            ai_model_id: The AI model id. Defaults to None. (optional)
+            enable_code_interpreter: Enable code interpreter. Defaults to False. (optional)
+            enable_file_search: Enable file search. Defaults to False. (optional)
+            enable_json_response: Enable JSON response. Defaults to False. (optional)
+            max_completion_tokens: The max completion tokens. Defaults to None. (optional)
+            max_prompt_tokens: The max prompt tokens. Defaults to None. (optional)
+            parallel_tool_calls_enabled: Enable parallel tool calls. Defaults to True. (optional)
+            truncation_message_count: The truncation message count. Defaults to None. (optional)
+            temperature: The temperature. Defaults to None. (optional)
+            top_p: The top p. Defaults to None. (optional)
+            metadata: The metadata. Defaults to {}. (optional)
+            kwargs: Extra keyword arguments.
 
         Yields:
             tuple[bool, ChatMessageContent]: A tuple of visibility and chat message content.
@@ -962,8 +962,8 @@ class OpenAIAssistantBase(Agent):
         """Extract function call contents from the run.
 
         Args:
-            run (Run): The run.
-            function_steps (dict[str, FunctionCallContent]): The function steps
+            run: The run.
+            function_steps: The function steps
 
         Returns:
             list[FunctionCallContent]: The list of function call contents.
@@ -987,8 +987,8 @@ class OpenAIAssistantBase(Agent):
         """Invoke function calls and store results in chat history.
 
         Args:
-            fccs (List[FunctionCallContent]): The function call contents.
-            chat_history (ChatHistory): The chat history.
+            fccs: The function call contents.
+            chat_history: The chat history.
 
         Returns:
             List[Any]: The results.
@@ -1003,7 +1003,7 @@ class OpenAIAssistantBase(Agent):
         """Format tool outputs from chat history for submission.
 
         Args:
-            chat_history (ChatHistory): The chat history.
+            chat_history: The chat history.
 
         Returns:
             list[dict[str, str]]: The formatted tool outputs

@@ -18,7 +18,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class AzureTextCompletion(AzureOpenAIConfigBase, OpenAITextCompletionBase):
-    """Azure Text Completion class."""
+    """Azure Text Completion."""
 
     def __init__(
         self,
@@ -38,22 +38,22 @@ class AzureTextCompletion(AzureOpenAIConfigBase, OpenAITextCompletionBase):
 
         Args:
             service_id: The service ID for the Azure deployment. (Optional)
-            api_key (str | None): The optional api key. If provided, will override the value in the
+            api_key: The optional api key. If provided, will override the value in the
                 env vars or .env file.
-            deployment_name  (str | None): The optional deployment. If provided, will override the value
+            deployment_name: The optional deployment. If provided, will override the value
                 (text_deployment_name) in the env vars or .env file.
-            endpoint (str | None): The optional deployment endpoint. If provided will override the value
+            endpoint: The optional deployment endpoint. If provided will override the value
                 in the env vars or .env file.
-            base_url (str | None): The optional deployment base_url. If provided will override the value
+            base_url: The optional deployment base_url. If provided will override the value
                 in the env vars or .env file.
-            api_version (str | None): The optional deployment api version. If provided will override the value
+            api_version: The optional deployment api version. If provided will override the value
                 in the env vars or .env file.
             ad_token: The Azure Active Directory token. (Optional)
             ad_token_provider: The Azure Active Directory token provider. (Optional)
             default_headers: The default headers mapping of string keys to
                 string values for HTTP requests. (Optional)
-            async_client (Optional[AsyncAzureOpenAI]): An existing client to use. (Optional)
-            env_file_path (str | None): Use the environment settings file as a fallback to
+            async_client: An existing client to use. (Optional)
+            env_file_path: Use the environment settings file as a fallback to
                 environment variables. (Optional)
         """
         try:

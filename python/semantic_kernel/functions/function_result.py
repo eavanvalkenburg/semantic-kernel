@@ -17,9 +17,9 @@ class FunctionResult(KernelBaseModel):
     """The result of a function.
 
     Args:
-        function (KernelFunctionMetadata): The metadata of the function that was invoked.
-        value (Any): The value of the result.
-        metadata (Mapping[str, Any]): The metadata of the result.
+        function: The metadata of the function that was invoked.
+        value: The value of the result.
+        metadata: The metadata of the result.
 
     Methods:
         __str__: Get the string representation of the result, will call str() on the value,
@@ -57,7 +57,7 @@ class FunctionResult(KernelBaseModel):
         """Get the inner content of the function result.
 
         Args:
-            index (int): The index of the inner content if the inner content is a list, default 0.
+            index: The index of the inner content if the inner content is a list, default 0.
         """
         if isinstance(self.value, list) and isinstance(self.value[index], KernelContent):
             return self.value[index].inner_content

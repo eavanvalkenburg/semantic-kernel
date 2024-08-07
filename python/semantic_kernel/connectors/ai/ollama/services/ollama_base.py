@@ -11,7 +11,7 @@ class OllamaBase(KernelBaseModel, ABC):
     """Ollama service base.
 
     Args:
-        client [AsyncClient]: An Ollama client to use for the service.
+        client: An Ollama client to use for the service.
     """
 
     client: AsyncClient

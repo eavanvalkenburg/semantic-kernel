@@ -29,9 +29,9 @@ class HandlebarsPromptTemplate(PromptTemplateBase):
     if not found, the literal value is returned.
 
     Args:
-        prompt_template_config (PromptTemplateConfig): The prompt template configuration
+        prompt_template_config: The prompt template configuration
             This is checked if the template format is 'handlebars'
-        allow_dangerously_set_content (bool = False): Allow content without encoding throughout, this overrides
+        allow_dangerously_set_content: Allow content without encoding throughout, this overrides
             the same settings in the prompt template config and input variables.
             This reverts the behavior to unencoded input.
 
@@ -86,18 +86,16 @@ class HandlebarsPromptTemplate(PromptTemplateBase):
         allow_unsafe_function_output = self._get_allow_dangerously_set_function_output()
         helpers: dict[str, Callable[..., Any]] = {}
         for plugin in kernel.plugins.values():
-            helpers.update(
-                {
-                    function.fully_qualified_name: create_template_helper_from_function(
-                        function,
-                        kernel,
-                        arguments,
-                        self.prompt_template_config.template_format,
-                        allow_unsafe_function_output,
-                    )
-                    for function in plugin
-                }
-            )
+            helpers.update({
+                function.fully_qualified_name: create_template_helper_from_function(
+                    function,
+                    kernel,
+                    arguments,
+                    self.prompt_template_config.template_format,
+                    allow_unsafe_function_output,
+                )
+                for function in plugin
+            })
         helpers.update(HANDLEBAR_SYSTEM_HELPERS)
 
         try:

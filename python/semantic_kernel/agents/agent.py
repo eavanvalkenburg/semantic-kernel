@@ -24,8 +24,7 @@ class Agent(KernelBaseModel):
     Attributes:
         name: The name of the agent (optional).
         description: The description of the agent (optional).
-        id: The unique identifier of the agent (optional). If no id is provided,
-            a new UUID will be generated.
+        id: The unique identifier of the agent (optional). If no id is provided, a new UUID will be generated.
         instructions: The instructions for the agent (optional
     """
 

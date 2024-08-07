@@ -50,13 +50,13 @@ class AzureAIInferenceTextEmbedding(EmbeddingGeneratorBase, AzureAIInferenceBase
         - AZURE_AI_INFERENCE_ENDPOINT
 
         Args:
-            ai_model_id: (str): A string that is used to identify the model such as the model name. (Required)
-            api_key (str | None): The API key for the Azure AI Inference service deployment. (Optional)
-            endpoint (str | None): The endpoint of the Azure AI Inference service deployment. (Optional)
-            service_id (str | None): Service ID for the chat completion service. (Optional)
-            env_file_path (str | None): The path to the environment file. (Optional)
-            env_file_encoding (str | None): The encoding of the environment file. (Optional)
-            client (EmbeddingsClient | None): The Azure AI Inference client to use. (Optional)
+            ai_model_id: A string that is used to identify the model such as the model name. (Required)
+            api_key: The API key for the Azure AI Inference service deployment. (Optional)
+            endpoint: The endpoint of the Azure AI Inference service deployment. (Optional)
+            service_id: Service ID for the chat completion service. (Optional)
+            env_file_path: The path to the environment file. (Optional)
+            env_file_encoding: The encoding of the environment file. (Optional)
+            client: The Azure AI Inference client to use. (Optional)
 
         Raises:
             ServiceInitializationError: If an error occurs during initialization.

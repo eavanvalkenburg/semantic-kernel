@@ -23,8 +23,8 @@ class TextCompletionClientBase(AIServiceClientBase, ABC):
         """Create text contents, in the number specified by the settings.
 
         Args:
-            prompt (str): The prompt to send to the LLM.
-            settings (PromptExecutionSettings): Settings for the request.
+            prompt: The prompt to send to the LLM.
+            settings: Settings for the request.
 
         Returns:
             list[TextContent]: A string or list of strings representing the response(s) from the LLM.
@@ -34,8 +34,8 @@ class TextCompletionClientBase(AIServiceClientBase, ABC):
         """This is the method that is called from the kernel to get a response from a text-optimized LLM.
 
         Args:
-            prompt (str): The prompt to send to the LLM.
-            settings (PromptExecutionSettings): Settings for the request.
+            prompt: The prompt to send to the LLM.
+            settings: Settings for the request.
 
         Returns:
             TextContent: A string or list of strings representing the response(s) from the LLM.
@@ -55,8 +55,8 @@ class TextCompletionClientBase(AIServiceClientBase, ABC):
         """Create streaming text contents, in the number specified by the settings.
 
         Args:
-            prompt (str): The prompt to send to the LLM.
-            settings (PromptExecutionSettings): Settings for the request.
+            prompt: The prompt to send to the LLM.
+            settings: Settings for the request.
 
         Yields:
             list[StreamingTextContent]: A stream representing the response(s) from the LLM.
@@ -69,8 +69,8 @@ class TextCompletionClientBase(AIServiceClientBase, ABC):
         """This is the method that is called from the kernel to get a stream response from a text-optimized LLM.
 
         Args:
-            prompt (str): The prompt to send to the LLM.
-            settings (PromptExecutionSettings): Settings for the request.
+            prompt: The prompt to send to the LLM.
+            settings: Settings for the request.
 
         Returns:
             StreamingTextContent: A stream representing the response(s) from the LLM.

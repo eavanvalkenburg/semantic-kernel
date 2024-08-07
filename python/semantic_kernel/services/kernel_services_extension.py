@@ -62,18 +62,17 @@ class KernelServicesExtension(KernelBaseModel, ABC):
         """Get a service by service_id and type.
 
         Type is optional and when not supplied, no checks are done.
-        Type should be
-            TextCompletionClientBase, ChatCompletionClientBase, EmbeddingGeneratorBase
-            or a subclass of one.
-            You can also check for multiple types in one go,
-            by using a tuple: (TextCompletionClientBase, ChatCompletionClientBase).
+        Type should be: TextCompletionClientBase, ChatCompletionClientBase, EmbeddingGeneratorBase
+        or a subclass of one.
+        You can also check for multiple types in one go,
+        by using a tuple: (TextCompletionClientBase, ChatCompletionClientBase).
 
         If type and service_id are both None, the first service is returned.
 
         Args:
-            service_id (str | None): The service id,
+            service_id: The service id,
                 if None, the default service is returned or the first service is returned.
-            type (Type[AI_SERVICE_CLIENT_TYPE] | tuple[type[AI_SERVICE_CLIENT_TYPE], ...] | None):
+            type:
                 The type of the service, if None, no checks are done on service type.
 
         Returns:
@@ -119,8 +118,8 @@ class KernelServicesExtension(KernelBaseModel, ABC):
         """Add a single service to the Kernel.
 
         Args:
-            service (AIServiceClientBase): The service to add.
-            overwrite (bool, optional): Whether to overwrite the service if it already exists. Defaults to False.
+            service: The service to add.
+            overwrite: Whether to overwrite the service if it already exists. Defaults to False.
         """
         if service.service_id not in self.services or overwrite:
             self.services[service.service_id] = service

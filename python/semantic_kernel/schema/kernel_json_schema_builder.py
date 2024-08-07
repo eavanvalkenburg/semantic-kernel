@@ -38,8 +38,8 @@ class KernelJsonSchemaBuilder:
         """Builds the JSON schema for a given parameter type and description.
 
         Args:
-            parameter_type (type | str): The parameter type.
-            description (str, optional): The description of the parameter. Defaults to None.
+            parameter_type: The parameter type.
+            description: The description of the parameter. Defaults to None.
 
         Returns:
             dict[str, Any]: The JSON schema for the parameter type.
@@ -64,8 +64,8 @@ class KernelJsonSchemaBuilder:
         """Builds the JSON schema for a given model and description.
 
         Args:
-            model (type): The model type.
-            description (str, optional): The description of the model. Defaults to None.
+            model: The model type.
+            description: The description of the model. Defaults to None.
 
         Returns:
             dict[str, Any]: The JSON schema for the model.
@@ -107,8 +107,8 @@ class KernelJsonSchemaBuilder:
         """Builds the JSON schema for a given parameter type name and description.
 
         Args:
-            parameter_type (str): The parameter type name.
-            description (str, optional): The description of the parameter. Defaults to None.
+            parameter_type: The parameter type name.
+            description: The description of the parameter. Defaults to None.
 
         Returns:
             dict[str, Any]: The JSON schema for the parameter type.
@@ -131,7 +131,7 @@ class KernelJsonSchemaBuilder:
         """Gets JSON schema for a given parameter type.
 
         Args:
-            parameter_type (type): The parameter type.
+            parameter_type: The parameter type.
 
         Returns:
             dict[str, Any]: The JSON schema for the parameter type.
@@ -144,8 +144,8 @@ class KernelJsonSchemaBuilder:
         """Handles building the JSON schema for complex types.
 
         Args:
-            parameter_type (type): The parameter type.
-            description (str, optional): The description of the parameter. Defaults to None.
+            parameter_type: The parameter type.
+            description: The description of the parameter. Defaults to None.
 
         Returns:
             dict[str, Any]: The JSON schema for the parameter type.
@@ -196,8 +196,8 @@ class KernelJsonSchemaBuilder:
         """Builds the JSON schema for an enum type.
 
         Args:
-            enum_type (type): The enum type.
-            description (str, optional): The description of the enum. Defaults to None.
+            enum_type: The enum type.
+            description: The description of the enum. Defaults to None.
 
         Returns:
             dict[str, Any]: The JSON schema for the enum type.

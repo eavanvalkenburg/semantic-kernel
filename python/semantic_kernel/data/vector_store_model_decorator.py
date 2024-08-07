@@ -12,15 +12,13 @@ from semantic_kernel.exceptions.memory_connector_exceptions import VectorStoreMo
 logger = logging.getLogger(__name__)
 
 
-def vectorstoremodel(
-    cls: Any | None = None,
-):
+def vectorstoremodel(cls: Any | None = None):
     """Returns the class as a vector store model.
 
     This decorator makes a class a vector store model.
     There are three things being checked:
     - The class must have at least one field with a annotation,
-        of type VectorStoreRecordKeyField, VectorStoreRecordDataField or VectorStoreRecordVectorField.
+    of type VectorStoreRecordKeyField, VectorStoreRecordDataField or VectorStoreRecordVectorField.
     - The class must have exactly one field with the VectorStoreRecordKeyField annotation.
 
     Optionally, when there are VectorStoreRecordDataFields that specify a embedding property name,

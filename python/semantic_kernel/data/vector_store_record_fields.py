@@ -50,18 +50,18 @@ class VectorStoreRecordVectorField(VectorStoreRecordField):
     if you want to set it up with more specific options, use a lambda, a custom function or a partial.
 
     Args:
-        property_type (str, optional): Property type.
+        property_type: Property type.
             For vectors this should be the inner type of the vector.
             By default the vector will be a list of numbers.
             If you want to use a numpy array or some other optimized format,
             set the cast_function with a function
             that takes a list of floats and returns a numpy array.
-        local_embedding (bool, optional): Whether to embed the vector locally. Defaults to True.
-        embedding_settings (dict[str, PromptExecutionSettings], optional): Embedding settings.
+        local_embedding: Whether to embed the vector locally. Defaults to True.
+        embedding_settings: Embedding settings.
             The key is the name of the embedding service to use, can be multiple ones.
-        serialize_function (Callable[[Any], list[float | int]], optional): Serialize function,
+        serialize_function: Serialize function,
             should take the vector and return a list of numbers.
-        deserialize_function (Callable[[list[float | int]], Any], optional): Deserialize function,
+        deserialize_function: Deserialize function,
             should take a list of numbers and return the vector.
     """
 

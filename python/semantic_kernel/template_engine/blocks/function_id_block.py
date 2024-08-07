@@ -30,9 +30,9 @@ class FunctionIdBlock(Block):
     Anything other than that and a ValueError is raised.
 
     Args:
-        content (str): The content of the block.
-        function_name (Optional[str], optional): The function name.
-        plugin_name (Optional[str], optional): The plugin name.
+        content: The content of the block.
+        function_name: The function name.
+        plugin_name: The plugin name.
 
     Raises:
         ValueError: If the content does not have valid syntax.

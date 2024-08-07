@@ -109,10 +109,10 @@ class RedisCollection(VectorStoreRecordCollection[str, TModel]):
 
         Args:
             **kwargs: Additional keyword arguments.
-                fields (list[Fields]): The fields to create the index with, when not supplied,
-                    these are created from the data_model_definition.
-                index_definition (IndexDefinition): The search index to create, if this is supplied
-                    this is used instead of a index created based on the definition.
+                fields - The fields to create the index with, when not supplied,
+                these are created from the data_model_definition.
+                index_definition - The search index to create, if this is supplied
+                this is used instead of a index created based on the definition.
                 other kwargs are passed to the create_index method.
         """
         if (index_definition := kwargs.pop("index_definition", None)) and (fields := kwargs.pop("fields", None)):

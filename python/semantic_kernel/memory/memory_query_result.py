@@ -33,14 +33,14 @@ class MemoryQueryResult:
         """Initialize a new instance of MemoryQueryResult.
 
         Args:
-            is_reference (bool): Whether the record is a reference record.
-            external_source_name (Optional[str]): The name of the external source.
-            id (str): A unique for the record.
-            description (Optional[str]): The description of the record.
-            text (Optional[str]): The text of the record.
-            additional_metadata (Optional[str]): Custom metadata for the record.
-            embedding (ndarray): The embedding of the record.
-            relevance (float): The relevance of the record to a known query.
+            is_reference: Whether the record is a reference record.
+            external_source_name: The name of the external source.
+            id: A unique for the record.
+            description: The description of the record.
+            text: The text of the record.
+            additional_metadata: Custom metadata for the record.
+            embedding: The embedding of the record.
+            relevance: The relevance of the record to a known query.
 
         Returns:
             None: None.
@@ -62,8 +62,8 @@ class MemoryQueryResult:
         """Create a new instance of MemoryQueryResult from a MemoryRecord.
 
         Args:
-            record (MemoryRecord): The MemoryRecord to create the MemoryQueryResult from.
-            relevance (float): The relevance of the record to a known query.
+            record: The MemoryRecord to create the MemoryQueryResult from.
+            relevance: The relevance of the record to a known query.
 
         Returns:
             MemoryQueryResult: The created MemoryQueryResult.

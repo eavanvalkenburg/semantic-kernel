@@ -166,6 +166,13 @@ weaviate-client = ">=3.18,<5.0"
 pandas = {version = "^2.2.2"}
 
 # Extras are exposed to pip, this allows a user to easily add the right dependencies to their environment
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^8.0.2"
+sphinx-pydantic = "^0.1.1"
+pydantic-extra-types = "^2.9.0"
+yaml-builder = "^0.1.1"
+
 [tool.poetry.extras]
 all = ["transformers", "sentence-transformers", "torch", "qdrant-client", "chromadb", "pymilvus", "milvus", "mistralai", "ollama", "google", "weaviate-client", "pinecone-client", "psycopg", "redis", "azure-ai-inference", "azure-search-documents", "azure-core", "azure-identity", "azure-cosmos", "usearch", "pyarrow", "ipykernel", "motor"]
 
@@ -231,6 +238,7 @@ convention = "google"
 # Ignore all directories named `tests` and `samples`.
 "tests/**" = ["D", "INP", "TD", "ERA001", "RUF"]
 "samples/**" = ["D", "INP", "ERA001", "RUF"]
+"docs/conf.py" = ["D", "INP", "ERA001", "RUF", "CPY"]
 # Ignore all files that end in `_test.py`.
 "*_test.py" = ["D"]
 "*.ipynb" = ["CPY", "E501"]

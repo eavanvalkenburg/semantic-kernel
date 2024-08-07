@@ -12,8 +12,7 @@ from semantic_kernel.utils.experimental_decorator import experimental_class
 class AzureAIInferencePromptExecutionSettings(PromptExecutionSettings):
     """Azure AI Inference Prompt Execution Settings.
 
-    Note:
-        `extra_parameters` is a dictionary to pass additional model-specific parameters to the model.
+    extra_parameters is a dictionary to pass additional model-specific parameters to the model.
     """
 
     frequency_penalty: float | None = Field(None, ge=-2, le=2)
@@ -45,8 +44,7 @@ class AzureAIInferenceChatPromptExecutionSettings(AzureAIInferencePromptExecutio
 class AzureAIInferenceEmbeddingPromptExecutionSettings(PromptExecutionSettings):
     """Azure AI Inference Embedding Prompt Execution Settings.
 
-    Note:
-        `extra_parameters` is a dictionary to pass additional model-specific parameters to the model.
+    extra_parameters is a dictionary to pass additional model-specific parameters to the model.
     """
 
     dimensions: int | None = Field(None, gt=0)
