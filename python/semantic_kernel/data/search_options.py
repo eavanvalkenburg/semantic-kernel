@@ -1,16 +1,18 @@
 # Copyright (c) Microsoft. All rights reserved.
 
 
-from pydantic import Field
+from collections.abc import Callable
+from typing import Generic, TypeVar
 
-from semantic_kernel.data.search_filter import SearchFilter
 from semantic_kernel.kernel_pydantic import KernelBaseModel
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
+TModel = TypeVar("TModel")
+
 
 @experimental_class
-class SearchOptions(KernelBaseModel):
+class SearchOptions(KernelBaseModel, Generic[TModel]):
     """Options for a search."""
 
-    filter: SearchFilter = Field(default_factory=SearchFilter)
+    filter: Callable[[TModel], bool] | None = None
     include_total_count: bool = False

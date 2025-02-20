@@ -27,7 +27,6 @@ from semantic_kernel.data import (
     IndexKind,
     VectorizableTextSearchMixin,
     VectorizedSearchMixin,
-    VectorSearchFilter,
     VectorSearchOptions,
     VectorSearchResult,
     VectorStoreRecordCollection,
@@ -214,10 +213,10 @@ async def main(collection: str, use_azure_openai: bool, embedding_model: str):
             [print_record(record=result) for result in results]
         else:
             print("Nothing found...")
-        options = VectorSearchOptions(
+        options = VectorSearchOptions[DataModel](
             vector_field_name="vector",
             include_vectors=True,
-            filter=VectorSearchFilter.equal_to("tag", "general"),
+            filter=lambda x: x.tag == "general",
         )
         if isinstance(record_collection, VectorTextSearchMixin):
             print("-" * 30)
