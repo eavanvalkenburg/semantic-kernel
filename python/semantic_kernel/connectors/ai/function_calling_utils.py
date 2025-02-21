@@ -3,7 +3,7 @@
 from collections import OrderedDict
 from typing import TYPE_CHECKING, Any
 
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
 
 if TYPE_CHECKING:
@@ -12,8 +12,7 @@ if TYPE_CHECKING:
         FunctionChoiceType,
     )
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
-    from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent, StreamingChatMessageContent
     from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
 
 
@@ -86,8 +85,7 @@ def merge_function_results(
     This method combines the FunctionResultContent items from separate ChatMessageContent messages,
     and is used in the event that the `context.terminate = True` condition is met.
     """
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
-    from semantic_kernel.contents.function_result_content import FunctionResultContent
+    from semantic_kernel.contents import ChatMessageContent, FunctionResultContent
 
     items: list[Any] = []
     for message in messages:
@@ -118,8 +116,7 @@ def merge_streaming_function_results(
     Returns:
         The combined streaming chat message content type.
     """
-    from semantic_kernel.contents.function_result_content import FunctionResultContent
-    from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
+    from semantic_kernel.contents import FunctionResultContent, StreamingChatMessageContent
 
     items: list[Any] = []
     for message in messages:

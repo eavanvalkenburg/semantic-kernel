@@ -9,8 +9,7 @@ from semantic_kernel.connectors.ai.bedrock.bedrock_prompt_execution_settings imp
 )
 from semantic_kernel.connectors.ai.bedrock.services.model_provider.utils import remove_none_recursively
 from semantic_kernel.connectors.ai.completion_usage import CompletionUsage
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidResponseError
 
 # region Text Completion

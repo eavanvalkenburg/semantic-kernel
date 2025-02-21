@@ -46,8 +46,7 @@ from semantic_kernel.connectors.ai.function_calling_utils import (
     kernel_function_metadata_to_function_call_format,
     merge_function_results,
 )
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatHistory, FunctionCallContent
 from semantic_kernel.exceptions.agent_exceptions import AgentInvokeException
 from semantic_kernel.functions import KernelArguments
 from semantic_kernel.utils.experimental_decorator import experimental_class
@@ -56,7 +55,7 @@ if TYPE_CHECKING:
     from azure.ai.projects.aio import AIProjectClient
 
     from semantic_kernel.agents.azure_ai.azure_ai_agent import AzureAIAgent
-    from semantic_kernel.contents import ChatHistory, ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
     from semantic_kernel.kernel import Kernel
 
 _T = TypeVar("_T", bound="AgentThreadActions")
@@ -192,7 +191,7 @@ class AgentThreadActions:
                     )
                     yield False, generate_function_call_content(agent_name=agent.name, fccs=fccs)
 
-                    from semantic_kernel.contents.chat_history import ChatHistory
+                    from semantic_kernel.contents import ChatHistory
 
                     chat_history = ChatHistory() if kwargs.get("chat_history") is None else kwargs["chat_history"]
                     _ = await cls._invoke_function_calls(kernel=kernel, fccs=fccs, chat_history=chat_history)
@@ -827,7 +826,7 @@ class AgentThreadActions:
         cls: type[_T], fccs: list["FunctionCallContent"], chat_history: "ChatHistory"
     ) -> list[dict[str, str]]:
         """Format the tool outputs for submission."""
-        from semantic_kernel.contents.function_result_content import FunctionResultContent
+        from semantic_kernel.contents import FunctionResultContent
 
         tool_call_lookup = {
             tool_call.id: tool_call
@@ -854,7 +853,7 @@ class AgentThreadActions:
         fccs = get_function_call_contents(run, function_steps)
         if fccs:
             function_call_content = generate_function_call_content(agent_name=agent_name, fccs=fccs)
-            from semantic_kernel.contents.chat_history import ChatHistory
+            from semantic_kernel.contents import ChatHistory
 
             chat_history = ChatHistory() if kwargs.get("chat_history") is None else kwargs["chat_history"]
             _ = await cls._invoke_function_calls(kernel=kernel, fccs=fccs, chat_history=chat_history)

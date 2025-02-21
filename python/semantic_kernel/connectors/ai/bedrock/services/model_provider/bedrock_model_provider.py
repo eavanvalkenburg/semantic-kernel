@@ -17,8 +17,7 @@ from semantic_kernel.connectors.ai.bedrock.services.model_provider import (
     bedrock_meta_llama,
     bedrock_mistralai,
 )
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 
 
 class BedrockModelProvider(Enum):

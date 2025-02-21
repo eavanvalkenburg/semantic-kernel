@@ -7,7 +7,7 @@ from semantic_kernel.connectors.ai.bedrock.bedrock_prompt_execution_settings imp
     BedrockTextPromptExecutionSettings,
 )
 from semantic_kernel.connectors.ai.bedrock.services.model_provider.utils import remove_none_recursively
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import TextContent
 
 # region Text Completion
 

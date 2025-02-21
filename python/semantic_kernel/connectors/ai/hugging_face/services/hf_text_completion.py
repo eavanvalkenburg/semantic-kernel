@@ -18,8 +18,7 @@ from transformers import AutoTokenizer, TextIteratorStreamer, pipeline
 from semantic_kernel.connectors.ai.hugging_face.hf_prompt_execution_settings import HuggingFacePromptExecutionSettings
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.exceptions import ServiceInvalidExecutionSettingsError, ServiceResponseException
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (
     trace_streaming_text_completion,

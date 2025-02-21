@@ -10,7 +10,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 def _messages(this, options, *args, **kwargs):
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
 
     if not isinstance(this.context["chat_history"], ChatHistory):
         return ""
@@ -18,7 +18,7 @@ def _messages(this, options, *args, **kwargs):
 
 
 def _message_to_prompt(this, *args, **kwargs):
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
     if isinstance(this.context, ChatMessageContent):
         return str(this.context.to_prompt())
@@ -26,7 +26,7 @@ def _message_to_prompt(this, *args, **kwargs):
 
 
 def _message(this, options, *args, **kwargs):
-    from semantic_kernel.contents.const import CHAT_MESSAGE_CONTENT_TAG
+    from semantic_kernel.contents import CHAT_MESSAGE_CONTENT_TAG
 
     # everything in kwargs, goes to <ROOT_KEY_MESSAGE kwargs_key="kwargs_value">
     # everything in options, goes in between <ROOT_KEY_MESSAGE>options</ROOT_KEY_MESSAGE>

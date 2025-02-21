@@ -39,7 +39,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from azure.identity.aio import DefaultAzureCredential
 
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
 AgentsApiResponseFormatOption = (
     str | AgentsApiResponseFormatMode | AgentsApiResponseFormat | ResponseFormatJsonSchemaType

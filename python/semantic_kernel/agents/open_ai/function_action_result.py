@@ -3,7 +3,7 @@
 import logging
 from dataclasses import dataclass
 
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import ChatMessageContent
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)

@@ -2,10 +2,10 @@
 
 from typing import TYPE_CHECKING
 
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 
 if TYPE_CHECKING:
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
 
 def store_results(chat_history: ChatHistory, results: list["ChatMessageContent"]):

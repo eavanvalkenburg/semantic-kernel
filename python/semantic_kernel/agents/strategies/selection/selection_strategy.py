@@ -9,7 +9,7 @@ from semantic_kernel.kernel_pydantic import KernelBaseModel
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
 if TYPE_CHECKING:
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
 
 @experimental_class

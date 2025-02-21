@@ -5,6 +5,7 @@ from typing import Any
 
 from openai.types.audio import Transcription
 
+from semantic_kernel.contents import AudioContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidRequestError
 
 if sys.version_info >= (3, 12):
@@ -18,7 +19,7 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_aud
 )
 from semantic_kernel.connectors.ai.open_ai.services.open_ai_handler import OpenAIHandler
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-from semantic_kernel.contents import AudioContent, TextContent
+from semantic_kernel.contents import TextContent
 
 
 class OpenAIAudioToTextBase(OpenAIHandler, AudioToTextClientBase):

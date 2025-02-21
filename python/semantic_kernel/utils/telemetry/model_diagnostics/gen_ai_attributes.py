@@ -1,6 +1,6 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole
 
 # Constants for tracing activities with semantic conventions.
 # Ideally, we should use the attributes from the semcov package.

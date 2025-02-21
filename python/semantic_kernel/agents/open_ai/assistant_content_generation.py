@@ -15,18 +15,20 @@ from openai.types.beta.threads.runs.code_interpreter_tool_call import CodeInterp
 from openai.types.beta.threads.text_content_block import TextContentBlock
 from openai.types.beta.threads.text_delta_block import TextDeltaBlock
 
-from semantic_kernel.contents.annotation_content import AnnotationContent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.streaming_annotation_content import StreamingAnnotationContent
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.streaming_file_reference_content import StreamingFileReferenceContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import (
+    AnnotationContent,
+    AuthorRole,
+    ChatMessageContent,
+    FileReferenceContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    ImageContent,
+    StreamingAnnotationContent,
+    StreamingChatMessageContent,
+    StreamingFileReferenceContent,
+    StreamingTextContent,
+    TextContent,
+)
 from semantic_kernel.exceptions.agent_exceptions import AgentExecutionException
 from semantic_kernel.utils.experimental_decorator import experimental_function
 

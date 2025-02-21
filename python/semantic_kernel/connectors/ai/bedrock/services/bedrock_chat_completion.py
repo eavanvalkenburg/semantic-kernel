@@ -7,6 +7,8 @@ from typing import TYPE_CHECKING, Any, ClassVar
 
 import boto3
 
+from semantic_kernel.contents import ITEM_TYPES
+
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
@@ -31,15 +33,17 @@ from semantic_kernel.connectors.ai.bedrock.services.model_provider.utils import 
 from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.completion_usage import CompletionUsage
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
-from semantic_kernel.contents.chat_message_content import ITEM_TYPES, ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.image_content import ImageContent
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatMessageContent,
+    FinishReason,
+    FunctionCallContent,
+    ImageContent,
+    StreamingChatMessageContent,
+    StreamingTextContent,
+    TextContent,
+)
 from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.contents.utils.finish_reason import FinishReason
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidRequestError,
@@ -53,7 +57,7 @@ from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.function_call_choice_configuration import FunctionCallChoiceConfiguration
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
 
 
 class BedrockChatCompletion(BedrockBase, ChatCompletionClientBase):

@@ -25,8 +25,7 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_pro
 )
 from semantic_kernel.connectors.ai.open_ai.services.open_ai_handler import OpenAIHandler
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (
     trace_streaming_text_completion,
     trace_text_completion,

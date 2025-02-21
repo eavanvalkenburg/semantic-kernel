@@ -120,7 +120,7 @@ class KernelFilterExtension(KernelBaseModel, ABC):
 
 def _rebuild_auto_function_invocation_context() -> None:
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings  # noqa: F401
-    from semantic_kernel.contents.chat_history import ChatHistory  # noqa: F401
+    from semantic_kernel.contents import ChatHistory  # noqa: F401
     from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
         AutoFunctionInvocationContext,
     )

@@ -12,8 +12,7 @@ from azure.ai.projects.models import (
     ToolDefinition,
 )
 
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, FileReferenceContent
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
 if TYPE_CHECKING:

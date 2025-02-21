@@ -6,11 +6,13 @@ from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Any
 
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    TextContent,
+)
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
 
 logger: logging.Logger = logging.getLogger(__name__)

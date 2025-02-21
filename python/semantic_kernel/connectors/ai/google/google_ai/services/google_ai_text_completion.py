@@ -17,8 +17,7 @@ from semantic_kernel.connectors.ai.google.google_ai.google_ai_prompt_execution_s
 from semantic_kernel.connectors.ai.google.google_ai.google_ai_settings import GoogleAISettings
 from semantic_kernel.connectors.ai.google.google_ai.services.google_ai_base import GoogleAIBase
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents import TextContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (
     trace_streaming_text_completion,

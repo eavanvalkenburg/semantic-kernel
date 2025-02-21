@@ -5,7 +5,7 @@ from typing import Any
 
 from pydantic import Field
 
-from semantic_kernel.contents.kernel_content import KernelContent
+from semantic_kernel.contents import KernelContent
 from semantic_kernel.exceptions import FunctionResultError
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
 from semantic_kernel.kernel_pydantic import KernelBaseModel

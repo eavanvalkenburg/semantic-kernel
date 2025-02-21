@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from azure.ai.projects.aio import AIProjectClient
 
     from semantic_kernel.agents.agent import Agent
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
 
 @experimental_class

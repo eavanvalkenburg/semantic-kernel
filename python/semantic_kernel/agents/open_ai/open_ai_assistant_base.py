@@ -42,7 +42,7 @@ from semantic_kernel.connectors.ai.function_calling_utils import (
     kernel_function_metadata_to_function_call_format,
     merge_function_results,
 )
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole
 from semantic_kernel.exceptions.agent_exceptions import (
     AgentExecutionException,
     AgentFileNotFoundException,
@@ -56,9 +56,7 @@ from semantic_kernel.utils.experimental_decorator import experimental_class
 from semantic_kernel.utils.telemetry.agent_diagnostics.decorators import trace_agent_invocation
 
 if TYPE_CHECKING:
-    from semantic_kernel.contents.chat_history import ChatHistory
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
-    from semantic_kernel.contents.function_call_content import FunctionCallContent
+    from semantic_kernel.contents import ChatHistory, ChatMessageContent, FunctionCallContent
     from semantic_kernel.kernel import Kernel
     from semantic_kernel.prompt_template.prompt_template_config import PromptTemplateConfig
 
@@ -842,7 +840,7 @@ class OpenAIAssistantBase(Agent):
                     )
                     yield False, generate_function_call_content(agent_name=self.name, fccs=fccs)
 
-                    from semantic_kernel.contents.chat_history import ChatHistory
+                    from semantic_kernel.contents import ChatHistory
 
                     chat_history = ChatHistory()
                     _ = await self._invoke_function_calls(fccs=fccs, chat_history=chat_history)
@@ -1180,7 +1178,7 @@ class OpenAIAssistantBase(Agent):
         if fccs:
             function_call_content = generate_function_call_content(agent_name=self.name, fccs=fccs)
 
-            from semantic_kernel.contents.chat_history import ChatHistory
+            from semantic_kernel.contents import ChatHistory
 
             chat_history = ChatHistory()
             _ = await self._invoke_function_calls(fccs=fccs, chat_history=chat_history)
@@ -1414,7 +1412,7 @@ class OpenAIAssistantBase(Agent):
         Returns:
             The formatted tool outputs as a list of dictionaries.
         """
-        from semantic_kernel.contents.function_result_content import FunctionResultContent
+        from semantic_kernel.contents import FunctionResultContent
 
         tool_call_lookup = {
             tool_call.id: tool_call

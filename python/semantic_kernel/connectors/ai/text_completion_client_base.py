@@ -5,11 +5,12 @@ from abc import ABC
 from collections.abc import AsyncGenerator
 from typing import TYPE_CHECKING, Any
 
+from semantic_kernel.contents import StreamingTextContent
 from semantic_kernel.services.ai_service_client_base import AIServiceClientBase
 
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-    from semantic_kernel.contents import StreamingTextContent, TextContent
+    from semantic_kernel.contents import TextContent
 
 
 class TextCompletionClientBase(AIServiceClientBase, ABC):

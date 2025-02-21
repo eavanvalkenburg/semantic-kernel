@@ -8,8 +8,7 @@ from typing import TYPE_CHECKING, ClassVar
 from pydantic import Field
 
 from semantic_kernel.agents.strategies.termination.termination_strategy import TerminationStrategy
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.history_reducer.chat_history_reducer import ChatHistoryReducer
+from semantic_kernel.contents import ChatHistoryReducer, ChatMessageContent
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.functions.kernel_function import KernelFunction
 from semantic_kernel.kernel import Kernel

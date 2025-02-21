@@ -21,13 +21,15 @@ from semantic_kernel.agents.bedrock.models.bedrock_agent_model import BedrockAge
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
 from semantic_kernel.agents.channels.bedrock_agent_channel import BedrockAgentChannel
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.contents.binary_content import BinaryContent
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import (
+    AuthorRole,
+    BinaryContent,
+    ChatHistory,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    StreamingChatMessageContent,
+)
 from semantic_kernel.exceptions.agent_exceptions import AgentInitializationException, AgentInvokeException
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.functions.kernel_function import TEMPLATE_FORMAT_MAP

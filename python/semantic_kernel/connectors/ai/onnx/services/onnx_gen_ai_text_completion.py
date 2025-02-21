@@ -17,8 +17,7 @@ from semantic_kernel.connectors.ai.onnx.onnx_gen_ai_settings import OnnxGenAISet
 from semantic_kernel.connectors.ai.onnx.services.onnx_gen_ai_completion_base import OnnxGenAICompletionBase
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.exceptions import ServiceInitializationError
 from semantic_kernel.utils.experimental_decorator import experimental_class
 

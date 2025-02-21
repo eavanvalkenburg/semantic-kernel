@@ -10,12 +10,14 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from opentelemetry.trace import Span, StatusCode, get_tracer, use_span
 
 from semantic_kernel.connectors.ai.completion_usage import CompletionUsage
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.streaming_content_mixin import StreamingContentMixin
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import (
+    ChatHistory,
+    ChatMessageContent,
+    StreamingChatMessageContent,
+    StreamingContentMixin,
+    StreamingTextContent,
+    TextContent,
+)
 from semantic_kernel.utils.experimental_decorator import experimental_function
 from semantic_kernel.utils.telemetry.model_diagnostics import gen_ai_attributes
 from semantic_kernel.utils.telemetry.model_diagnostics.model_diagnostics_settings import ModelDiagnosticSettings

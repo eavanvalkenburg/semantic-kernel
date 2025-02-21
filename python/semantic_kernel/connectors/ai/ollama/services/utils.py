@@ -8,11 +8,13 @@ from ollama._types import Message
 
 from semantic_kernel.connectors.ai.function_calling_utils import kernel_function_metadata_to_function_call_format
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    ImageContent,
+)
 
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.function_call_choice_configuration import FunctionCallChoiceConfiguration

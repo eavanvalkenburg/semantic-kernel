@@ -5,6 +5,8 @@ import sys
 from collections.abc import AsyncGenerator
 from typing import Any, ClassVar
 
+from semantic_kernel.contents import ChatHistory, ChatMessageContent, ImageContent, StreamingChatMessageContent
+
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
@@ -20,13 +22,9 @@ from semantic_kernel.connectors.ai.onnx.services.onnx_gen_ai_completion_base imp
 from semantic_kernel.connectors.ai.onnx.utils import ONNXTemplate, apply_template
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.contents import (
-    ChatHistory,
-    ChatMessageContent,
-    ImageContent,
-    StreamingChatMessageContent,
+    AuthorRole,
     TextContent,
 )
-from semantic_kernel.contents.utils.author_role import AuthorRole
 from semantic_kernel.exceptions import ServiceInitializationError, ServiceInvalidExecutionSettingsError
 from semantic_kernel.utils.experimental_decorator import experimental_class
 

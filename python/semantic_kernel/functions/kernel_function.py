@@ -34,7 +34,7 @@ from semantic_kernel.prompt_template.prompt_template_base import PromptTemplateB
 
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-    from semantic_kernel.contents.streaming_content_mixin import StreamingContentMixin
+    from semantic_kernel.contents import StreamingContentMixin
     from semantic_kernel.functions.kernel_function_from_method import KernelFunctionFromMethod
     from semantic_kernel.functions.kernel_function_from_prompt import KernelFunctionFromPrompt
     from semantic_kernel.kernel import Kernel

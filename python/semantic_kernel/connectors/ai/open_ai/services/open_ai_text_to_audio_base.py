@@ -16,7 +16,7 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_tex
 from semantic_kernel.connectors.ai.open_ai.services.open_ai_handler import OpenAIHandler
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_to_audio_client_base import TextToAudioClientBase
-from semantic_kernel.contents.audio_content import AudioContent
+from semantic_kernel.contents import AudioContent
 
 
 class OpenAITextToAudioBase(OpenAIHandler, TextToAudioClientBase):

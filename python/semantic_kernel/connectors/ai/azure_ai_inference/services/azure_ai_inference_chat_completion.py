@@ -32,15 +32,18 @@ from semantic_kernel.connectors.ai.chat_completion_client_base import ChatComple
 from semantic_kernel.connectors.ai.completion_usage import CompletionUsage
 from semantic_kernel.connectors.ai.function_calling_utils import update_settings_from_function_call_configuration
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ITEM_TYPES, ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
+from semantic_kernel.contents import (
+    ITEM_TYPES,
+    AuthorRole,
+    ChatHistory,
+    ChatMessageContent,
+    FinishReason,
+    FunctionCallContent,
+    StreamingChatMessageContent,
+    StreamingTextContent,
+    TextContent,
+)
 from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.contents.utils.finish_reason import FinishReason
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidExecutionSettingsError
 from semantic_kernel.utils.experimental_decorator import experimental_class
 

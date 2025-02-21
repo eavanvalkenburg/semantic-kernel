@@ -5,9 +5,7 @@ from collections import deque
 from collections.abc import AsyncIterable
 from copy import deepcopy
 
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import ChatMessageContent, ImageContent, StreamingTextContent, TextContent
 
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -18,16 +16,13 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING, Any, ClassVar, Deque, Protocol, runtime_checkable
 
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
-from semantic_kernel.contents import ChatMessageContent
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import ChatHistory, FunctionCallContent, FunctionResultContent
 from semantic_kernel.exceptions import ServiceInvalidTypeError
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
 if TYPE_CHECKING:
     from semantic_kernel.agents.agent import Agent
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
 
 
 @experimental_class

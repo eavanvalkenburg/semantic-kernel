@@ -9,7 +9,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 def _messages(chat_history):
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
 
     if not isinstance(chat_history, ChatHistory):
         return ""
@@ -17,7 +17,7 @@ def _messages(chat_history):
 
 
 def _message_to_prompt(context):
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
+    from semantic_kernel.contents import ChatMessageContent
 
     if isinstance(context, ChatMessageContent):
         return str(context.to_prompt())
@@ -25,7 +25,7 @@ def _message_to_prompt(context):
 
 
 def _message(item):
-    from semantic_kernel.contents.const import CHAT_MESSAGE_CONTENT_TAG
+    from semantic_kernel.contents import CHAT_MESSAGE_CONTENT_TAG
 
     start = f"<{CHAT_MESSAGE_CONTENT_TAG}"
     role = item.role

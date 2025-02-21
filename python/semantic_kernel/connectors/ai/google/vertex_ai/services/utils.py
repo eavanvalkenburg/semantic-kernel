@@ -16,12 +16,14 @@ from semantic_kernel.connectors.ai.google.shared_utils import (
 from semantic_kernel.connectors.ai.google.vertex_ai.vertex_ai_prompt_execution_settings import (
     VertexAIChatPromptExecutionSettings,
 )
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.finish_reason import FinishReason as SemanticKernelFinishReason
+from semantic_kernel.contents import (
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    ImageContent,
+    TextContent,
+)
+from semantic_kernel.contents import FinishReason as SemanticKernelFinishReason
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidRequestError
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
 

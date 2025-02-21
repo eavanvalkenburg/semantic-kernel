@@ -7,11 +7,13 @@ from typing import TYPE_CHECKING, Any
 from autogen import ConversableAgent
 
 from semantic_kernel.agents.agent import Agent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    TextContent,
+)
 from semantic_kernel.exceptions.agent_exceptions import AgentInvokeException
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 

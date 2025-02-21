@@ -4,8 +4,7 @@ import logging
 
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
 from semantic_kernel.const import DEFAULT_FULLY_QUALIFIED_NAME_SEPARATOR
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatHistory
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidRequestError
 
 logger: logging.Logger = logging.getLogger(__name__)

@@ -13,9 +13,7 @@ from pydantic import Field
 
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
 from semantic_kernel.const import AUTO_FUNCTION_INVOCATION_SPAN_NAME
-from semantic_kernel.contents.annotation_content import AnnotationContent
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
+from semantic_kernel.contents import AnnotationContent, FileReferenceContent, FunctionCallContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidExecutionSettingsError
 from semantic_kernel.services.ai_service_client_base import AIServiceClientBase
 from semantic_kernel.utils.telemetry.model_diagnostics.gen_ai_attributes import AVAILABLE_FUNCTIONS
@@ -23,9 +21,7 @@ from semantic_kernel.utils.telemetry.model_diagnostics.gen_ai_attributes import 
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.function_call_choice_configuration import FunctionCallChoiceConfiguration
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-    from semantic_kernel.contents.chat_history import ChatHistory
-    from semantic_kernel.contents.chat_message_content import ChatMessageContent
-    from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
+    from semantic_kernel.contents import ChatHistory, ChatMessageContent, StreamingChatMessageContent
     from semantic_kernel.kernel import Kernel
 
 logger: logging.Logger = logging.getLogger(__name__)

@@ -5,6 +5,8 @@ import sys
 from collections.abc import AsyncGenerator, AsyncIterator, Callable, Mapping, Sequence
 from typing import TYPE_CHECKING, Any, ClassVar, TypeVar
 
+from semantic_kernel.contents import AuthorRole
+
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
@@ -25,14 +27,16 @@ from semantic_kernel.connectors.ai.ollama.services.utils import (
     MESSAGE_CONVERTERS,
     update_settings_from_function_choice_configuration,
 )
-from semantic_kernel.contents import AuthorRole
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ITEM_TYPES, ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
+from semantic_kernel.contents import (
+    ITEM_TYPES,
+    ChatHistory,
+    ChatMessageContent,
+    FunctionCallContent,
+    StreamingChatMessageContent,
+    StreamingTextContent,
+    TextContent,
+)
 from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidExecutionSettingsError,

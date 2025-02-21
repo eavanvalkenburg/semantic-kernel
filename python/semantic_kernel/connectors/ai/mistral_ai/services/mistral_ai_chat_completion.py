@@ -5,6 +5,14 @@ import sys
 from collections.abc import AsyncGenerator, Callable
 from typing import TYPE_CHECKING, Any, ClassVar
 
+from semantic_kernel.contents import (
+    ChatMessageContent,
+    FunctionCallContent,
+    StreamingChatMessageContent,
+    StreamingTextContent,
+    TextContent,
+)
+
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
 else:
@@ -32,15 +40,10 @@ from semantic_kernel.connectors.ai.mistral_ai.prompt_execution_settings.mistral_
 from semantic_kernel.connectors.ai.mistral_ai.services.mistral_ai_base import MistralAIBase
 from semantic_kernel.connectors.ai.mistral_ai.settings.mistral_ai_settings import MistralAISettings
 from semantic_kernel.contents import (
-    ChatMessageContent,
-    FunctionCallContent,
-    StreamingChatMessageContent,
-    StreamingTextContent,
-    TextContent,
+    AuthorRole,
+    ChatHistory,
+    FinishReason,
 )
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.contents.utils.finish_reason import FinishReason
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError, ServiceResponseException
 from semantic_kernel.utils.experimental_decorator import experimental_class
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (

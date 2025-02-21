@@ -13,9 +13,7 @@ from semantic_kernel.connectors.ai.chat_completion_client_base import ChatComple
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
 from semantic_kernel.const import DEFAULT_SERVICE_NAME
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import ChatHistory, ChatMessageContent, TextContent
 from semantic_kernel.exceptions import FunctionExecutionException, FunctionInitializationError
 from semantic_kernel.exceptions.function_exceptions import PromptRenderingException
 from semantic_kernel.filters.filter_types import FilterTypes
