@@ -18,12 +18,12 @@ else:
 
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
 from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.utils.experimental_decorator import experimental_class
+from semantic_kernel.utils.experimental_decorator import experimental
 
 logger = logging.getLogger(__name__)
 
 
-@experimental_class
+@experimental
 class BedrockAgentChannel(AgentChannel, ChatHistory):
     """An AgentChannel for a BedrockAgent that is based on a ChatHistory.
 

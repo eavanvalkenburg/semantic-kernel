@@ -2,10 +2,8 @@
 
 from enum import Enum
 
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
-
-@experimental_class
+# @experimental
 class FunctionChoiceType(Enum):
     """The type of function choice behavior."""
 
