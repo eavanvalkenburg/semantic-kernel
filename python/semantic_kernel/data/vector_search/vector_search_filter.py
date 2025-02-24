@@ -9,7 +9,7 @@ else:
 
 from semantic_kernel.data.filter_clauses.any_tags_equal_to_filter_clause import AnyTagsEqualTo
 from semantic_kernel.data.search_filter import SearchFilter
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

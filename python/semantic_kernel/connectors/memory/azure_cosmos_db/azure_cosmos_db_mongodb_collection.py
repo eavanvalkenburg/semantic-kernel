@@ -38,7 +38,7 @@ from semantic_kernel.exceptions.vector_store_exceptions import (
     VectorSearchExecutionException,
     VectorStoreModelDeserializationException,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger: logging.Logger = logging.getLogger(__name__)
 

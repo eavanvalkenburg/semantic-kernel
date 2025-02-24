@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 from opentelemetry.trace import get_tracer
 
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 from semantic_kernel.utils.telemetry.agent_diagnostics import gen_ai_attributes
 
 if TYPE_CHECKING:

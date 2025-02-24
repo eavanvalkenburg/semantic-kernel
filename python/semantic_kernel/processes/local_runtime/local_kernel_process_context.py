@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from semantic_kernel.kernel import Kernel
 from semantic_kernel.kernel_pydantic import KernelBaseModel
 from semantic_kernel.processes.local_runtime.local_process import LocalProcess
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.processes.kernel_process.kernel_process import KernelProcess

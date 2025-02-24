@@ -3,7 +3,7 @@
 from typing import Any
 
 from semantic_kernel.exceptions.function_exceptions import FunctionExecutionException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

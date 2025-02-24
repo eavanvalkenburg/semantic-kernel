@@ -14,7 +14,7 @@ from semantic_kernel.contents.const import BINARY_CONTENT_TAG, ContentTypes
 from semantic_kernel.contents.kernel_content import KernelContent
 from semantic_kernel.contents.utils.data_uri import DataUri
 from semantic_kernel.exceptions.content_exceptions import ContentException, ContentInitializationError
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

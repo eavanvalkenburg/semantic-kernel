@@ -4,7 +4,7 @@ from semantic_kernel.connectors.openapi_plugin.models.rest_api_payload_property 
     RestApiPayloadProperty,
 )
 from semantic_kernel.exceptions.function_exceptions import FunctionExecutionException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

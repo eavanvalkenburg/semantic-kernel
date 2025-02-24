@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from collections.abc import AsyncIterable
 from typing import TYPE_CHECKING, Any
 
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.agents.agent import Agent

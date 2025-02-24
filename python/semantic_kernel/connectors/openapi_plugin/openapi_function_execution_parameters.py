@@ -11,7 +11,7 @@ from semantic_kernel.connectors.openapi_plugin.operation_selection_predicate_con
     OperationSelectionPredicateContext,
 )
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 AuthCallbackType = Callable[..., Awaitable[Any]]
 

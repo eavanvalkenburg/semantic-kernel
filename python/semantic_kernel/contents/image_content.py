@@ -10,7 +10,7 @@ from typing_extensions import deprecated
 
 from semantic_kernel.contents.binary_content import BinaryContent
 from semantic_kernel.contents.const import IMAGE_CONTENT_TAG, ContentTypes
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

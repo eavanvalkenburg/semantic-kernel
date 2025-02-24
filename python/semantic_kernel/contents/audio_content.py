@@ -8,7 +8,7 @@ from pydantic import Field
 
 from semantic_kernel.contents.binary_content import BinaryContent
 from semantic_kernel.contents.const import AUDIO_CONTENT_TAG, ContentTypes
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 _T = TypeVar("_T", bound="AudioContent")
 

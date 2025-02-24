@@ -12,7 +12,7 @@ else:
 from semantic_kernel.agents.azure_ai.agent_thread_actions import AgentThreadActions
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
 from semantic_kernel.exceptions.agent_exceptions import AgentChatException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from azure.ai.projects.aio import AIProjectClient

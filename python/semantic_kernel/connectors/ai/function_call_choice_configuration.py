@@ -4,7 +4,7 @@
 from pydantic.dataclasses import dataclass
 
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

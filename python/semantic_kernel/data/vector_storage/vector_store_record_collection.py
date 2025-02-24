@@ -22,7 +22,7 @@ from semantic_kernel.exceptions import (
 )
 from semantic_kernel.kernel_pydantic import KernelBaseModel
 from semantic_kernel.kernel_types import OneOrMany
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 TModel = TypeVar("TModel", bound=object)
 TKey = TypeVar("TKey")

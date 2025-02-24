@@ -3,7 +3,7 @@
 from collections.abc import Sequence
 from typing import Any, Protocol, TypeVar, runtime_checkable
 
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 TModel = TypeVar("TModel", bound=object)
 

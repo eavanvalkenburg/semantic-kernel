@@ -49,7 +49,7 @@ from semantic_kernel.exceptions.service_exceptions import (
     ServiceInvalidResponseError,
     ServiceResponseException,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (
     trace_chat_completion,
     trace_streaming_chat_completion,

@@ -19,7 +19,7 @@ from semantic_kernel.connectors.openapi_plugin.models.rest_api_payload import Re
 from semantic_kernel.connectors.openapi_plugin.models.rest_api_run_options import RestApiRunOptions
 from semantic_kernel.exceptions.function_exceptions import FunctionExecutionException
 from semantic_kernel.functions.kernel_arguments import KernelArguments
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 from semantic_kernel.utils.telemetry.user_agent import APP_INFO, prepend_semantic_kernel_to_user_agent
 
 logger: logging.Logger = logging.getLogger(__name__)

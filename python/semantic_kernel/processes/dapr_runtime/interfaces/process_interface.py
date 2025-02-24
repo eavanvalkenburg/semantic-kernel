@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from dapr.actor import ActorInterface, actormethod
 
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.processes.dapr_runtime.dapr_process_info import DaprProcessInfo

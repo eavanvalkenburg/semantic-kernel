@@ -9,7 +9,7 @@ from dapr.actor.runtime.context import ActorRuntimeContext
 
 from semantic_kernel.processes.dapr_runtime.actors.actor_state_key import ActorStateKeys
 from semantic_kernel.processes.dapr_runtime.interfaces.message_buffer_interface import MessageBufferInterface
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger: logging.Logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from pydantic import Field
 
 from semantic_kernel.agents.strategies.termination.termination_strategy import TerminationStrategy
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.agents.agent import Agent

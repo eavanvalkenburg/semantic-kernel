@@ -16,7 +16,7 @@ from semantic_kernel.kernel_pydantic import KernelBaseModel
 from semantic_kernel.utils.authentication.async_default_azure_credential_wrapper import (
     AsyncDefaultAzureCredentialWrapper,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 from semantic_kernel.utils.telemetry.user_agent import SEMANTIC_KERNEL_USER_AGENT
 
 

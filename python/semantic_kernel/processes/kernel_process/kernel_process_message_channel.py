@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 
 from semantic_kernel.processes.local_runtime.local_event import KernelProcessEvent
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

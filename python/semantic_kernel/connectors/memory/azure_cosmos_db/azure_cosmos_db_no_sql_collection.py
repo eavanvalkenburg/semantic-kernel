@@ -42,7 +42,7 @@ from semantic_kernel.exceptions import (
     VectorStoreOperationException,
 )
 from semantic_kernel.kernel_types import OneOrMany
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 TModel = TypeVar("TModel")
 TKey = TypeVar("TKey", str, AzureCosmosDBNoSQLCompositeKey)

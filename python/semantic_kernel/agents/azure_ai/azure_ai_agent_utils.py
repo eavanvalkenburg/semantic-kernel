@@ -14,7 +14,7 @@ from azure.ai.projects.models import (
 
 from semantic_kernel.contents.file_reference_content import FileReferenceContent
 from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.contents import ChatMessageContent

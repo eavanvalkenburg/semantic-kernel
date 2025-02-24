@@ -17,7 +17,7 @@ from semantic_kernel.agents.bedrock.models.bedrock_agent_status import BedrockAg
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior, FunctionChoiceType
 from semantic_kernel.kernel import Kernel
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

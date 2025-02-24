@@ -5,7 +5,7 @@ import hashlib
 from collections.abc import Iterable
 
 from semantic_kernel.exceptions.agent_exceptions import AgentExecutionException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

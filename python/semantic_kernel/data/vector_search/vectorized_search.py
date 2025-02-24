@@ -10,7 +10,7 @@ from semantic_kernel.exceptions import (
     VectorStoreMixinException,
     VectorStoreModelDeserializationException,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.data.kernel_search_results import KernelSearchResults

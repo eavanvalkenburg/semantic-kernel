@@ -24,7 +24,7 @@ from semantic_kernel.processes.local_runtime.local_event import (
 from semantic_kernel.processes.local_runtime.local_message import LocalMessage
 from semantic_kernel.processes.local_runtime.local_message_factory import LocalMessageFactory
 from semantic_kernel.processes.local_runtime.local_step import LocalStep
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.processes.kernel_process.kernel_process import KernelProcess

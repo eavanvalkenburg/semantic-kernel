@@ -19,7 +19,7 @@ from semantic_kernel.connectors.ai.mistral_ai.services.mistral_ai_base import Mi
 from semantic_kernel.connectors.ai.mistral_ai.settings.mistral_ai_settings import MistralAISettings
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError, ServiceResponseException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger: logging.Logger = logging.getLogger(__name__)
 

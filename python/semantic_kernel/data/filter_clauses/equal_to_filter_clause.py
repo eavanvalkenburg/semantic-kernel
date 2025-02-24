@@ -3,7 +3,7 @@
 from typing import ClassVar
 
 from semantic_kernel.data.filter_clauses.filter_clause_base import FilterClauseBase
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

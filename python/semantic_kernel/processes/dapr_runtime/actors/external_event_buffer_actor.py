@@ -11,7 +11,7 @@ from semantic_kernel.processes.dapr_runtime.actors.actor_state_key import ActorS
 from semantic_kernel.processes.dapr_runtime.interfaces.external_event_buffer_interface import (
     ExternalEventBufferInterface,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

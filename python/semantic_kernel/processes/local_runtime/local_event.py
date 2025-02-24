@@ -7,7 +7,7 @@ from semantic_kernel.processes.kernel_process.kernel_process_event import (
     KernelProcessEvent,
     KernelProcessEventVisibility,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

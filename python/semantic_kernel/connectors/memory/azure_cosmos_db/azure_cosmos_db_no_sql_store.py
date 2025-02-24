@@ -19,7 +19,7 @@ from semantic_kernel.data.record_definition.vector_store_model_definition import
 from semantic_kernel.data.vector_storage.vector_store import VectorStore
 from semantic_kernel.data.vector_storage.vector_store_record_collection import VectorStoreRecordCollection
 from semantic_kernel.exceptions import VectorStoreOperationException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 TModel = TypeVar("TModel")
 

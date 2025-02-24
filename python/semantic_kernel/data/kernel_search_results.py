@@ -4,7 +4,7 @@ from collections.abc import AsyncIterable, Mapping
 from typing import Any, Generic, TypeVar
 
 from semantic_kernel.kernel_pydantic import KernelBaseModel
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 T = TypeVar("T")
 

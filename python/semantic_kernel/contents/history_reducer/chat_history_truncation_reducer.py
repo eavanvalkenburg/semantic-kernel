@@ -18,7 +18,7 @@ from semantic_kernel.contents.history_reducer.chat_history_reducer_utils import 
     extract_range,
     locate_safe_reduction_index,
 )
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

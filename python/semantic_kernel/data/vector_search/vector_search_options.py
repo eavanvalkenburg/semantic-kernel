@@ -7,7 +7,7 @@ from pydantic import Field
 
 from semantic_kernel.data.search_options import SearchOptions
 from semantic_kernel.data.vector_search.vector_search_filter import VectorSearchFilter
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 
 @experimental

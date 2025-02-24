@@ -27,7 +27,7 @@ from semantic_kernel.contents.history_reducer.chat_history_reducer_utils import 
     locate_summarization_boundary,
 )
 from semantic_kernel.exceptions.content_exceptions import ChatHistoryReducerException
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 logger = logging.getLogger(__name__)
 

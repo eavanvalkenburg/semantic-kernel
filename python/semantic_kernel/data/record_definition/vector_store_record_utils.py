@@ -10,7 +10,7 @@ from semantic_kernel.data.record_definition.vector_store_record_fields import (
 )
 from semantic_kernel.exceptions import VectorStoreModelException
 from semantic_kernel.kernel_types import OneOrMany
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 
 if TYPE_CHECKING:
     from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings

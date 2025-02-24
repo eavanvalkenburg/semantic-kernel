@@ -14,7 +14,7 @@ from semantic_kernel.const import DEFAULT_SERVICE_NAME
 from semantic_kernel.exceptions.agent_exceptions import AgentInitializationException
 from semantic_kernel.kernel_pydantic import HttpsUrl
 from semantic_kernel.utils.authentication.entra_id_authentication import get_entra_auth_token
-from semantic_kernel.utils.experimental_decorator import experimental
+from semantic_kernel.utils.lifecycle_decorators import experimental
 from semantic_kernel.utils.telemetry.user_agent import APP_INFO, prepend_semantic_kernel_to_user_agent
 
 if TYPE_CHECKING:
