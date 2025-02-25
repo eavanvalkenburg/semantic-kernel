@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft. All rights reserved.
 
 from dataclasses import dataclass, field
-from typing import TypeVar
+from typing import TypeAlias, TypeVar
 
 from semantic_kernel.data.record_definition.vector_store_model_protocols import (
     DeserializeFunctionProtocol,
@@ -19,7 +19,7 @@ from semantic_kernel.exceptions import VectorStoreModelException
 from semantic_kernel.utils.experimental_decorator import experimental_class
 
 VectorStoreRecordFields = TypeVar("VectorStoreRecordFields", bound=VectorStoreRecordField)
-FieldsType = dict[str, VectorStoreRecordFields]
+FieldsType: TypeAlias = dict[str, VectorStoreRecordFields]
 
 
 @experimental_class
