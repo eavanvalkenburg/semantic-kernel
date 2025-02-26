@@ -4,6 +4,7 @@ import logging
 import sys
 from typing import TYPE_CHECKING, Any, Optional
 
+from deprecated import deprecated
 from numpy import array, ndarray
 
 if sys.version_info >= (3, 12):
@@ -15,7 +16,6 @@ from semantic_kernel.connectors.memory.chroma.utils import chroma_compute_simila
 from semantic_kernel.exceptions import ServiceInitializationError, ServiceResourceNotFoundError
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 if TYPE_CHECKING:
     import chromadb
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
+@deprecated("This class is deprecated. Use ChromaStore instead.")
 class ChromaMemoryStore(MemoryStoreBase):
     """ChromaMemoryStore provides an interface to store and retrieve data using ChromaDB."""
 

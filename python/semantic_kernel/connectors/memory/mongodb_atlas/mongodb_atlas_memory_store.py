@@ -4,6 +4,7 @@ import logging
 from collections.abc import Mapping
 from importlib import metadata
 from typing import Any
+from warnings import deprecated
 
 from motor import core, motor_asyncio
 from numpy import ndarray
@@ -22,12 +23,11 @@ from semantic_kernel.exceptions import ServiceResourceNotFoundError
 from semantic_kernel.exceptions.memory_connector_exceptions import MemoryConnectorInitializationError
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
+@deprecated("This class is deprecated. Use MongoDBAtlasStore instead.")
 class MongoDBAtlasMemoryStore(MemoryStoreBase):
     """Memory Store for MongoDB Atlas Vector Search Connections."""
 

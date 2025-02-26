@@ -4,6 +4,7 @@ import logging
 
 import numpy as np
 import redis
+from deprecated import deprecated
 from numpy import ndarray
 from pydantic import ValidationError
 from redis.commands.search.field import TextField, VectorField
@@ -25,12 +26,11 @@ from semantic_kernel.exceptions import (
 from semantic_kernel.exceptions.memory_connector_exceptions import MemoryConnectorInitializationError
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
+@deprecated("This class is deprecated. Use RedisStore instead.")
 class RedisMemoryStore(MemoryStoreBase):
     """A memory store implementation using Redis."""
 

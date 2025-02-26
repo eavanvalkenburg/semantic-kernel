@@ -6,11 +6,11 @@ from typing import Final
 
 import numpy as np
 import weaviate
+from deprecated import deprecated
 
 from semantic_kernel.exceptions.memory_connector_exceptions import MemoryConnectorInitializationError
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -102,7 +102,7 @@ class FieldMapper:
         return {key.lstrip("_"): value for key, value in sk_dict.items()}
 
 
-@experimental_class
+@deprecated("This class is deprecated. Use WeaviateStore instead.")
 class WeaviateMemoryStore(MemoryStoreBase):
     """A memory store that uses Weaviate as the backend."""
 

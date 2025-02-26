@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
+from deprecated import deprecated
 from numpy import ndarray
 from usearch.index import BatchMatches, CompiledMetric, Index, Matches, MetricKind, ScalarKind
 
@@ -21,7 +22,6 @@ from semantic_kernel.exceptions import (
 )
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -112,7 +112,7 @@ def pyarrow_table_to_memoryrecords(table: pa.Table, vectors: ndarray | None = No
     ]
 
 
-@experimental_class
+@deprecated("This class is deprecated and will be removed in a future version.")
 class USearchMemoryStore(MemoryStoreBase):
     """Memory store for searching embeddings with USearch."""
 

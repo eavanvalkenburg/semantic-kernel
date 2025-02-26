@@ -3,6 +3,7 @@
 import logging
 from datetime import datetime
 from typing import Any
+from warnings import deprecated
 
 from numpy import array, expand_dims, ndarray
 from pymilvus import Collection, CollectionSchema, DataType, FieldSchema, connections, utility
@@ -48,7 +49,7 @@ OUTPUT_FIELDS_WO_EMBEDDING = [
 ]
 
 
-@experimental_function
+@deprecated("This class is deprecated and will be removed in a future release.")
 def memoryrecord_to_milvus_dict(mem: MemoryRecord) -> dict[str, Any]:
     """Convert a memoryrecord into a dict.
 

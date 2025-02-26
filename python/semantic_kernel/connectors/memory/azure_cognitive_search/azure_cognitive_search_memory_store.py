@@ -4,6 +4,7 @@ import contextlib
 import logging
 import uuid
 from inspect import isawaitable
+from warnings import deprecated
 
 from azure.core.credentials import AzureKeyCredential, TokenCredential
 from azure.core.exceptions import ResourceNotFoundError
@@ -33,12 +34,11 @@ from semantic_kernel.connectors.memory.azure_cognitive_search.utils import (
 from semantic_kernel.exceptions import MemoryConnectorInitializationError, MemoryConnectorResourceNotFound
 from semantic_kernel.memory.memory_record import MemoryRecord
 from semantic_kernel.memory.memory_store_base import MemoryStoreBase
-from semantic_kernel.utils.experimental_decorator import experimental_class
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@experimental_class
+@deprecated("This class is deprecated. Use AzureAISearchStore instead.")
 class AzureCognitiveSearchMemoryStore(MemoryStoreBase):
     """Azure Cognitive Search Memory Store."""
 
