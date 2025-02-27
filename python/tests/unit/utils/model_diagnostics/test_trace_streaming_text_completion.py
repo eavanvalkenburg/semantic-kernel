@@ -10,7 +10,7 @@ from opentelemetry.trace import StatusCode
 
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
+from semantic_kernel.contents import StreamingTextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceResponseException
 from semantic_kernel.utils.telemetry.model_diagnostics import gen_ai_attributes
 from semantic_kernel.utils.telemetry.model_diagnostics.decorators import (

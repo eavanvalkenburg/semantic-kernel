@@ -6,7 +6,7 @@ import json
 import logging
 from typing import Any
 
-from semantic_kernel.contents.function_call_content import FunctionCallContent
+from semantic_kernel.contents import FunctionCallContent
 from semantic_kernel.functions import FunctionResult
 
 logger = logging.getLogger(__name__)

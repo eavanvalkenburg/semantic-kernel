@@ -12,7 +12,7 @@ from semantic_kernel.agents.strategies.selection.selection_strategy import Selec
 from semantic_kernel.agents.strategies.selection.sequential_selection_strategy import SequentialSelectionStrategy
 from semantic_kernel.agents.strategies.termination.default_termination_strategy import DefaultTerminationStrategy
 from semantic_kernel.agents.strategies.termination.termination_strategy import TerminationStrategy
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole
 from semantic_kernel.exceptions.agent_exceptions import AgentChatException
 
 

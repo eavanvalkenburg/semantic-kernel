@@ -4,7 +4,7 @@ from xml.etree.ElementTree import Element
 
 import pytest
 
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
+from semantic_kernel.contents import FileReferenceContent
 
 
 def test_create_empty():

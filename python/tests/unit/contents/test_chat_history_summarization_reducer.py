@@ -6,12 +6,12 @@ import pytest
 
 from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.history_reducer.chat_history_reducer_utils import SUMMARY_METADATA_KEY
-from semantic_kernel.contents.history_reducer.chat_history_summarization_reducer import (
+from semantic_kernel.contents import (
+    SUMMARY_METADATA_KEY,
+    AuthorRole,
     ChatHistorySummarizationReducer,
+    ChatMessageContent,
 )
-from semantic_kernel.contents.utils.author_role import AuthorRole
 from semantic_kernel.exceptions.content_exceptions import ChatHistoryReducerException
 
 

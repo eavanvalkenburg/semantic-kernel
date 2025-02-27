@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 
 import boto3
 
-from semantic_kernel.contents import ITEM_TYPES
+from semantic_kernel.contents import CMC_ITEM_TYPES
 
 if sys.version_info >= (3, 12):
     from typing import override  # pragma: no cover
@@ -33,6 +33,7 @@ from semantic_kernel.connectors.ai.bedrock.services.model_provider.utils import 
 from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.completion_usage import CompletionUsage
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
+from semantic_kernel.contents import CMC_ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.contents import (
     AuthorRole,
     ChatMessageContent,
@@ -43,7 +44,6 @@ from semantic_kernel.contents import (
     StreamingTextContent,
     TextContent,
 )
-from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidRequestError,
@@ -244,7 +244,7 @@ class BedrockChatCompletion(BedrockBase, ChatCompletionClientBase):
             prompt_tokens=response["usage"]["inputTokens"],
             completion_tokens=response["usage"]["outputTokens"],
         )
-        items: list[ITEM_TYPES] = []
+        items: list[CMC_ITEM_TYPES] = []
         for content in response["output"]["message"]["content"]:
             if "text" in content:
                 items.append(TextContent(text=content["text"], inner_content=content))

@@ -6,8 +6,7 @@ import re
 
 from semantic_kernel.agents import AgentGroupChat
 from semantic_kernel.agents.open_ai import OpenAIAssistantAgent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent
 
 #####################################################################
 # The following sample demonstrates how to create a Semantic Kernel #

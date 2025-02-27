@@ -12,8 +12,7 @@ else:
 from samples.demos.document_generator.agents.custom_agent_base import CustomAgentBase
 from samples.demos.document_generator.plugins.code_execution_plugin import CodeExecutionPlugin
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import ChatHistory, ChatMessageContent
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 
 if TYPE_CHECKING:

@@ -35,7 +35,7 @@ from semantic_kernel.connectors.ai.chat_completion_client_base import ChatComple
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceType
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.contents import (
-    ITEM_TYPES,
+    CMC_ITEM_TYPES,
     AuthorRole,
     ChatHistory,
     ChatMessageContent,
@@ -44,8 +44,8 @@ from semantic_kernel.contents import (
     StreamingTextContent,
     TextContent,
 )
+from semantic_kernel.contents import CMC_ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.contents import FinishReason as SemanticKernelFinishReason
-from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidRequestError,
@@ -264,7 +264,7 @@ class AnthropicChatCompletion(ChatCompletionClientBase):
         self, response: Message, response_metadata: dict[str, Any]
     ) -> "ChatMessageContent":
         """Create a chat message content object."""
-        items: list[ITEM_TYPES] = []
+        items: list[CMC_ITEM_TYPES] = []
         items += self._get_tool_calls_from_message(response)
 
         for content_block in response.content:

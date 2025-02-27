@@ -12,8 +12,7 @@ from semantic_kernel.connectors.ai.bedrock.services.bedrock_text_completion impo
 from semantic_kernel.connectors.ai.bedrock.services.model_provider.bedrock_model_provider import (
     get_text_completion_request_body,
 )
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import StreamingTextContent, TextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError, ServiceInvalidRequestError
 from tests.unit.connectors.ai.bedrock.conftest import MockBedrockClient, MockBedrockRuntimeClient
 

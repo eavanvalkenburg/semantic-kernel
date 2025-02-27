@@ -5,10 +5,7 @@ import uuid
 import pytest
 
 from semantic_kernel.agents.bedrock.bedrock_agent import BedrockAgent
-from semantic_kernel.contents.binary_content import BinaryContent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, BinaryContent, ChatMessageContent, StreamingChatMessageContent
 
 
 class TestBedrockAgentIntegration:

@@ -10,7 +10,7 @@ from semantic_kernel.agents.bedrock.action_group_utils import (
     parse_return_control_payload,
 )
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import FunctionResultContent
 from semantic_kernel.kernel import Kernel
 
 

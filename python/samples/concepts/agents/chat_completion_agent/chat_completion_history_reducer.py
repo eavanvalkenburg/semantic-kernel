@@ -11,11 +11,11 @@ from semantic_kernel.agents import (
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, OpenAIChatCompletion
 from semantic_kernel.contents import (
     AuthorRole,
+    ChatHistoryReducer,
     ChatHistorySummarizationReducer,
     ChatHistoryTruncationReducer,
     ChatMessageContent,
 )
-from semantic_kernel.contents.history_reducer.chat_history_reducer import ChatHistoryReducer
 
 #####################################################################
 # The following sample demonstrates how to implement a chat history #

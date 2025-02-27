@@ -5,8 +5,7 @@ import os
 from pytest import mark, raises
 
 from semantic_kernel import Kernel
-from semantic_kernel.contents import AuthorRole
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import AuthorRole, ChatHistory
 from semantic_kernel.exceptions import TemplateSyntaxError
 from semantic_kernel.functions import kernel_function
 from semantic_kernel.functions.kernel_arguments import KernelArguments

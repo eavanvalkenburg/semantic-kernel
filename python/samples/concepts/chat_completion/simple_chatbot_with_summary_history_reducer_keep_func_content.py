@@ -8,10 +8,12 @@ from samples.concepts.setup.chat_completion_services import (
 )
 from semantic_kernel import Kernel
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.contents import ChatHistorySummarizationReducer
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import (
+    ChatHistory,
+    ChatHistorySummarizationReducer,
+    FunctionCallContent,
+    FunctionResultContent,
+)
 from semantic_kernel.core_plugins.time_plugin import TimePlugin
 from semantic_kernel.functions import KernelArguments
 

@@ -2,7 +2,7 @@
 
 import pytest
 
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import ChatMessageContent
 
 
 @pytest.fixture

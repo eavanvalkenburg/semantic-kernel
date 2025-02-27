@@ -3,9 +3,7 @@
 from azure.ai.projects.models import MessageAttachment, MessageRole
 
 from semantic_kernel.agents.azure_ai.azure_ai_agent_utils import AzureAIAgentUtils
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent, FileReferenceContent
 
 
 def test_azure_ai_agent_utils_get_thread_messages_none():

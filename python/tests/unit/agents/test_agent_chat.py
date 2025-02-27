@@ -8,8 +8,7 @@ import pytest
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
 from semantic_kernel.agents.group_chat.agent_chat import AgentChat
 from semantic_kernel.agents.group_chat.broadcast_queue import ChannelReference
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent
 from semantic_kernel.exceptions.agent_exceptions import AgentChatException
 
 

@@ -6,11 +6,13 @@ from unittest.mock import Mock
 import pytest
 from pydantic import BaseModel, ConfigDict, Field
 
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import (
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+    ImageContent,
+    TextContent,
+)
 from semantic_kernel.functions.function_result import FunctionResult
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
 from semantic_kernel.kernel_pydantic import KernelBaseModel

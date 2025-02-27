@@ -8,8 +8,7 @@ from azure.identity.aio import DefaultAzureCredential
 
 from semantic_kernel.agents.azure_ai.azure_ai_agent import AzureAIAgent
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent
 
 
 async def test_azure_ai_agent_init():

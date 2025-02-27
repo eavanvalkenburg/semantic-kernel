@@ -5,7 +5,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from semantic_kernel.contents.utils.data_uri import DataUri
+from semantic_kernel.contents import DataUri
 from semantic_kernel.exceptions.content_exceptions import ContentInitializationError
 
 

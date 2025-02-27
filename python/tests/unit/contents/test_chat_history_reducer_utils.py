@@ -2,18 +2,18 @@
 
 import pytest
 
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.history_reducer.chat_history_reducer_utils import (
+from semantic_kernel.contents import (
     SUMMARY_METADATA_KEY,
+    AuthorRole,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
     contains_function_call_or_result,
     extract_range,
     get_call_result_pairs,
     locate_safe_reduction_index,
     locate_summarization_boundary,
 )
-from semantic_kernel.contents.utils.author_role import AuthorRole
 
 
 @pytest.fixture

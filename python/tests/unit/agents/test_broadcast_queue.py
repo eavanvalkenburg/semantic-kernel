@@ -7,7 +7,7 @@ import pytest
 
 from semantic_kernel.agents.channels.agent_channel import AgentChannel
 from semantic_kernel.agents.group_chat.broadcast_queue import BroadcastQueue, ChannelReference, QueueReference
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import ChatMessageContent
 
 
 @pytest.fixture

@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 
 from semantic_kernel.connectors.ai.bedrock.services.model_provider.bedrock_model_provider import BedrockModelProvider
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 
 
 @pytest.fixture()

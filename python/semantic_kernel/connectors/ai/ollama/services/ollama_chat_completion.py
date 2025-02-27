@@ -28,7 +28,7 @@ from semantic_kernel.connectors.ai.ollama.services.utils import (
     update_settings_from_function_choice_configuration,
 )
 from semantic_kernel.contents import (
-    ITEM_TYPES,
+    CMC_ITEM_TYPES,
     ChatHistory,
     ChatMessageContent,
     FunctionCallContent,
@@ -36,7 +36,7 @@ from semantic_kernel.contents import (
     StreamingTextContent,
     TextContent,
 )
-from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
+from semantic_kernel.contents import CMC_ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidExecutionSettingsError,
@@ -259,7 +259,7 @@ class OllamaChatCompletion(OllamaBase, ChatCompletionClientBase):
 
     def _create_chat_message_content_from_chat_response(self, response: ChatResponse) -> ChatMessageContent:
         """Create a chat message content from the response."""
-        items: list[ITEM_TYPES] = []
+        items: list[CMC_ITEM_TYPES] = []
         if response.message.content:
             items.append(
                 TextContent(
@@ -278,7 +278,7 @@ class OllamaChatCompletion(OllamaBase, ChatCompletionClientBase):
 
     def _create_chat_message_content(self, response: Mapping[str, Any]) -> ChatMessageContent:
         """Create a chat message content from the response."""
-        items: list[ITEM_TYPES] = []
+        items: list[CMC_ITEM_TYPES] = []
         if not (message := response.get("message", None)):
             raise ServiceInvalidResponseError("No message content found in response.")
 

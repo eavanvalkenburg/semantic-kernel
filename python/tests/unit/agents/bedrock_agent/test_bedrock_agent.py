@@ -8,7 +8,7 @@ import pytest
 from semantic_kernel.agents.bedrock.action_group_utils import parse_function_result_contents
 from semantic_kernel.agents.bedrock.bedrock_agent import BedrockAgent
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import FunctionResultContent
 from semantic_kernel.exceptions.agent_exceptions import AgentInitializationException
 from semantic_kernel.prompt_template.prompt_template_config import PromptTemplateConfig
 

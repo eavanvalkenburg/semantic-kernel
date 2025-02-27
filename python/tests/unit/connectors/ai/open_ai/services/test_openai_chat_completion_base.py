@@ -18,10 +18,7 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_pro
 )
 from semantic_kernel.connectors.ai.open_ai.services.open_ai_chat_completion import OpenAIChatCompletion
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-from semantic_kernel.contents import StreamingChatMessageContent
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.streaming_text_content import StreamingTextContent
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import ChatHistory, StreamingChatMessageContent, StreamingTextContent, TextContent
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInvalidExecutionSettingsError,
     ServiceInvalidResponseError,

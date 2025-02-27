@@ -8,8 +8,7 @@ from azure.ai.projects.models import Agent as AzureAIAgentModel
 
 from semantic_kernel.agents.azure_ai.azure_ai_agent import AzureAIAgent
 from semantic_kernel.agents.azure_ai.azure_ai_channel import AzureAIChannel
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent
 from semantic_kernel.exceptions.agent_exceptions import AgentChatException
 
 

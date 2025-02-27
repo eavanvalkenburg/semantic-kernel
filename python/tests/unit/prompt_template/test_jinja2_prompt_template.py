@@ -3,11 +3,13 @@
 import pytest
 from pytest import mark
 
-from semantic_kernel.contents import AuthorRole
-from semantic_kernel.contents.chat_history import ChatHistory
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatHistory,
+    ChatMessageContent,
+    FunctionCallContent,
+    FunctionResultContent,
+)
 from semantic_kernel.exceptions.template_engine_exceptions import Jinja2TemplateRenderException
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.kernel import Kernel

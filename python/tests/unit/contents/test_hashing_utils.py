@@ -4,8 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import FunctionCallContent, FunctionResultContent
 
 
 class SimpleModel(BaseModel):

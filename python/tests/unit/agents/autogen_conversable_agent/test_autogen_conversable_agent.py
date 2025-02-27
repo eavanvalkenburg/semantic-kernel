@@ -6,7 +6,7 @@ import pytest
 from autogen import ConversableAgent
 
 from semantic_kernel.agents.autogen.autogen_conversable_agent import AutoGenConversableAgent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole
 from semantic_kernel.exceptions.agent_exceptions import AgentInvokeException
 
 

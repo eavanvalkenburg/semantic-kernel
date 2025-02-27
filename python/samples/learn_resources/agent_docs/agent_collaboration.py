@@ -10,8 +10,7 @@ from semantic_kernel.agents.strategies import (
     KernelFunctionTerminationStrategy,
 )
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
-from semantic_kernel.contents import ChatHistoryTruncationReducer, ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatHistoryTruncationReducer, ChatMessageContent
 from semantic_kernel.functions.kernel_function_from_prompt import KernelFunctionFromPrompt
 
 ###################################################################

@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from semantic_kernel.contents.kernel_content import KernelContent
+from semantic_kernel.contents import KernelContent
 from semantic_kernel.exceptions.function_exceptions import FunctionResultError
 from semantic_kernel.functions.function_result import FunctionResult
 from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata

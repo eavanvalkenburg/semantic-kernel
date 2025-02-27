@@ -37,7 +37,7 @@ The following example demonstrates how to integrate and use the `MockAIChatCompl
 
 ```python
 import asyncio
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 
 async def main():

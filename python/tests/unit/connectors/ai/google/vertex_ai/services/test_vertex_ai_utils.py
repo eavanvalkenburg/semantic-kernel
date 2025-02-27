@@ -8,13 +8,15 @@ from semantic_kernel.connectors.ai.google.vertex_ai.services.utils import (
     format_assistant_message,
     format_user_message,
 )
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.text_content import TextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.contents.utils.finish_reason import FinishReason
+from semantic_kernel.contents import (
+    AuthorRole,
+    ChatMessageContent,
+    FinishReason,
+    FunctionCallContent,
+    FunctionResultContent,
+    ImageContent,
+    TextContent,
+)
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidRequestError
 
 

@@ -12,7 +12,7 @@ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_pro
 )
 from semantic_kernel.connectors.ai.open_ai.services.azure_text_completion import AzureTextCompletion
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import TextContent
 from semantic_kernel.exceptions import ServiceInitializationError
 
 

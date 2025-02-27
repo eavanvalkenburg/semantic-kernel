@@ -2,9 +2,7 @@
 import asyncio
 
 from semantic_kernel.agents.open_ai import AzureAssistantAgent, OpenAIAssistantAgent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.file_reference_content import FileReferenceContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatMessageContent, FileReferenceContent
 from semantic_kernel.kernel import Kernel
 
 #####################################################################

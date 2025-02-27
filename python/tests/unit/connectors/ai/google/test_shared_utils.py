@@ -10,7 +10,7 @@ from semantic_kernel.connectors.ai.google.shared_utils import (
     filter_system_message,
     format_gemini_function_name_to_kernel_function_fully_qualified_name,
 )
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 from semantic_kernel.exceptions.service_exceptions import ServiceInvalidRequestError
 
 

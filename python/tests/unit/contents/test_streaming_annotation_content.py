@@ -4,7 +4,7 @@ from xml.etree.ElementTree import Element
 
 import pytest
 
-from semantic_kernel.contents.streaming_annotation_content import StreamingAnnotationContent
+from semantic_kernel.contents import StreamingAnnotationContent
 
 test_cases = [
     pytest.param(StreamingAnnotationContent(file_id="12345"), id="file_id"),

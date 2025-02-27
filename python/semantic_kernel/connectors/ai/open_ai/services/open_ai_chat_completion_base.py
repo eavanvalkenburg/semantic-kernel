@@ -35,8 +35,8 @@ from semantic_kernel.contents import (
     FunctionCallContent,
     StreamingChatMessageContent,
     StreamingTextContent,
+    TextContent,
 )
-from semantic_kernel.contents.text_content import TextContent
 from semantic_kernel.exceptions import ServiceInvalidExecutionSettingsError, ServiceInvalidResponseError
 from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
     AutoFunctionInvocationContext,

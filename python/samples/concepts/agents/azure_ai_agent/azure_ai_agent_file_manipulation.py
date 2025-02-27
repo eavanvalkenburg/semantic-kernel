@@ -7,9 +7,7 @@ from azure.ai.projects.models import CodeInterpreterTool, FilePurpose
 from azure.identity.aio import DefaultAzureCredential
 
 from semantic_kernel.agents.azure_ai import AzureAIAgent, AzureAIAgentSettings
-from semantic_kernel.contents.annotation_content import AnnotationContent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AnnotationContent, AuthorRole, ChatMessageContent
 
 ###################################################################
 # The following sample demonstrates how to create a simple,       #

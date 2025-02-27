@@ -6,7 +6,7 @@ import pytest
 import typing_extensions as te
 from pydantic import Field, Json
 
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 from semantic_kernel.core_plugins.conversation_summary_plugin import ConversationSummaryPlugin
 from semantic_kernel.core_plugins.http_plugin import HttpPlugin
 from semantic_kernel.core_plugins.math_plugin import MathPlugin

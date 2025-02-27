@@ -25,10 +25,10 @@ from semantic_kernel.contents import (
     ChatHistory,
     ChatMessageContent,
     FunctionCallContent,
+    FunctionResultContent,
     StreamingChatMessageContent,
     TextContent,
 )
-from semantic_kernel.contents.function_result_content import FunctionResultContent
 from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
     AutoFunctionInvocationContext,
 )

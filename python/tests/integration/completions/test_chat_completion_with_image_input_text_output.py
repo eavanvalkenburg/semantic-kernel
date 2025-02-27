@@ -14,9 +14,7 @@ import pytest
 
 from semantic_kernel import Kernel
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
-from semantic_kernel.contents import ChatHistory, ChatMessageContent, TextContent
-from semantic_kernel.contents.image_content import ImageContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatHistory, ChatMessageContent, ImageContent, TextContent
 from tests.integration.completions.chat_completion_test_base import (
     ChatCompletionTestBase,
     google_ai_setup,

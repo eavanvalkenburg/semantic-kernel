@@ -5,7 +5,7 @@ from typing import Any
 from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
 from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
 from semantic_kernel.connectors.ai.text_completion_client_base import TextCompletionClientBase
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import ChatMessageContent
 from semantic_kernel.kernel import Kernel
 
 ServiceType = ChatCompletionClientBase | TextCompletionClientBase

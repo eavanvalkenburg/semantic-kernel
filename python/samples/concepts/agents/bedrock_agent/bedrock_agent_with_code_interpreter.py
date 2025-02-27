@@ -4,8 +4,7 @@ import asyncio
 import os
 
 from semantic_kernel.agents.bedrock.bedrock_agent import BedrockAgent
-from semantic_kernel.contents.binary_content import BinaryContent
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
+from semantic_kernel.contents import BinaryContent, ChatMessageContent
 
 # This sample shows how to interact with a Bedrock agent that is capable of writing and executing code.
 # This sample uses the following main component(s):

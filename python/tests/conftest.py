@@ -24,7 +24,7 @@ from semantic_kernel.data.record_definition.vector_store_record_fields import (
 )
 
 if TYPE_CHECKING:
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
     from semantic_kernel.filters.functions.function_invocation_context import FunctionInvocationContext
     from semantic_kernel.functions.kernel_function import KernelFunction
     from semantic_kernel.kernel import Kernel
@@ -120,7 +120,7 @@ def experimental_plugin_class():
 
 @fixture(scope="session")
 def create_mock_function() -> Callable:
-    from semantic_kernel.contents.streaming_text_content import StreamingTextContent
+    from semantic_kernel.contents import StreamingTextContent
     from semantic_kernel.functions.function_result import FunctionResult
     from semantic_kernel.functions.kernel_function import KernelFunction
     from semantic_kernel.functions.kernel_function_metadata import KernelFunctionMetadata
@@ -162,7 +162,7 @@ def create_mock_function() -> Callable:
 
 @fixture(scope="function")
 def get_tool_call_mock():
-    from semantic_kernel.contents.function_call_content import FunctionCallContent
+    from semantic_kernel.contents import FunctionCallContent
 
     tool_call_mock = MagicMock(spec=FunctionCallContent)
     tool_call_mock.split_name_dict.return_value = {"arg_name": "arg_value"}
@@ -182,7 +182,7 @@ def get_tool_call_mock():
 
 @fixture(scope="function")
 def chat_history() -> "ChatHistory":
-    from semantic_kernel.contents.chat_history import ChatHistory
+    from semantic_kernel.contents import ChatHistory
 
     return ChatHistory()
 

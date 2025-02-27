@@ -4,7 +4,7 @@
 import pytest
 from numpy import array
 
-from semantic_kernel.contents.binary_content import BinaryContent
+from semantic_kernel.contents import BinaryContent
 
 test_cases = [
     pytest.param(BinaryContent(uri="http://test_uri"), id="uri"),
@@ -111,3 +111,10 @@ def test_element_roundtrip(binary):
 @pytest.mark.parametrize("binary", test_cases)
 def test_to_dict(binary):
     assert binary.to_dict() == {"type": "binary", "binary": {"uri": str(binary)}}
+
+
+def test_deprecated_version():
+    from semantic_kernel.contents import BinaryContent as DeprecatedBinaryContent
+
+    binary = DeprecatedBinaryContent(uri="http://test_uri")
+    assert hasattr(binary, "__deprecated__")

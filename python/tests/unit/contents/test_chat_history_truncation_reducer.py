@@ -2,9 +2,7 @@
 
 import pytest
 
-from semantic_kernel.contents.chat_message_content import ChatMessageContent
-from semantic_kernel.contents.history_reducer.chat_history_truncation_reducer import ChatHistoryTruncationReducer
-from semantic_kernel.contents.utils.author_role import AuthorRole
+from semantic_kernel.contents import AuthorRole, ChatHistoryTruncationReducer, ChatMessageContent
 
 
 @pytest.fixture

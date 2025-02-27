@@ -26,16 +26,17 @@ from anthropic.types.raw_message_delta_event import Delta
 from semantic_kernel.connectors.ai.anthropic.prompt_execution_settings.anthropic_prompt_execution_settings import (
     AnthropicChatPromptExecutionSettings,
 )
-from semantic_kernel.contents.chat_message_content import (
+from semantic_kernel.contents import (
+    AuthorRole,
     ChatMessageContent,
+    ContentTypes,
+    FinishReason,
     FunctionCallContent,
     FunctionResultContent,
+    StreamingChatMessageContent,
+    StreamingTextContent,
     TextContent,
 )
-from semantic_kernel.contents.const import ContentTypes
-from semantic_kernel.contents.streaming_chat_message_content import StreamingChatMessageContent, StreamingTextContent
-from semantic_kernel.contents.utils.author_role import AuthorRole
-from semantic_kernel.contents.utils.finish_reason import FinishReason
 
 
 @pytest.fixture

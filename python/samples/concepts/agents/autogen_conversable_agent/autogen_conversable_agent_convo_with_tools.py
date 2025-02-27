@@ -7,8 +7,7 @@ from typing import Annotated, Literal
 from autogen import ConversableAgent, register_function
 
 from semantic_kernel.agents.autogen.autogen_conversable_agent import AutoGenConversableAgent
-from semantic_kernel.contents.function_call_content import FunctionCallContent
-from semantic_kernel.contents.function_result_content import FunctionResultContent
+from semantic_kernel.contents import FunctionCallContent, FunctionResultContent
 
 """
 The following sample demonstrates how to use the AutoGenConversableAgent to create a conversation between two agents

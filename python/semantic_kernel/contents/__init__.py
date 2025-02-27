@@ -1,6 +1,9 @@
 # Copyright (c) Microsoft. All rights reserved.
 
+import base64
+import binascii
 import logging
+import mimetypes
 import sys
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Generator, Iterable, Mapping, MutableMapping, Sequence
@@ -71,12 +74,71 @@ FUNCTION_CALL_CONTENT_TAG: Final[str] = "function_call"
 FUNCTION_RESULT_CONTENT_TAG: Final[str] = "function_result"
 DISCRIMINATOR_FIELD: Final[str] = "content_type"
 
+EMPTY_VALUES: Final[list[str | None]] = ["", "{}", None]
+
+DEFAULT_SUMMARIZATION_PROMPT = """
+Provide a concise and complete summarization of the entire dialog that does not exceed 5 sentences.
+
+This summary must always:
+- Consider both user and assistant interactions
+- Maintain continuity for the purpose of further dialog
+- Include details from any existing summary
+- Focus on the most significant aspects of the dialog
+
+This summary must never:
+- Critique, correct, interpret, presume, or assume
+- Identify faults, mistakes, misunderstanding, or correctness
+- Analyze what has not occurred
+- Exclude details from any existing summary
+"""
+SUMMARY_METADATA_KEY = "__summary__"
+
+
+class ContentTypes(str, Enum):
+    """Content types enumeration."""
+
+    AUDIO_CONTENT = AUDIO_CONTENT_TAG
+    ANNOTATION_CONTENT = ANNOTATION_CONTENT_TAG
+    BINARY_CONTENT = BINARY_CONTENT_TAG
+    CHAT_MESSAGE_CONTENT = CHAT_MESSAGE_CONTENT_TAG
+    IMAGE_CONTENT = IMAGE_CONTENT_TAG
+    FILE_REFERENCE_CONTENT = FILE_REFERENCE_CONTENT_TAG
+    FUNCTION_CALL_CONTENT = FUNCTION_CALL_CONTENT_TAG
+    FUNCTION_RESULT_CONTENT = FUNCTION_RESULT_CONTENT_TAG
+    STREAMING_ANNOTATION_CONTENT = STREAMING_ANNOTATION_CONTENT_TAG
+    STREAMING_FILE_REFERENCE_CONTENT = STREAMING_FILE_REFERENCE_CONTENT_TAG
+    TEXT_CONTENT = TEXT_CONTENT_TAG
+
+
+class AuthorRole(str, Enum):
+    """Author role enum."""
+
+    SYSTEM = "system"
+    USER = "user"
+    ASSISTANT = "assistant"
+    TOOL = "tool"
+    DEVELOPER = "developer"
+
+
+class FinishReason(str, Enum):
+    """Finish Reason enum."""
+
+    STOP = "stop"
+    LENGTH = "length"
+    CONTENT_FILTER = "content_filter"
+    TOOL_CALLS = "tool_calls"
+    FUNCTION_CALL = "function_call"
+
+
+DataUrl = Annotated[Url, UrlConstraints(allowed_schemes=["data"])]
+
 
 class KernelContent(KernelBaseModel, ABC):
     """Base class for all kernel contents."""
 
     # NOTE: if you wish to hold on to the inner content, you are responsible
     # for saving it before serializing the content/chat history as it won't be included.
+    content_type: ContentTypes | None = Field(default=None, init=False)
     inner_content: Annotated[Any | None, Field(exclude=True)] = None
     ai_model_id: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
@@ -107,7 +169,7 @@ class KernelContent(KernelBaseModel, ABC):
 class AnnotationContent(KernelContent):
     """Annotation content."""
 
-    content_type: Literal[ContentTypes.ANNOTATION_CONTENT] = Field(ANNOTATION_CONTENT_TAG, init=False)  # type: ignore
+    content_type: Literal[ContentTypes.ANNOTATION_CONTENT] = Field(default=ANNOTATION_CONTENT_TAG, init=False)  # type: ignore
     tag: ClassVar[str] = ANNOTATION_CONTENT_TAG
     file_id: str | None = None
     quote: str | None = None
@@ -306,7 +368,7 @@ class DataUri(KernelBaseModel, validate_assignment=True):
         return ""
 
 
-DataUrl = Annotated[Url, UrlConstraints(allowed_schemes=["data"])]
+_TBinary = TypeVar("_TBinary", bound="BinaryContent")
 
 
 @experimental_class
@@ -326,7 +388,7 @@ class BinaryContent(KernelContent):
 
     """
 
-    content_type: Literal[ContentTypes.BINARY_CONTENT] = Field(default=BINARY_CONTENT_TAG, init=False)  # type: ignore
+    content_type: Literal[ContentTypes.BINARY_CONTENT] = Field(default=BINARY_CONTENT_TAG, init=False)
     uri: Url | str | None = None
 
     default_mime_type: ClassVar[str] = "text/plain"
@@ -458,7 +520,7 @@ class BinaryContent(KernelContent):
         return element
 
     @classmethod
-    def from_element(cls: type[_T], element: Element) -> _T:
+    def from_element(cls: type[_TBinary], element: Element) -> _TBinary:
         """Create an instance from an Element."""
         if element.tag != cls.tag:
             raise ContentInitializationError(f"Element tag is not {cls.tag}")  # pragma: no cover
@@ -545,7 +607,7 @@ class AudioContent(BinaryContent):
         )
 
     @classmethod
-    def from_audio_file(cls: type[_T], path: str) -> "AudioContent":
+    def from_audio_file(cls: type[_TBinary], path: str) -> "_TBinary":
         """Create an instance from an audio file."""
         mime_type = mimetypes.guess_type(path)[0]
         with open(path, "rb") as audio_file:
@@ -554,9 +616,6 @@ class AudioContent(BinaryContent):
     def to_dict(self) -> dict[str, Any]:
         """Convert the instance to a dictionary."""
         return {"type": "audio_url", "audio_url": {"uri": str(self)}}
-
-
-EMPTY_VALUES: Final[list[str | None]] = ["", "{}", None]
 
 
 class FunctionCallContent(KernelContent):
@@ -1017,26 +1076,6 @@ class StreamingTextContent(StreamingContentMixin, TextContent):
         )
 
 
-class AuthorRole(str, Enum):
-    """Author role enum."""
-
-    SYSTEM = "system"
-    USER = "user"
-    ASSISTANT = "assistant"
-    TOOL = "tool"
-    DEVELOPER = "developer"
-
-
-class FinishReason(str, Enum):
-    """Finish Reason enum."""
-
-    STOP = "stop"
-    LENGTH = "length"
-    CONTENT_FILTER = "content_filter"
-    TOOL_CALLS = "tool_calls"
-    FUNCTION_CALL = "function_call"
-
-
 def make_hashable(input: Any, visited=None) -> Any:
     """Recursively convert unhashable types to hashable equivalents.
 
@@ -1261,6 +1300,170 @@ class FunctionResultContent(KernelContent):
         ))
 
 
+@experimental_class
+class FileReferenceContent(KernelContent):
+    """File reference content."""
+
+    content_type: Literal[ContentTypes.FILE_REFERENCE_CONTENT] = Field(FILE_REFERENCE_CONTENT_TAG, init=False)  # type: ignore
+    tag: ClassVar[str] = FILE_REFERENCE_CONTENT_TAG
+    file_id: str | None = None
+    tools: list[Any] = Field(default_factory=list)
+    data_source: Any | None = None
+
+    def __str__(self) -> str:
+        """Return the string representation of the file reference content."""
+        return f"FileReferenceContent(file_id={self.file_id})"
+
+    def to_element(self) -> Element:
+        """Convert the file reference content to an Element."""
+        element = Element(self.tag)
+        if self.file_id:
+            element.set("file_id", self.file_id)
+        return element
+
+    @classmethod
+    def from_element(cls: type[_T], element: Element) -> _T:
+        """Create an instance from an Element."""
+        return cls(
+            file_id=element.get("file_id"),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert the instance to a dictionary."""
+        return {
+            "file_id": self.file_id,
+        }
+
+
+_TStreamingAnnotationContent = TypeVar("_TStreamingAnnotationContent", bound="StreamingAnnotationContent")
+
+
+@experimental_class
+class StreamingAnnotationContent(KernelContent):
+    """Streaming Annotation content."""
+
+    content_type: Literal[ContentTypes.STREAMING_ANNOTATION_CONTENT] = Field(
+        STREAMING_ANNOTATION_CONTENT_TAG,  # type: ignore
+        init=False,
+    )
+    tag: ClassVar[str] = STREAMING_ANNOTATION_CONTENT_TAG
+    file_id: str | None = None
+    quote: str | None = None
+    start_index: int | None = None
+    end_index: int | None = None
+
+    def __str__(self) -> str:
+        """Return the string representation of the annotation content."""
+        return f"StreamingAnnotationContent(file_id={self.file_id}, quote={self.quote}, start_index={self.start_index}, end_index={self.end_index})"  # noqa: E501
+
+    def to_element(self) -> Element:
+        """Convert the annotation content to an Element."""
+        element = Element(self.tag)
+        if self.file_id:
+            element.set("file_id", self.file_id)
+        if self.quote:
+            element.set("quote", self.quote)
+        if self.start_index is not None:
+            element.set("start_index", str(self.start_index))
+        if self.end_index is not None:
+            element.set("end_index", str(self.end_index))
+        return element
+
+    @classmethod
+    def from_element(cls: type[_TStreamingAnnotationContent], element: Element) -> _TStreamingAnnotationContent:
+        """Create an instance from an Element."""
+        return cls(
+            file_id=element.get("file_id"),
+            quote=element.get("quote"),
+            start_index=int(element.get("start_index")) if element.get("start_index") else None,  # type: ignore
+            end_index=int(element.get("end_index")) if element.get("end_index") else None,  # type: ignore
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert the instance to a dictionary."""
+        return {
+            "type": "text",
+            "text": f"{self.file_id} {self.quote} (Start Index={self.start_index}->End Index={self.end_index})",
+        }
+
+
+_TStreamingFileReferenceContent = TypeVar("_TStreamingFileReferenceContent", bound="StreamingFileReferenceContent")
+
+
+@experimental_class
+class StreamingFileReferenceContent(KernelContent):
+    """Streaming File reference content."""
+
+    content_type: Literal[ContentTypes.STREAMING_FILE_REFERENCE_CONTENT] = Field(
+        STREAMING_FILE_REFERENCE_CONTENT_TAG,  # type: ignore
+        init=False,
+    )
+    tag: ClassVar[str] = STREAMING_FILE_REFERENCE_CONTENT_TAG
+    file_id: str | None = None
+    tools: list[Any] = Field(default_factory=list)
+    data_source: Any | None = None
+
+    def __str__(self) -> str:
+        """Return the string representation of the file reference content."""
+        return f"StreamingFileReferenceContent(file_id={self.file_id})"
+
+    def to_element(self) -> Element:
+        """Convert the file reference content to an Element."""
+        element = Element(self.tag)
+        if self.file_id:
+            element.set("file_id", self.file_id)
+        return element
+
+    @classmethod
+    def from_element(cls: type[_TStreamingFileReferenceContent], element: Element) -> _TStreamingFileReferenceContent:
+        """Create an instance from an Element."""
+        return cls(
+            file_id=element.get("file_id"),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert the instance to a dictionary."""
+        return {
+            "file_id": self.file_id,
+        }
+
+
+TAG_CONTENT_MAP = {
+    ANNOTATION_CONTENT_TAG: AnnotationContent,
+    TEXT_CONTENT_TAG: TextContent,
+    FILE_REFERENCE_CONTENT_TAG: FileReferenceContent,
+    FUNCTION_CALL_CONTENT_TAG: FunctionCallContent,
+    FUNCTION_RESULT_CONTENT_TAG: FunctionResultContent,
+    IMAGE_CONTENT_TAG: ImageContent,
+    STREAMING_FILE_REFERENCE_CONTENT_TAG: StreamingFileReferenceContent,
+    STREAMING_ANNOTATION_CONTENT_TAG: StreamingAnnotationContent,
+}
+
+CMC_ITEM_TYPES = Annotated[
+    AnnotationContent
+    | BinaryContent
+    | ImageContent
+    | TextContent
+    | FunctionResultContent
+    | FunctionCallContent
+    | FileReferenceContent
+    | StreamingAnnotationContent
+    | StreamingFileReferenceContent,
+    Field(discriminator=DISCRIMINATOR_FIELD),
+]
+
+STREAMING_CMC_ITEM_TYPES = Annotated[
+    BinaryContent
+    | ImageContent
+    | StreamingTextContent
+    | FunctionCallContent
+    | FunctionResultContent
+    | StreamingFileReferenceContent
+    | StreamingAnnotationContent,
+    Field(discriminator=DISCRIMINATOR_FIELD),
+]
+
+
 class ChatMessageContent(KernelContent):
     """This is the class for chat message response content.
 
@@ -1285,7 +1488,7 @@ class ChatMessageContent(KernelContent):
     tag: ClassVar[str] = CHAT_MESSAGE_CONTENT_TAG
     role: AuthorRole
     name: str | None = None
-    items: list[Annotated[ITEM_TYPES, Field(discriminator=DISCRIMINATOR_FIELD)]] = Field(default_factory=list)
+    items: list[CMC_ITEM_TYPES] = Field(default_factory=list)
     encoding: str | None = None
     finish_reason: FinishReason | None = None
 
@@ -1293,7 +1496,7 @@ class ChatMessageContent(KernelContent):
     def __init__(
         self,
         role: AuthorRole,
-        items: list[ITEM_TYPES],
+        items: list[CMC_ITEM_TYPES],
         name: str | None = None,
         inner_content: Any | None = None,
         encoding: str | None = None,
@@ -1320,7 +1523,7 @@ class ChatMessageContent(KernelContent):
     def __init__(  # type: ignore
         self,
         role: AuthorRole,
-        items: list[ITEM_TYPES] | None = None,
+        items: list[CMC_ITEM_TYPES] | None = None,
         content: str | None = None,
         inner_content: Any | None = None,
         name: str | None = None,
@@ -1518,6 +1721,213 @@ class ChatMessageContent(KernelContent):
         """Return the hash of the chat message content."""
         hashable_items = [make_hashable(item) for item in self.items] if self.items else []
         return hash((self.tag, self.role, self.content, self.encoding, self.finish_reason, *hashable_items))
+
+
+class StreamingChatMessageContent(ChatMessageContent, StreamingContentMixin):
+    """This is the class for streaming chat message response content.
+
+    All Chat Completion Services should return an instance of this class as streaming response,
+    where each part of the response as it is streamed is converted to an instance of this class,
+    the end-user will have to either do something directly or gather them and combine them into a
+    new instance. A service can implement their own subclass of this class and return instances of that.
+
+    Args:
+        choice_index: int - The index of the choice that generated this response.
+        inner_content: Optional[Any] - The inner content of the response,
+            this should hold all the information from the response so even
+            when not creating a subclass a developer can leverage the full thing.
+        ai_model_id: Optional[str] - The id of the AI model that generated this response.
+        metadata: Dict[str, Any] - Any metadata that should be attached to the response.
+        role: Optional[ChatRole] - The role of the chat message, defaults to ASSISTANT.
+        content: Optional[str] - The text of the response.
+        encoding: Optional[str] - The encoding of the text.
+
+    Methods:
+        __str__: Returns the content of the response.
+        __bytes__: Returns the content of the response encoded in the encoding.
+        __add__: Combines two StreamingChatMessageContent instances.
+    """
+
+    function_invoke_attempt: int | None = Field(
+        default=0,
+        description="Tracks the current attempt count for automatically invoking functions. "
+        "This value increments with each subsequent automatic invocation attempt.",
+    )
+
+    @overload
+    def __init__(
+        self,
+        role: AuthorRole,
+        items: list[STREAMING_CMC_ITEM_TYPES],
+        choice_index: int,
+        name: str | None = None,
+        inner_content: Any | None = None,
+        encoding: str | None = None,
+        finish_reason: FinishReason | None = None,
+        ai_model_id: str | None = None,
+        metadata: dict[str, Any] | None = None,
+        function_invoke_attempt: int | None = None,
+    ) -> None: ...
+
+    @overload
+    def __init__(
+        self,
+        role: AuthorRole,
+        content: str,
+        choice_index: int,
+        name: str | None = None,
+        inner_content: Any | None = None,
+        encoding: str | None = None,
+        finish_reason: FinishReason | None = None,
+        ai_model_id: str | None = None,
+        metadata: dict[str, Any] | None = None,
+        function_invoke_attempt: int | None = None,
+    ) -> None: ...
+
+    def __init__(  # type: ignore
+        self,
+        role: AuthorRole,
+        choice_index: int,
+        items: list[STREAMING_CMC_ITEM_TYPES] | None = None,
+        content: str | None = None,
+        inner_content: Any | None = None,
+        name: str | None = None,
+        encoding: str | None = None,
+        finish_reason: FinishReason | None = None,
+        ai_model_id: str | None = None,
+        metadata: dict[str, Any] | None = None,
+        function_invoke_attempt: int | None = None,
+    ):
+        """Create a new instance of StreamingChatMessageContent.
+
+        Args:
+            role: The role of the chat message.
+            choice_index: The index of the choice that generated this response.
+            items: The content.
+            content: The text of the response.
+            inner_content: The inner content of the response,
+                this should hold all the information from the response so even
+                when not creating a subclass a developer can leverage the full thing.
+            name: The name of the response.
+            encoding: The encoding of the text.
+            finish_reason: The reason the response was finished.
+            metadata: Any metadata that should be attached to the response.
+            ai_model_id: The id of the AI model that generated this response.
+            function_invoke_attempt: Tracks the current attempt count for automatically
+                invoking functions. This value increments with each subsequent automatic invocation attempt.
+        """
+        kwargs: dict[str, Any] = {
+            "role": role,
+            "choice_index": choice_index,
+            "function_invoke_attempt": function_invoke_attempt,
+        }
+        if encoding:
+            kwargs["encoding"] = encoding
+        if finish_reason:
+            kwargs["finish_reason"] = finish_reason
+        if name:
+            kwargs["name"] = name
+        if content:
+            item = StreamingTextContent(
+                choice_index=choice_index,
+                ai_model_id=ai_model_id,
+                inner_content=inner_content,
+                metadata=metadata or {},
+                text=content,
+                encoding=encoding,
+            )
+            if items:
+                items.append(item)
+            else:
+                items = [item]
+        if items:
+            kwargs["items"] = items
+        if inner_content:
+            kwargs["inner_content"] = inner_content
+        if metadata:
+            kwargs["metadata"] = metadata
+        if ai_model_id:
+            kwargs["ai_model_id"] = ai_model_id
+        super().__init__(
+            **kwargs,
+        )
+
+    def __bytes__(self) -> bytes:
+        """Return the content of the response encoded in the encoding."""
+        return self.content.encode(self.encoding if self.encoding else "utf-8") if self.content else b""
+
+    def __add__(self, other: "StreamingChatMessageContent") -> "StreamingChatMessageContent":
+        """When combining two StreamingChatMessageContent instances, the content fields are combined.
+
+        The addition should follow these rules:
+            1. The inner_content of the two will be combined. If they are not lists, they will be converted to lists.
+            2. ai_model_id should be the same.
+            3. encoding should be the same.
+            4. role should be the same.
+            5. choice_index should be the same.
+            6. Metadata will be combined
+        """
+        if not isinstance(other, StreamingChatMessageContent):
+            raise ContentAdditionException(
+                f"Cannot add other type to StreamingChatMessageContent, type supplied: {type(other)}"
+            )
+        if self.choice_index != other.choice_index:
+            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different choice_index")
+        if self.ai_model_id != other.ai_model_id:
+            raise ContentAdditionException("Cannot add StreamingChatMessageContent from different ai_model_id")
+        if self.encoding != other.encoding:
+            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different encoding")
+        if self.role and other.role and self.role != other.role:
+            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different role")
+
+        return StreamingChatMessageContent(
+            role=self.role,
+            items=self._merge_items_lists(other.items),
+            choice_index=self.choice_index,
+            inner_content=self._merge_inner_contents(other.inner_content),
+            ai_model_id=self.ai_model_id,
+            metadata=self.metadata | other.metadata,
+            encoding=self.encoding,
+            finish_reason=self.finish_reason or other.finish_reason,
+            function_invoke_attempt=self.function_invoke_attempt,
+        )
+
+    def to_element(self) -> "Element":
+        """Convert the StreamingChatMessageContent to an XML Element.
+
+        Args:
+            root_key: str - The key to use for the root of the XML Element.
+
+        Returns:
+            Element - The XML Element representing the StreamingChatMessageContent.
+        """
+        root = Element(self.tag)
+        for field in self.model_fields_set:
+            if field not in ["role", "name", "encoding", "finish_reason", "ai_model_id", "choice_index"]:
+                continue
+            value = getattr(self, field)
+            if isinstance(value, Enum):
+                value = value.value
+            if isinstance(value, int):
+                value = str(value)
+            root.set(field, value)
+        for index, item in enumerate(self.items):
+            root.insert(index, item.to_element())
+        return root
+
+    def __hash__(self) -> int:
+        """Return the hash of the streaming chat message content."""
+        hashable_items = [make_hashable(item) for item in self.items] if self.items else []
+        return hash((
+            self.tag,
+            self.role,
+            self.content,
+            self.encoding,
+            self.finish_reason,
+            self.choice_index,
+            self.function_invoke_attempt,
+            *hashable_items,
+        ))
 
 
 class ChatHistory(KernelBaseModel):
@@ -1890,386 +2300,6 @@ class ChatHistory(KernelBaseModel):
 
 
 @experimental_class
-class FileReferenceContent(KernelContent):
-    """File reference content."""
-
-    content_type: Literal[ContentTypes.FILE_REFERENCE_CONTENT] = Field(FILE_REFERENCE_CONTENT_TAG, init=False)  # type: ignore
-    tag: ClassVar[str] = FILE_REFERENCE_CONTENT_TAG
-    file_id: str | None = None
-    tools: list[Any] = Field(default_factory=list)
-    data_source: Any | None = None
-
-    def __str__(self) -> str:
-        """Return the string representation of the file reference content."""
-        return f"FileReferenceContent(file_id={self.file_id})"
-
-    def to_element(self) -> Element:
-        """Convert the file reference content to an Element."""
-        element = Element(self.tag)
-        if self.file_id:
-            element.set("file_id", self.file_id)
-        return element
-
-    @classmethod
-    def from_element(cls: type[_T], element: Element) -> _T:
-        """Create an instance from an Element."""
-        return cls(
-            file_id=element.get("file_id"),
-        )
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert the instance to a dictionary."""
-        return {
-            "file_id": self.file_id,
-        }
-
-
-@experimental_class
-class StreamingAnnotationContent(KernelContent):
-    """Streaming Annotation content."""
-
-    content_type: Literal[ContentTypes.STREAMING_ANNOTATION_CONTENT] = Field(
-        STREAMING_ANNOTATION_CONTENT_TAG,  # type: ignore
-        init=False,
-    )
-    tag: ClassVar[str] = STREAMING_ANNOTATION_CONTENT_TAG
-    file_id: str | None = None
-    quote: str | None = None
-    start_index: int | None = None
-    end_index: int | None = None
-
-    def __str__(self) -> str:
-        """Return the string representation of the annotation content."""
-        return f"StreamingAnnotationContent(file_id={self.file_id}, quote={self.quote}, start_index={self.start_index}, end_index={self.end_index})"  # noqa: E501
-
-    def to_element(self) -> Element:
-        """Convert the annotation content to an Element."""
-        element = Element(self.tag)
-        if self.file_id:
-            element.set("file_id", self.file_id)
-        if self.quote:
-            element.set("quote", self.quote)
-        if self.start_index is not None:
-            element.set("start_index", str(self.start_index))
-        if self.end_index is not None:
-            element.set("end_index", str(self.end_index))
-        return element
-
-    @classmethod
-    def from_element(cls: type[_T], element: Element) -> _T:
-        """Create an instance from an Element."""
-        return cls(
-            file_id=element.get("file_id"),
-            quote=element.get("quote"),
-            start_index=int(element.get("start_index")) if element.get("start_index") else None,  # type: ignore
-            end_index=int(element.get("end_index")) if element.get("end_index") else None,  # type: ignore
-        )
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert the instance to a dictionary."""
-        return {
-            "type": "text",
-            "text": f"{self.file_id} {self.quote} (Start Index={self.start_index}->End Index={self.end_index})",
-        }
-
-
-@experimental_class
-class StreamingFileReferenceContent(KernelContent):
-    """Streaming File reference content."""
-
-    content_type: Literal[ContentTypes.STREAMING_FILE_REFERENCE_CONTENT] = Field(
-        STREAMING_FILE_REFERENCE_CONTENT_TAG,  # type: ignore
-        init=False,
-    )
-    tag: ClassVar[str] = STREAMING_FILE_REFERENCE_CONTENT_TAG
-    file_id: str | None = None
-    tools: list[Any] = Field(default_factory=list)
-    data_source: Any | None = None
-
-    def __str__(self) -> str:
-        """Return the string representation of the file reference content."""
-        return f"StreamingFileReferenceContent(file_id={self.file_id})"
-
-    def to_element(self) -> Element:
-        """Convert the file reference content to an Element."""
-        element = Element(self.tag)
-        if self.file_id:
-            element.set("file_id", self.file_id)
-        return element
-
-    @classmethod
-    def from_element(cls: type[_T], element: Element) -> _T:
-        """Create an instance from an Element."""
-        return cls(
-            file_id=element.get("file_id"),
-        )
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert the instance to a dictionary."""
-        return {
-            "file_id": self.file_id,
-        }
-
-
-STREAMING_CMC_ITEM_TYPES = Union[
-    BinaryContent,
-    ImageContent,
-    StreamingTextContent,
-    FunctionCallContent,
-    FunctionResultContent,
-    StreamingFileReferenceContent,
-    StreamingAnnotationContent,
-]
-
-
-class StreamingChatMessageContent(ChatMessageContent, StreamingContentMixin):
-    """This is the class for streaming chat message response content.
-
-    All Chat Completion Services should return an instance of this class as streaming response,
-    where each part of the response as it is streamed is converted to an instance of this class,
-    the end-user will have to either do something directly or gather them and combine them into a
-    new instance. A service can implement their own subclass of this class and return instances of that.
-
-    Args:
-        choice_index: int - The index of the choice that generated this response.
-        inner_content: Optional[Any] - The inner content of the response,
-            this should hold all the information from the response so even
-            when not creating a subclass a developer can leverage the full thing.
-        ai_model_id: Optional[str] - The id of the AI model that generated this response.
-        metadata: Dict[str, Any] - Any metadata that should be attached to the response.
-        role: Optional[ChatRole] - The role of the chat message, defaults to ASSISTANT.
-        content: Optional[str] - The text of the response.
-        encoding: Optional[str] - The encoding of the text.
-
-    Methods:
-        __str__: Returns the content of the response.
-        __bytes__: Returns the content of the response encoded in the encoding.
-        __add__: Combines two StreamingChatMessageContent instances.
-    """
-
-    function_invoke_attempt: int | None = Field(
-        default=0,
-        description="Tracks the current attempt count for automatically invoking functions. "
-        "This value increments with each subsequent automatic invocation attempt.",
-    )
-
-    @overload
-    def __init__(
-        self,
-        role: AuthorRole,
-        items: list[STREAMING_CMC_ITEM_TYPES],
-        choice_index: int,
-        name: str | None = None,
-        inner_content: Any | None = None,
-        encoding: str | None = None,
-        finish_reason: FinishReason | None = None,
-        ai_model_id: str | None = None,
-        metadata: dict[str, Any] | None = None,
-        function_invoke_attempt: int | None = None,
-    ) -> None: ...
-
-    @overload
-    def __init__(
-        self,
-        role: AuthorRole,
-        content: str,
-        choice_index: int,
-        name: str | None = None,
-        inner_content: Any | None = None,
-        encoding: str | None = None,
-        finish_reason: FinishReason | None = None,
-        ai_model_id: str | None = None,
-        metadata: dict[str, Any] | None = None,
-        function_invoke_attempt: int | None = None,
-    ) -> None: ...
-
-    def __init__(  # type: ignore
-        self,
-        role: AuthorRole,
-        choice_index: int,
-        items: list[STREAMING_CMC_ITEM_TYPES] | None = None,
-        content: str | None = None,
-        inner_content: Any | None = None,
-        name: str | None = None,
-        encoding: str | None = None,
-        finish_reason: FinishReason | None = None,
-        ai_model_id: str | None = None,
-        metadata: dict[str, Any] | None = None,
-        function_invoke_attempt: int | None = None,
-    ):
-        """Create a new instance of StreamingChatMessageContent.
-
-        Args:
-            role: The role of the chat message.
-            choice_index: The index of the choice that generated this response.
-            items: The content.
-            content: The text of the response.
-            inner_content: The inner content of the response,
-                this should hold all the information from the response so even
-                when not creating a subclass a developer can leverage the full thing.
-            name: The name of the response.
-            encoding: The encoding of the text.
-            finish_reason: The reason the response was finished.
-            metadata: Any metadata that should be attached to the response.
-            ai_model_id: The id of the AI model that generated this response.
-            function_invoke_attempt: Tracks the current attempt count for automatically
-                invoking functions. This value increments with each subsequent automatic invocation attempt.
-        """
-        kwargs: dict[str, Any] = {
-            "role": role,
-            "choice_index": choice_index,
-            "function_invoke_attempt": function_invoke_attempt,
-        }
-        if encoding:
-            kwargs["encoding"] = encoding
-        if finish_reason:
-            kwargs["finish_reason"] = finish_reason
-        if name:
-            kwargs["name"] = name
-        if content:
-            item = StreamingTextContent(
-                choice_index=choice_index,
-                ai_model_id=ai_model_id,
-                inner_content=inner_content,
-                metadata=metadata or {},
-                text=content,
-                encoding=encoding,
-            )
-            if items:
-                items.append(item)
-            else:
-                items = [item]
-        if items:
-            kwargs["items"] = items
-        if inner_content:
-            kwargs["inner_content"] = inner_content
-        if metadata:
-            kwargs["metadata"] = metadata
-        if ai_model_id:
-            kwargs["ai_model_id"] = ai_model_id
-        super().__init__(
-            **kwargs,
-        )
-
-    def __bytes__(self) -> bytes:
-        """Return the content of the response encoded in the encoding."""
-        return self.content.encode(self.encoding if self.encoding else "utf-8") if self.content else b""
-
-    def __add__(self, other: "StreamingChatMessageContent") -> "StreamingChatMessageContent":
-        """When combining two StreamingChatMessageContent instances, the content fields are combined.
-
-        The addition should follow these rules:
-            1. The inner_content of the two will be combined. If they are not lists, they will be converted to lists.
-            2. ai_model_id should be the same.
-            3. encoding should be the same.
-            4. role should be the same.
-            5. choice_index should be the same.
-            6. Metadata will be combined
-        """
-        if not isinstance(other, StreamingChatMessageContent):
-            raise ContentAdditionException(
-                f"Cannot add other type to StreamingChatMessageContent, type supplied: {type(other)}"
-            )
-        if self.choice_index != other.choice_index:
-            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different choice_index")
-        if self.ai_model_id != other.ai_model_id:
-            raise ContentAdditionException("Cannot add StreamingChatMessageContent from different ai_model_id")
-        if self.encoding != other.encoding:
-            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different encoding")
-        if self.role and other.role and self.role != other.role:
-            raise ContentAdditionException("Cannot add StreamingChatMessageContent with different role")
-
-        return StreamingChatMessageContent(
-            role=self.role,
-            items=self._merge_items_lists(other.items),
-            choice_index=self.choice_index,
-            inner_content=self._merge_inner_contents(other.inner_content),
-            ai_model_id=self.ai_model_id,
-            metadata=self.metadata | other.metadata,
-            encoding=self.encoding,
-            finish_reason=self.finish_reason or other.finish_reason,
-            function_invoke_attempt=self.function_invoke_attempt,
-        )
-
-    def to_element(self) -> "Element":
-        """Convert the StreamingChatMessageContent to an XML Element.
-
-        Args:
-            root_key: str - The key to use for the root of the XML Element.
-
-        Returns:
-            Element - The XML Element representing the StreamingChatMessageContent.
-        """
-        root = Element(self.tag)
-        for field in self.model_fields_set:
-            if field not in ["role", "name", "encoding", "finish_reason", "ai_model_id", "choice_index"]:
-                continue
-            value = getattr(self, field)
-            if isinstance(value, Enum):
-                value = value.value
-            if isinstance(value, int):
-                value = str(value)
-            root.set(field, value)
-        for index, item in enumerate(self.items):
-            root.insert(index, item.to_element())
-        return root
-
-    def __hash__(self) -> int:
-        """Return the hash of the streaming chat message content."""
-        hashable_items = [make_hashable(item) for item in self.items] if self.items else []
-        return hash((
-            self.tag,
-            self.role,
-            self.content,
-            self.encoding,
-            self.finish_reason,
-            self.choice_index,
-            self.function_invoke_attempt,
-            *hashable_items,
-        ))
-
-
-TAG_CONTENT_MAP = {
-    ANNOTATION_CONTENT_TAG: AnnotationContent,
-    TEXT_CONTENT_TAG: TextContent,
-    FILE_REFERENCE_CONTENT_TAG: FileReferenceContent,
-    FUNCTION_CALL_CONTENT_TAG: FunctionCallContent,
-    FUNCTION_RESULT_CONTENT_TAG: FunctionResultContent,
-    IMAGE_CONTENT_TAG: ImageContent,
-    STREAMING_FILE_REFERENCE_CONTENT_TAG: StreamingFileReferenceContent,
-    STREAMING_ANNOTATION_CONTENT_TAG: StreamingAnnotationContent,
-}
-
-ITEM_TYPES = (
-    AnnotationContent
-    | BinaryContent
-    | ImageContent
-    | TextContent
-    | FunctionResultContent
-    | FunctionCallContent
-    | FileReferenceContent
-    | StreamingAnnotationContent
-    | StreamingFileReferenceContent
-)
-
-
-class ContentTypes(str, Enum):
-    """Content types enumeration."""
-
-    AUDIO_CONTENT = AUDIO_CONTENT_TAG
-    ANNOTATION_CONTENT = ANNOTATION_CONTENT_TAG
-    BINARY_CONTENT = BINARY_CONTENT_TAG
-    CHAT_MESSAGE_CONTENT = CHAT_MESSAGE_CONTENT_TAG
-    IMAGE_CONTENT = IMAGE_CONTENT_TAG
-    FILE_REFERENCE_CONTENT = FILE_REFERENCE_CONTENT_TAG
-    FUNCTION_CALL_CONTENT = FUNCTION_CALL_CONTENT_TAG
-    FUNCTION_RESULT_CONTENT = FUNCTION_RESULT_CONTENT_TAG
-    STREAMING_ANNOTATION_CONTENT = STREAMING_ANNOTATION_CONTENT_TAG
-    STREAMING_FILE_REFERENCE_CONTENT = STREAMING_FILE_REFERENCE_CONTENT_TAG
-    TEXT_CONTENT = TEXT_CONTENT_TAG
-
-
-@experimental_class
 class ChatHistoryReducer(ChatHistory, ABC):
     """Defines a contract for reducing chat history."""
 
@@ -2313,24 +2343,6 @@ class ChatHistoryReducer(ChatHistory, ABC):
         self.messages.append(ChatMessageContent(**message))
         if self.auto_reduce:
             await self.reduce()
-
-
-DEFAULT_SUMMARIZATION_PROMPT = """
-Provide a concise and complete summarization of the entire dialog that does not exceed 5 sentences.
-
-This summary must always:
-- Consider both user and assistant interactions
-- Maintain continuity for the purpose of further dialog
-- Include details from any existing summary
-- Focus on the most significant aspects of the dialog
-
-This summary must never:
-- Critique, correct, interpret, presume, or assume
-- Identify faults, mistakes, misunderstanding, or correctness
-- Analyze what has not occurred
-- Exclude details from any existing summary
-"""
-SUMMARY_METADATA_KEY = "__summary__"
 
 
 @experimental_function

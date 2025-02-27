@@ -11,7 +11,7 @@ from semantic_kernel.connectors.ai.google.vertex_ai.vertex_ai_prompt_execution_s
     VertexAITextPromptExecutionSettings,
 )
 from semantic_kernel.connectors.ai.google.vertex_ai.vertex_ai_settings import VertexAISettings
-from semantic_kernel.contents.text_content import TextContent
+from semantic_kernel.contents import TextContent
 from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
 
 

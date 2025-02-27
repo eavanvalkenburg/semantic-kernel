@@ -36,7 +36,7 @@ from semantic_kernel.connectors.ai.google.shared_utils import (
     format_gemini_function_name_to_kernel_function_fully_qualified_name,
 )
 from semantic_kernel.contents import (
-    ITEM_TYPES,
+    CMC_ITEM_TYPES,
     AuthorRole,
     ChatHistory,
     ChatMessageContent,
@@ -46,7 +46,7 @@ from semantic_kernel.contents import (
     StreamingTextContent,
     TextContent,
 )
-from semantic_kernel.contents.streaming_chat_message_content import ITEM_TYPES as STREAMING_ITEM_TYPES
+from semantic_kernel.contents import CMC_ITEM_TYPES as STREAMING_ITEM_TYPES
 from semantic_kernel.exceptions.service_exceptions import (
     ServiceInitializationError,
     ServiceInvalidExecutionSettingsError,
@@ -247,7 +247,7 @@ class GoogleAIChatCompletion(GoogleAIBase, ChatCompletionClientBase):
         response_metadata = self._get_metadata_from_response(response)
         response_metadata.update(self._get_metadata_from_candidate(candidate))
 
-        items: list[ITEM_TYPES] = []
+        items: list[CMC_ITEM_TYPES] = []
         for idx, part in enumerate(candidate.content.parts):
             if part.text:
                 items.append(TextContent(text=part.text, inner_content=response, metadata=response_metadata))

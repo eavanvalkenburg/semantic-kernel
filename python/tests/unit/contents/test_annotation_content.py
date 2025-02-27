@@ -4,7 +4,7 @@ from xml.etree.ElementTree import Element
 
 import pytest
 
-from semantic_kernel.contents.annotation_content import AnnotationContent
+from semantic_kernel.contents import AnnotationContent
 
 test_cases = [
     pytest.param(AnnotationContent(file_id="12345"), id="file_id"),

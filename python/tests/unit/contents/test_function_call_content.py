@@ -2,7 +2,7 @@
 
 import pytest
 
-from semantic_kernel.contents.function_call_content import FunctionCallContent
+from semantic_kernel.contents import FunctionCallContent
 from semantic_kernel.exceptions.content_exceptions import (
     ContentAdditionException,
     FunctionCallInvalidArgumentsException,

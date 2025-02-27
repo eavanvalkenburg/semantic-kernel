@@ -4,7 +4,7 @@
 import asyncio
 
 from semantic_kernel.connectors.ai.onnx import OnnxGenAIChatCompletion, OnnxGenAIPromptExecutionSettings
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 from semantic_kernel.kernel import Kernel
 
 # This concept sample shows how to use the Onnx connector with

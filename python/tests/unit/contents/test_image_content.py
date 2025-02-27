@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from semantic_kernel.contents.image_content import ImageContent
+from semantic_kernel.contents import ImageContent
 
 test_cases = [
     pytest.param(ImageContent(uri="http://test_uri"), id="uri"),

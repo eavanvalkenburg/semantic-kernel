@@ -2,7 +2,7 @@
 
 import pytest
 
-from semantic_kernel.contents.chat_history import ChatHistory
+from semantic_kernel.contents import ChatHistory
 
 
 @pytest.fixture()
