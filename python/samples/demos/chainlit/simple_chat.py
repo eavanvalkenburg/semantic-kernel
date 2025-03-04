@@ -1,8 +1,9 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-import datetime
+import logging
 
 import chainlit as cl
+from pydantic import BaseModel
 
 from semantic_kernel import Kernel
 from semantic_kernel.connectors.ai import FunctionChoiceBehavior
@@ -12,13 +13,11 @@ from semantic_kernel.connectors.ai.open_ai import (
 )
 from semantic_kernel.contents import ChatHistory
 from semantic_kernel.core_plugins.math_plugin import MathPlugin
-from semantic_kernel.exceptions import FunctionExecutionException
-from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
-    AutoFunctionInvocationContext,
-)
+from semantic_kernel.core_plugins.time_plugin import TimePlugin
+from semantic_kernel.filters.functions.function_invocation_context import FunctionInvocationContext
 from semantic_kernel.functions import KernelArguments
-from semantic_kernel.functions.kernel_function_decorator import kernel_function
-from semantic_kernel.kernel_pydantic import KernelBaseModel
+
+logger = logging.getLogger(__name__)
 
 #####################################################################
 # This sample demonstrates how to build a conversational chatbot    #
@@ -28,242 +27,6 @@ from semantic_kernel.kernel_pydantic import KernelBaseModel
 # as needed, and return responses.                                  #
 #####################################################################
 # Copyright (c) Microsoft. All rights reserved.
-
-
-class TimePlugin(KernelBaseModel):
-    """TimePlugin provides a set of functions to get the current time and date.
-
-    Usage:
-        kernel.add_plugin(TimePlugin(), plugin_name="time")
-
-    Examples:
-        {{time.date}}            => Sunday, 12 January, 2031
-        {{time.today}}           => Sunday, 12 January, 2031
-        {{time.iso_date}}        => 2031-01-12
-        {{time.now}}             => Sunday, January 12, 2031 9:15 PM
-        {{time.utcNow}}          => Sunday, January 13, 2031 5:15 AM
-        {{time.time}}            => 09:15:07 PM
-        {{time.year}}            => 2031
-        {{time.month}}           => January
-        {{time.monthNumber}}     => 01
-        {{time.day}}             => 12
-        {{time.dayOfWeek}}       => Sunday
-        {{time.hour}}            => 9 PM
-        {{time.hourNumber}}      => 21
-        {{time.days_ago $days}} => Sunday, 7 May, 2023
-        {{time.last_matching_day $dayName}} => Sunday, 7 May, 2023
-        {{time.minute}}          => 15
-        {{time.minutes}}         => 15
-        {{time.second}}          => 7
-        {{time.seconds}}         => 7
-        {{time.timeZoneOffset}}  => -0800
-        {{time.timeZoneName}}    => PST
-    """
-
-    @cl.step(type="tool")
-    @kernel_function(description="Get the current date.")
-    def date(self) -> str:
-        """Get the current date.
-
-        Example:
-            {{time.date}} => Sunday, 12 January, 2031
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%A, %d %B, %Y")
-
-    @kernel_function(description="Get the current date.")
-    def today(self) -> str:
-        """Get the current date.
-
-        Example:
-            {{time.today}} => Sunday, 12 January, 2031
-        """
-        return self.date()
-
-    @kernel_function(description="Get the current date in iso format.")
-    def iso_date(self) -> str:
-        """Get the current date in iso format.
-
-        Example:
-            {{time.iso_date}} => 2031-01-12
-        """
-        today = datetime.date.today()
-        return today.isoformat()
-
-    @kernel_function(description="Get the current date and time in the local time zone")
-    def now(self) -> str:
-        """Get the current date and time in the local time zone.
-
-        Example:
-            {{time.now}} => Sunday, January 12, 2031 9:15 PM
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%A, %B %d, %Y %I:%M %p")
-
-    @kernel_function(description="Get the current date and time in UTC", name="utcNow")
-    def utc_now(self) -> str:
-        """Get the current date and time in UTC.
-
-        Example:
-            {{time.utcNow}} => Sunday, January 13, 2031 5:15 AM
-        """
-        now = datetime.datetime.utcnow()
-        return now.strftime("%A, %B %d, %Y %I:%M %p")
-
-    @kernel_function(description="Get the current time in the local time zone")
-    def time(self) -> str:
-        """Get the current time in the local time zone.
-
-        Example:
-            {{time.time}} => 09:15:07 PM
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%I:%M:%S %p")
-
-    @kernel_function(description="Get the current year")
-    def year(self) -> str:
-        """Get the current year.
-
-        Example:
-            {{time.year}} => 2031
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%Y")
-
-    @kernel_function(description="Get the current month")
-    def month(self) -> str:
-        """Get the current month.
-
-        Example:
-            {{time.month}} => January
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%B")
-
-    @kernel_function(description="Get the current month number")
-    def month_number(self) -> str:
-        """Get the current month number.
-
-        Example:
-            {{time.monthNumber}} => 01
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%m")
-
-    @kernel_function(description="Get the current day")
-    def day(self) -> str:
-        """Get the current day of the month.
-
-        Example:
-            {{time.day}} => 12
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%d")
-
-    @kernel_function(description="Get the current day of the week", name="dayOfWeek")
-    def day_of_week(self) -> str:
-        """Get the current day of the week.
-
-        Example:
-            {{time.dayOfWeek}} => Sunday
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%A")
-
-    @kernel_function(description="Get the current hour")
-    def hour(self) -> str:
-        """Get the current hour.
-
-        Example:
-            {{time.hour}} => 9 PM
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%I %p")
-
-    @kernel_function(description="Get the current hour number", name="hourNumber")
-    def hour_number(self) -> str:
-        """Get the current hour number.
-
-        Example:
-            {{time.hourNumber}} => 21
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%H")
-
-    @kernel_function(description="Get the current minute")
-    def minute(self) -> str:
-        """Get the current minute.
-
-        Example:
-            {{time.minute}} => 15
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%M")
-
-    @kernel_function(description="Get the date of offset from today by a provided number of days")
-    def days_ago(self, days: str) -> str:
-        """Get the date a provided number of days in the past.
-
-        Args:
-            days: The number of days to offset from today
-        Returns:
-            The date of the offset day.
-
-        Example:
-             {{time.days_ago $input}} => Sunday, 7 May, 2023
-        """
-        d = datetime.date.today() - datetime.timedelta(days=int(days))
-        return d.strftime("%A, %d %B, %Y")
-
-    @kernel_function(description="""Get the date of the last day matching the supplied week day name in English.""")
-    def date_matching_last_day_name(self, day_name: str) -> str:
-        """Get the date of the last day matching the supplied day name.
-
-        Args:
-            day_name: The day name to match with.
-
-        Returns:
-            The date of the matching day.
-
-        Example:
-             {{time.date_matching_last_day_name $input}} => Sunday, 7 May, 2023
-        """
-        d = datetime.date.today()
-        for i in range(1, 8):
-            d = d - datetime.timedelta(days=1)
-            if d.strftime("%A") == day_name:
-                return d.strftime("%A, %d %B, %Y")
-        raise FunctionExecutionException("day_name is not recognized")
-
-    @kernel_function(description="Get the seconds on the current minute")
-    def second(self) -> str:
-        """Get the seconds on the current minute.
-
-        Example:
-            {{time.second}} => 7
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%S")
-
-    @kernel_function(description="Get the current time zone offset", name="timeZoneOffset")
-    def time_zone_offset(self) -> str:
-        """Get the current time zone offset.
-
-        Example:
-            {{time.timeZoneOffset}} => -08:00
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%z")
-
-    @kernel_function(description="Get the current time zone name", name="timeZoneName")
-    def time_zone_name(self) -> str:
-        """Get the current time zone name.
-
-        Example:
-            {{time.timeZoneName}} => PST
-        """
-        now = datetime.datetime.now()
-        return now.strftime("%Z")
 
 
 # System message defining the behavior and persona of the chat bot.
@@ -313,16 +76,28 @@ history.add_user_message("Hi there, who are you?")
 history.add_assistant_message("I am Mosscap, a chat bot. I'm trying to figure out what people need.")
 
 
-async def auto_func(context: AutoFunctionInvocationContext, next):
-    async with cl.Step(type="tool", name=context.function.name) as step:
-        step.input = dict(context.arguments)
+async def func_step(context: FunctionInvocationContext, next):
+    if context.function.plugin_name == "ChatBot":
+        await next(context)
+        return
+    async with cl.Step(type="tool", name=context.function.fully_qualified_name) as step:
+        input_dict = {}
+        for key, value in context.arguments.items():
+            if key == "chat_history":
+                continue
+            if isinstance(value, BaseModel):
+                input_dict[key] = value.model_dump()
+            else:
+                input_dict[key] = value
+        step.input = input_dict or ""
         await step.send()
         await next(context)
-        step.output = context.function_result.value
+        if context.result:
+            step.output = context.result.value
         await step.update()
 
 
-kernel.add_filter("auto_function_invocation", auto_func)
+kernel.add_filter("function_invocation", func_step)
 
 
 @cl.on_message
@@ -331,11 +106,33 @@ async def chat(message: cl.Message):
     arguments["chat_history"] = history
 
     cl_msg = cl.Message(content="")
-    response = []
+    assistant_responses = []
+    tool_responses = []
     async for msg in kernel.invoke_stream(chat_function, arguments=arguments):
         if msg and msg[0].role == "assistant":
-            response.append(msg[0])
+            assistant_responses.append(msg[0])
             await cl_msg.stream_token(msg[0].content)
-    full_response = sum(response[1:], response[0])
+        if msg and msg[0].role == "tool":
+            tool_responses.append(msg[0])
+
+    full_response = sum(assistant_responses[1:], assistant_responses[0])
     history.add_message(full_response)
+    if tool_responses:
+        tool_response = sum(tool_responses[1:], tool_responses[0])
+        if tool_response:
+            history.add_message(tool_response)
     await cl_msg.update()
+
+
+@cl.set_starters
+async def set_starters():
+    return [
+        cl.Starter(
+            label="Simple function call without arguments",
+            message="What time is it?",
+        ),
+        cl.Starter(
+            label="Math",
+            message="What is the current time + 293847 minus 2934?",
+        ),
+    ]
