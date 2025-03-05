@@ -154,7 +154,7 @@ async def chat(message: cl.Message):
                 cl_msg = cl.Message(content="", author=msg.name)
                 last_msg_author = msg.name
             await cl_msg.stream_token(msg.content)
-    await cl_msg.update()
+            await cl_msg.update()
 
 
 @cl.set_starters

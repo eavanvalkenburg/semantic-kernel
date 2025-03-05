@@ -12,10 +12,13 @@ from semantic_kernel.connectors.ai.open_ai import (
     OpenAIChatPromptExecutionSettings,
 )
 from semantic_kernel.contents import ChatHistory
+from semantic_kernel.contents.function_call_content import FunctionCallContent
 from semantic_kernel.core_plugins.math_plugin import MathPlugin
 from semantic_kernel.core_plugins.time_plugin import TimePlugin
+from semantic_kernel.filters.auto_function_invocation.auto_function_invocation_context import (
+    AutoFunctionInvocationContext,
+)
 from semantic_kernel.filters.functions.function_invocation_context import FunctionInvocationContext
-from semantic_kernel.functions import KernelArguments
 
 logger = logging.getLogger(__name__)
 
@@ -50,14 +53,6 @@ kernel = Kernel()
 kernel.add_plugin(MathPlugin(), plugin_name="math")
 kernel.add_plugin(TimePlugin(), plugin_name="time")
 
-
-# Define a chat function (a template for how to handle user input).
-chat_function = kernel.add_function(
-    prompt="{{$chat_history}}",
-    plugin_name="ChatBot",
-    function_name="Chat",
-)
-
 # Please make sure you have configured your environment correctly for the selected chat completion service.
 chat_completion_service = OpenAIChatCompletion(service_id="chat")
 request_settings = OpenAIChatPromptExecutionSettings(
@@ -66,9 +61,6 @@ request_settings = OpenAIChatPromptExecutionSettings(
 
 kernel.add_service(chat_completion_service)
 
-# Pass the request settings to the kernel arguments.
-arguments = KernelArguments(settings=request_settings)
-
 # Create a chat history to store the system message, initial messages, and the conversation.
 history = ChatHistory()
 history.add_system_message(system_message)
@@ -76,52 +68,73 @@ history.add_user_message("Hi there, who are you?")
 history.add_assistant_message("I am Mosscap, a chat bot. I'm trying to figure out what people need.")
 
 
-async def func_step(context: FunctionInvocationContext, next):
-    if context.function.plugin_name == "ChatBot":
-        await next(context)
-        return
-    async with cl.Step(type="tool", name=context.function.fully_qualified_name) as step:
-        input_dict = {}
-        for key, value in context.arguments.items():
-            if key == "chat_history":
-                continue
-            if isinstance(value, BaseModel):
-                input_dict[key] = value.model_dump()
-            else:
-                input_dict[key] = value
-        step.input = input_dict or ""
-        await step.send()
-        await next(context)
-        if context.result:
-            step.output = context.result.value
-        await step.update()
+class SemanticKernelFilter(BaseModel):
+    excluded_plugins: list[str] | None = None
+
+    async def auto_func_loop(self, context: AutoFunctionInvocationContext, next):
+        if "__step_id__" in context.arguments:
+            step = context.arguments["__step_id__"]
+            async with step:
+                await next(context)
+        else:
+            await next(context)
+
+    async def func_step(self, context: FunctionInvocationContext, next):
+        if self.excluded_plugins and context.function.plugin_name in self.excluded_plugins:
+            await next(context)
+            return
+        async with cl.Step(type="tool", name=context.function.fully_qualified_name) as step:
+            input_dict = {}
+            for key, value in context.arguments.items():
+                if key in ["chat_history", "__step_id__"]:
+                    continue
+                if isinstance(value, BaseModel):
+                    input_dict[key] = value.model_dump()
+                else:
+                    input_dict[key] = value
+            step.input = input_dict or ""
+            await step.send()
+            await next(context)
+            if context.result:
+                step.output = context.result.value
+            await step.update()
 
 
-kernel.add_filter("function_invocation", func_step)
+filter = SemanticKernelFilter(excluded_plugins=["ChatBot"])
+kernel.add_filter("function_invocation", filter.func_step)
+# kernel.add_filter("auto_function_invocation", filter.auto_func_loop)
 
 
 @cl.on_message
 async def chat(message: cl.Message):
     history.add_user_message(message.content)
-    arguments["chat_history"] = history
-
+    step = None
     cl_msg = cl.Message(content="")
     assistant_responses = []
     tool_responses = []
-    async for msg in kernel.invoke_stream(chat_function, arguments=arguments):
-        if msg and msg[0].role == "assistant":
-            assistant_responses.append(msg[0])
-            await cl_msg.stream_token(msg[0].content)
-        if msg and msg[0].role == "tool":
-            tool_responses.append(msg[0])
-
+    async for msg in chat_completion_service.get_streaming_chat_message_content(
+        chat_history=history,
+        settings=request_settings,
+        kernel=kernel,
+    ):
+        if msg and msg.role == "assistant":
+            if not step and any(isinstance(item, FunctionCallContent) for item in msg.items):
+                step = cl.Step(type="tool", name="Auto Function Calling")
+                await step.__aenter__()
+                cl_msg.parent_id = step.id
+            assistant_responses.append(msg)
+            await cl_msg.stream_token(msg.content)
+        if msg and msg.role == "tool":
+            tool_responses.append(msg)
+    if step:
+        await step.__aexit__(None, None, None)
     full_response = sum(assistant_responses[1:], assistant_responses[0])
     history.add_message(full_response)
     if tool_responses:
         tool_response = sum(tool_responses[1:], tool_responses[0])
         if tool_response:
             history.add_message(tool_response)
-    await cl_msg.update()
+    await cl_msg.send()
 
 
 @cl.set_starters
